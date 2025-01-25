@@ -5,7 +5,7 @@ export default function Test() {
   return (
     <div>
         <h1 className={styles.title}>
-            לך אל נמלה עצל
+            זו רק בדיקה
         </h1>
     </div>
   )
