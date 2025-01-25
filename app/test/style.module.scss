@@ -5,5 +5,15 @@
 }
 
 .title {
-    color: $primary;
+    color: $titleColor;
+    background: $elementGradient;
+    width: 500px;
+    height: 100px;
+    border: 1px solid $lightblueBorder;
+    border-radius: 15px;
+    font-family: $font-family;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: $text-xl;
 }

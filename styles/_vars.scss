@@ -1,7 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Hebrew:wght@100;200;300;400;500;600;700;800;900&display=swap');
 :root {
-    --background: #ffffff;
-    --foreground: #171717;
-    --primary: #FFD700;
+    --blue: #272C55;
+    --gray: #fcfcfc;
+    --lightblue: #E8F1F8;
+    --darkGray: #72838A;
+    --mutedBlue: #2D3748;
+    --lightGray: #DDDDDD;
 }
 
-$primary: var(--primary);
+//Colors
+$primary: var(--blue);
+$titleColor: var(--blue);
+$grayBackground: var(--gray);
+$lightblueBorder: var(--lightblue);
+$textColor: var(--darkGray);
+$buttonColor: var(--mutedBlue);
+$placeHolderColor: var(--lightGray);
+
+//Gradients
+$elementGradient: linear-gradient(to top, var(--gray) 50%,white 100%); //used for gray background
+$darkElementGradient: linear-gradient(to top, var(--mutedBlue) 20%, var(--darkGray) 100%); // used for dark background
+
+
+//Text sizing
+$font-family: 'Noto Sans Hebrew', sans-serif;
+$text-xxl: 64px; // כותרת ענק
+$text-xl: 36px;  // כותרת
+$text-lg: 24px;  // משנה
+$text-md: 18px;  // טקסט רגיל
