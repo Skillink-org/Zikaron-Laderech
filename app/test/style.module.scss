@@ -1,0 +1,9 @@
+@use '@/styles/_vars.scss' as *;
+
+:root {
+    --primary: #FFD700;
+}
+
+.title {
+    color: $primary;
+}
