@@ -1,0 +1,38 @@
+@use '@/styles/_vars.scss' as *;
+$footer-height: 150px;
+
+.footer {
+    height: $footer-height;
+    width: 672px;
+    padding-block: 34px;
+    margin-inline: auto;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+
+    font-family: $font-family;
+}
+
+.nav {
+    display: flex;
+    flex-direction: row;
+
+    color: $textColor;
+    font-size: $text-md;
+    text-align: center;
+
+    a {
+        width: 128px;
+    }
+
+    a:nth-child(2) {
+        width: 160px;
+    }
+}
+
+.small {
+    font-size: 16px;
+}
