@@ -4,42 +4,46 @@ $header-height: 100px;
 
 .header {
     height: $header-height;
-    width: 1440px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 152px;
+    display: grid;
+    grid-template-rows: $header-height;
+    grid-template-columns: [right] 100px [center] 1fr [left] auto;
     font-family: $font-family;
-    padding-inline: 85px;
-    margin-inline: auto;
+
+    &>* {
+        grid-row: 1;
+    }
+
+}
+
+.search {
+    grid-column: left;
+    place-self: center;
 }
 
 .logo {
+    grid-column: center;
+    place-self: center;
+
     font-weight: 700;
-    width: 178px;
     font-size: 35px;
-    // line-height: 42.36px;
     color: $primary;
 
     span {
         color: $textColor;
     }
-
 }
 
 .nav {
-    display: flex;
+    grid-column: center;
+    display: none;
     flex-direction: row;
     align-items: center;
     justify-content: center;
 
-
-
     a {
         text-align: center;
-        width: 128px;
+        width: 100px;
         padding-block: 30px;
-
         font-size: $text-md;
 
         &:hover {}
@@ -51,3 +55,84 @@ $header-height: 100px;
         width: 160px;
     }
 }
+
+.mobileNav {
+    grid-column: right;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+
+
+    .navIcon {
+        cursor: pointer;
+        z-index: 10;
+    }
+
+    &.open {
+        .nav {
+            transform: translateX(0);
+        }
+    }
+
+    &.closed {
+        .nav {
+            transform: translateX(100%);
+        }
+    }
+
+    & .nav {
+        position: absolute;
+        height: 100vh;
+        width: 50%;
+        right: 0;
+        top: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+
+        background-color: $grayBackground;
+        color: $textColor;
+        border-left: 1px solid $lightblueBorder;
+        transition: all 0.2s ease-in-out;
+    }
+}
+
+
+@media (min-width: 768px) {}
+
+
+@media (min-width: 1024px) {
+    .header {
+        grid-template-columns: auto [right] 280px [center] auto [left] 280px auto;
+    }
+
+    .mobileNav {
+        display: none;
+    }
+
+    .nav {
+        display: flex;
+    }
+
+    .logo {
+        grid-column: right;
+    }
+
+}
+
+@media (min-width: 1220px) {
+    .header {
+        grid-template-columns: auto [right] 335px [center] auto [left] 335px auto;
+    }
+
+    .nav {
+        a {
+            width: 128px;
+        }
+    }
+}
+
+@media (min-width: 1440px) {}

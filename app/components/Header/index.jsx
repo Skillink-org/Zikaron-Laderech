@@ -1,5 +1,8 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import styles from './style.module.scss'
+import NavIcon from '@/public/mobile-nav-icon.svg'
+import MobileNav from './MobileNav'
 
 export default function Header() {
     return (
@@ -11,7 +14,12 @@ export default function Header() {
                 <Link href='/about'>אודות</Link>
                 <Link href='/contact'>יצירת קשר</Link>
             </nav>
-            <input type="text" />
+            <MobileNav />
+
+            <div className={styles.search}>
+                <input type="text" />
+            </div>
+
         </header>
     )
 }
