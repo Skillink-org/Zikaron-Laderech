@@ -1,0 +1,160 @@
+@use '@/styles/_vars.scss' as *;
+
+
+$header-height: 80px;
+
+.header {
+    height: $header-height;
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-columns: [right] 78px [center] 1fr [left] 78px;
+    font-family: $font-family;
+
+    &>* {
+        grid-row: 1;
+    }
+
+}
+
+.search {
+    grid-column: left;
+    place-self: center;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    .searchInput {
+        display: none;
+    }
+}
+
+.logo {
+    grid-column: center;
+    place-self: center;
+
+    font-weight: 700;
+    font-size: 35px;
+    color: $primary;
+
+    padding-bottom: 5px;
+
+    span {
+        color: $textColor;
+    }
+}
+
+.nav {
+    grid-column: center;
+    display: none;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    a {
+        text-align: center;
+        width: 100px;
+        padding-block: 30px;
+        font-size: $text-md;
+
+        &:hover {}
+
+        &.active {}
+    }
+
+    a:nth-child(2) {
+        width: 160px;
+    }
+}
+
+.mobileNav {
+    grid-column: right;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+
+
+    .navIcon {
+        position: fixed;
+        cursor: pointer;
+        z-index: 10;
+    }
+
+    &.open {
+        .nav {
+            transform: translateX(0);
+        }
+    }
+
+    &.closed {
+        .nav {
+            transform: translateX(100%);
+        }
+    }
+
+    & .nav {
+        position: fixed;
+        height: 100vh;
+        width: 50%;
+        right: 0;
+        top: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+
+        background-color: $grayBackground;
+        color: $textColor;
+        border-left: 1px solid $lightblueBorder;
+        transition: all 0.2s ease-in-out;
+    }
+}
+
+
+@media (min-width: 768px) {}
+
+
+@media (min-width: 1024px) {
+    .header {
+        height: 100px;
+        grid-template-columns: auto [right] 280px [center] auto [left] 280px auto;
+    }
+
+    .mobileNav {
+        display: none;
+    }
+
+    .nav {
+        display: flex;
+    }
+
+    .logo {
+        grid-column: right;
+    }
+
+    .search {
+        .searchInput {
+            display: block;
+        }
+
+        .searchIcon {
+            display: none;
+        }
+    }
+
+}
+
+@media (min-width: 1220px) {
+    .header {
+        grid-template-columns: auto [right] 335px [center] auto [left] 335px auto;
+    }
+
+    .nav {
+        a {
+            width: 128px;
+        }
+    }
+}
+
+@media (min-width: 1440px) {}
