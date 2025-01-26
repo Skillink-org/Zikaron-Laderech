@@ -1,21 +1,15 @@
-import Link from 'next/link'
 import styles from './style.module.scss'
 import MobileNav from './MobileNav'
+import Search from './Search'
+import NavList from './NavList'
 
 export default function Header() {
     return (
         <header className={styles.header}>
             <div className={styles.logo}><span>זיכרון </span>לדרך</div>
-            <nav className={styles.nav}>
-                <Link href='/'>בית</Link>
-                <Link href='/all-fallen'>השמות והתחביבים</Link>
-                <Link href='/about'>אודות</Link>
-                <Link href='/contact'>יצירת קשר</Link>
-            </nav>
+            <NavList />
             <MobileNav />
-            <div className={styles.search}>
-                <input type="text" />
-            </div>
+            <Search />
         </header>
     )
 }
