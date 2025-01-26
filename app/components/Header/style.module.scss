@@ -1,0 +1,53 @@
+@use '@/styles/_vars.scss' as *;
+
+$header-height: 100px;
+
+.header {
+    height: $header-height;
+    width: 1440px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 152px;
+    font-family: $font-family;
+    padding-inline: 85px;
+    margin-inline: auto;
+}
+
+.logo {
+    font-weight: 700;
+    width: 178px;
+    font-size: 35px;
+    // line-height: 42.36px;
+    color: $primary;
+
+    span {
+        color: $textColor;
+    }
+
+}
+
+.nav {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+
+
+    a {
+        text-align: center;
+        width: 128px;
+        padding-block: 30px;
+
+        font-size: $text-md;
+
+        &:hover {}
+
+        &.active {}
+    }
+
+    a:nth-child(2) {
+        width: 160px;
+    }
+}
