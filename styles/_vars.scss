@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Hebrew:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
 :root {
     --blue: #272C55;
     --gray: #fcfcfc;
@@ -18,13 +19,14 @@ $buttonColor: var(--mutedBlue);
 $placeHolderColor: var(--lightGray);
 
 //Gradients
-$elementGradient: linear-gradient(to top, var(--gray) 50%,white 100%); //used for gray background
+$elementGradient: linear-gradient(to top, var(--gray) 50%, white 100%); //used for gray background
 $darkElementGradient: linear-gradient(to top, var(--mutedBlue) 20%, var(--darkGray) 100%); // used for dark background
 
 
 //Text sizing
 $font-family: 'Noto Sans Hebrew', sans-serif;
 $text-xxl: 64px; // כותרת ענק
-$text-xl: 36px;  // כותרת
-$text-lg: 24px;  // משנה
-$text-md: 18px;  // טקסט רגיל
+$text-xl: 36px; // כותרת
+$text-lg: 24px; // משנה
+$text-md: 18px; // טקסט רגיל
+$text-sm: 14px;
