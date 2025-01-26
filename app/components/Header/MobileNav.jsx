@@ -6,7 +6,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 
 export default function MobileNav() {
-    const [isOpen, setIsOpen] = useState(true)
+    const [isOpen, setIsOpen] = useState(false)
 
     function toggleNav() {
         setIsOpen(!isOpen)

@@ -1,7 +1,5 @@
 import Link from 'next/link'
-import Image from 'next/image'
 import styles from './style.module.scss'
-import NavIcon from '@/public/mobile-nav-icon.svg'
 import MobileNav from './MobileNav'
 
 export default function Header() {
@@ -15,11 +13,9 @@ export default function Header() {
                 <Link href='/contact'>יצירת קשר</Link>
             </nav>
             <MobileNav />
-
             <div className={styles.search}>
                 <input type="text" />
             </div>
-
         </header>
     )
 }

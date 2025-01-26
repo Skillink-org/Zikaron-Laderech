@@ -1,12 +1,9 @@
 @use '@/styles/_vars.scss' as *;
-$footer-height: 150px;
 
 .footer {
-    height: $footer-height;
-    width: 672px;
+    height: 80px;
     padding-block: 34px;
     margin-inline: auto;
-
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -17,7 +14,7 @@ $footer-height: 150px;
 }
 
 .nav {
-    display: flex;
+    display: none;
     flex-direction: row;
 
     color: $textColor;
@@ -35,4 +32,16 @@ $footer-height: 150px;
 
 .small {
     font-size: 16px;
+}
+
+@media (min-width: 768px) {
+    .footer {
+        height: 150px;
+    }
+
+
+    .nav {
+        display: flex;
+        width: 672px;
+    }
 }
