@@ -1,7 +1,6 @@
-import React from "react";
 import styles from "./ImageWithTitle.module.scss";
 
-const ImageWithTitle = ({ imageUrl, title, subtitle }) => {
+export default function ImageWithTitle({ imageUrl, title, subtitle }) {
   return (
     <div
       className={styles.imageWithTitle}
@@ -15,6 +14,4 @@ const ImageWithTitle = ({ imageUrl, title, subtitle }) => {
       </div>
     </div>
   );
-};
-
-export default ImageWithTitle;
+}
