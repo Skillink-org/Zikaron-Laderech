@@ -4,11 +4,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: $grayBackground;
   padding: 2%;
   width: 250px;
   height: 350px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   font-family: $font-family;
 
   .profileImage {
