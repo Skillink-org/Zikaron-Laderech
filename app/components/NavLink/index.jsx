@@ -5,12 +5,12 @@ import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 
 
-export default function NavLink({ href, children }) {
+export default function NavLink({ href, children, ...rest }) {
     const pathname = usePathname()
     const isActive = pathname === href
 
     return (
-        <Link href={href} className={`${styles.link} ${isActive ? `${styles.active}` : ''}`}>
+        <Link href={href} {...rest} className={`${styles.link} ${isActive ? `${styles.active}` : ''}`}>
             {children}
         </Link>
     )
