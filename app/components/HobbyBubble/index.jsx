@@ -2,7 +2,8 @@ import React from 'react';
 import Image from 'next/image';
 import styles from './style.module.scss';
 
-export default function HobbyBubble({ hobby = "טניס", plusMode = true, ...props }) {
+export default function HobbyBubble({ hobby = "טניס", plusMode = true, onClick, ...props }) {
+
     // List of pastel colors
     const pastelColors = [
         "#FFB3BA", // Light pink
@@ -71,6 +72,7 @@ export default function HobbyBubble({ hobby = "טניס", plusMode = true, ...pr
                 "--borderColor": randomColor,
                 "--darkerBorderColor": darkerBorderColor,
             }}
+            onClick={onClick}
         >
             {hobby}
            {plusMode ? <Image src="/plusIcon.svg" alt="Plus icon" className={styles.Image} width={20} height={20} />:""}

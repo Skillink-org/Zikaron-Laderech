@@ -18,7 +18,7 @@ $buttonColor: var(--mutedBlue);
 $placeHolderColor: var(--lightGray);
 
 //Gradients
-$elementGradient: linear-gradient(to top, var(--gray) 50%,white 100%); //used for gray background
+$elementGradient: linear-gradient(0deg, $grayBackground, white); //used for gray background
 $darkElementGradient: linear-gradient(to top, var(--mutedBlue) 20%, var(--darkGray) 100%); // used for dark background
 
 
