@@ -5,24 +5,15 @@
 .hobbyBubble {
     display: flex;
     flex-direction: row;
-    align-items: end;
-    justify-content: space-between;
+    align-items: center;
+    justify-content: center;
     padding: 10px;
-    border: 1px solid var(--darkerBorderColor);
     border-radius: 10px;
-    //width: 100px;
-    width: 207.9px;
-    height: 120.87px;
-    aspect-ratio: 3/2;
+    width: 200px;
+    height: 40px;
     gap: 10px;
     font-size: 18px;
-    color: black;
-    background: linear-gradient( -45deg, var(--baseColor) 10%, var(--lighterColor) 100%);
-    .Image {
-        &:hover {
-          cursor: pointer;
-        }
-      }
+    color: $bubbleTextColor;
 }
 
 
