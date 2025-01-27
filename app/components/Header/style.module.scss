@@ -59,15 +59,17 @@ $header-height: 80px;
     align-items: center;
     justify-content: center;
 
-
-
     .navIcon {
-        position: fixed;
+        position: static;
         cursor: pointer;
         z-index: 10;
     }
 
     &.open {
+        .navIcon {
+            position: fixed;
+        }
+
         .nav {
             transform: translateX(0);
         }
