@@ -1,40 +1,40 @@
-@use '@/styles/_vars.scss' as *;
+@use "@/styles/_vars.scss" as *;
 
 .card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background: $grayBackground;
-    padding: 2%;
-    width: 250px;
-    height: 350px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    font-family: $font-family;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: $grayBackground;
+  padding: 2%;
+  width: 250px;
+  height: 350px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-family: $font-family;
 
-    .profileImage {
-        position: relative;
-        width: 200px;
-        height: 250px;
-        margin-bottom: 10px;
-        border-radius: 60px;
-        overflow: hidden;
+  .profileImage {
+    position: relative;
+    width: 200px;
+    height: 250px;
+    margin-bottom: 10px;
+    border-radius: 60px;
+    overflow: hidden;
 
-        img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
+  }
 
-    .name {
-        font-size: $text-lg;
-        font-weight: 700;
-        color: $titleColor;
-    }
+  .name {
+    font-size: $text-lg;
+    font-weight: 700;
+    color: $titleColor;
+  }
 
-    .years {
-        font-size: $text-sm;
-        font-weight: 400;
-        color: $textColor;
-    }
+  .years {
+    font-size: $text-sm;
+    font-weight: 400;
+    color: $textColor;
+  }
 }
