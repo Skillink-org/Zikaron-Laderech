@@ -10,7 +10,7 @@ export default function Footer() {
                     <NavLink key={index} href={link.href}>{link.label}</NavLink>
                 ))}
             </nav>
-            <div className={styles.small}>2025 | נבנה ופותח ע”י Skillink</div>
+            <div className={styles.copyright}>2025 | נבנה ופותח ע”י Skillink</div>
         </footer>
     )
 }
