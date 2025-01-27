@@ -1,6 +1,6 @@
 import Image from "next/image";
 import styles from "./page.module.scss";
-import ImageWithTitle from "./components/ImageWithTitle/ImageWithTitle";
+import ImageWithTitle from "./components/ImageWithTitle/Index";
 
 
 export default function Home() {
