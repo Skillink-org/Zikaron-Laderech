@@ -7,15 +7,21 @@
  *   Text
  * </CustomBubble>
  */
-import React from 'react';
-import styles from './style.module.scss';
+import styles from "./style.module.scss";
 
-const CustomBubble = ({ children, className = '', style = {}, onClick, ...props}) => {
+export default function CustomBubble({
+  children,
+  classNames = "",
+  style = {},
+  onClick,
+}) {
   return (
-    <div className={`${styles.customBubble} ${className}`} style={style} onClick={onClick}>
+    <div
+      className={`${styles.customBubble} ${classNames}`}
+      style={style}
+      onClick={onClick}
+    >
       {children}
     </div>
   );
-};
-
-export default CustomBubble;
+}
