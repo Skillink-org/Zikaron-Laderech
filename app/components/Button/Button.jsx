@@ -3,17 +3,20 @@
 import styles from "./style.module.scss";
 
 export default function Button({
-  type = "button",
   children,
+  className = styles.button,
   disabled = false,
   onClick,
+  type = "button",
+  ...props
 }) {
   return (
     <button
       type={type}
-      className={styles.button}
+      className={className}
       disabled={disabled}
       onClick={onClick}
+      {...props}
     >
       {children}
     </button>
