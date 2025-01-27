@@ -10,9 +10,9 @@
 import React from 'react';
 import styles from './style.module.scss';
 
-const CustomBubble = ({ children, className = '', style = {} }) => {
+const CustomBubble = ({ children, className = '', style = {}, onClick, ...props}) => {
   return (
-    <div className={`${styles.customBubble} ${className}`} style={style}>
+    <div className={`${styles.customBubble} ${className}`} style={style} onClick={onClick}>
       {children}
     </div>
   );
