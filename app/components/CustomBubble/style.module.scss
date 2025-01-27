@@ -1,0 +1,16 @@
+@use '@/styles/_vars.scss' as *;
+
+.customBubble {
+    color: $titleColor;
+    background: $elementGradient;
+    border: 1px solid $lightblueBorder;
+    border-radius: 15px;
+    font-family: $font-family;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    justify-content: center;
+    align-items: center;
+    font-size: $text-xl;
+  }
+  
