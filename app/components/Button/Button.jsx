@@ -2,17 +2,20 @@
 
 import styles from "./style.module.scss";
 
-const Button = ({ type = "button", value, disabled, onClick }) => {
+export default function Button({
+  type = "button",
+  children,
+  disabled = false,
+  onClick,
+}) {
   return (
     <button
       type={type}
       className={styles.button}
       disabled={disabled}
-      onClick={() => onClick}
+      onClick={onClick}
     >
-      {value}
+      {children}
     </button>
   );
-};
-
-export default Button;
+}
