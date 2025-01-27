@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./style.module.scss";
 
-const ProfileCard = ({ firstName, lastName, birthYear, deathYear, imageSrc }) => {
+const ProfileCard = ({ firstName="מאי", lastName="הלל", birthYear="2000", deathYear="2023", imageSrc="/profileImage.webp" }) => {
     return (
         <div className={styles.card}>
             <div className={styles.profileImage}>
