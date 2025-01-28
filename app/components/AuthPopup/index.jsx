@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 import styles from "./style.module.scss";
 import GenericInput from "../GenericInput/index";
 import Button from "../Button";
+import GoogleAuth from "./GoogleAuth";
 
 export default function AuthPopup({ onClose }) {
     const [isLogin, setIsLogin] = useState(true);
@@ -20,7 +20,6 @@ export default function AuthPopup({ onClose }) {
 
     const toggleForm = () => setIsLogin(!isLogin);
 
-    // פונקציה שתטפל בהתחברות באמצעות גוגל
     const handleGoogleLoginSuccess = (response) => {
         console.log("Logged in with Google:", response);
     };
@@ -72,19 +71,15 @@ export default function AuthPopup({ onClose }) {
                         onChange={handlePasswordChange}
                     />
                     <Button className={styles.submitButton}>
-                        {isLogin ? "התחברות" : "ההרשמה"}
+                        {isLogin ? "התחברות" : "הרשמה"}
                     </Button>
 
-                    <GoogleOAuthProvider clientId="הכנס את ה-clientId שלך כאן">
-                        <div className={styles.googleLoginWrapper}>
-                        <GoogleLogin
-                            className={styles.goggleLoginButton}
-                            onSuccess={handleGoogleLoginSuccess}
-                            onError={handleGoogleLoginFailure}
-                            useOneTap
-                        />
-                        </div>
-                    </GoogleOAuthProvider>
+                    <GoogleAuth
+                        onSuccess={handleGoogleLoginSuccess}
+                        onFailure={handleGoogleLoginFailure}
+                        className={styles.googleLoginWrapper} 
+                    />
+
                     <div className={styles.toggleButton} onClick={toggleForm}>
                         <small>{isLogin ? "אין לך חשבון? לחץ כאן להרשמה" : "נרשמת בעבר? לחץ כאן להתחברות"}</small>
                     </div>
