@@ -23,6 +23,15 @@
     }
 }
 
+.itemsContainer {
+    margin: 10px 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    width: 100%;
+}
+
 @media (max-width: 768px) {
     .customBubble {
         flex-direction: column !important;
@@ -33,7 +42,18 @@
         flex-direction: column !important;
     }
 
-    .searchInput, .searchButton {
+    .searchInput,
+    .searchButton {
         width: 100%;
+    }
+
+    .itemsContainer {
+        justify-content: space-evenly;
+    }
+}
+
+@media (min-width: 1300px) {
+    .itemsContainer {
+        justify-content: flex-start;
     }
 }

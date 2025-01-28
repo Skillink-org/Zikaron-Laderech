@@ -4,7 +4,7 @@ import styles from "./style.module.scss";
 
 export default function Button({
   children,
-  className,
+  className = "",
   disabled = false,
   onClick,
   type = "button",
