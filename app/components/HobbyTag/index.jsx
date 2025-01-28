@@ -1,14 +1,33 @@
 "use client";
-import React from "react";
+
+import useRand from "@/hooks/useRand";
 import styles from "./style.module.scss";
 import DynamicBackground from "../DynamicBackground";
 
-export default function HobbyTag({ hobby = "טניס", onClick, ...props }) {
+export default function HobbyTag({
+  hobby,
+  className = "",
+  onClick,
+  ...props
+}) {
+  const rand = useRand();
+
   return (
-    <DynamicBackground>
-      <div className={styles.hobbyBubble} onClick={onClick} {...props}>
-        {hobby}
-      </div>
-    </DynamicBackground>
+    <>
+      {rand ? (
+        <DynamicBackground rand={rand} className={styles.dynamicBackground}>
+          <div
+            className={`${styles.hobbyTag} ${className}`}
+            onClick={onClick}
+            {...props}
+          >
+            {hobby}
+          </div>
+        </DynamicBackground>
+      ) : (
+        // TODO: Add a loading indicator here
+        <></>
+      )}
+    </>
   );
 }
