@@ -1,0 +1,7 @@
+@mixin page-layout($padding: 200px, $min-height: 100vh) {
+    padding-left: $padding;
+    padding-right: $padding;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
