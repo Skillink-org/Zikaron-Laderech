@@ -4,7 +4,7 @@ import styles from "./style.module.scss";
 
 export default function Button({
   children,
-  className = styles.button,
+  className,
   disabled = false,
   onClick,
   type = "button",
@@ -13,7 +13,7 @@ export default function Button({
   return (
     <button
       type={type}
-      className={className}
+      className={`${styles.button} ${className}`}
       disabled={disabled}
       onClick={onClick}
       {...props}
