@@ -23,10 +23,12 @@ $header-height: 80px;
     align-items: center;
     cursor: pointer;
 
-    .searchInput {
+    input {
         display: none;
     }
 }
+
+
 
 .logo {
     grid-column: center;
@@ -49,21 +51,6 @@ $header-height: 80px;
     flex-direction: row;
     align-items: center;
     justify-content: center;
-
-    a {
-        text-align: center;
-        width: 100px;
-        padding-block: 30px;
-        font-size: $text-md;
-
-        &:hover {}
-
-        &.active {}
-    }
-
-    a:nth-child(2) {
-        width: 160px;
-    }
 }
 
 .mobileNav {
@@ -72,15 +59,17 @@ $header-height: 80px;
     align-items: center;
     justify-content: center;
 
-
-
     .navIcon {
-        position: fixed;
+        position: static;
         cursor: pointer;
         z-index: 10;
     }
 
     &.open {
+        .navIcon {
+            position: fixed;
+        }
+
         .nav {
             transform: translateX(0);
         }
@@ -108,6 +97,11 @@ $header-height: 80px;
         color: $textColor;
         border-left: 1px solid $lightblueBorder;
         transition: all 0.2s ease-in-out;
+
+        a {
+            padding-block: 30px;
+        }
+
     }
 }
 
@@ -134,7 +128,7 @@ $header-height: 80px;
     }
 
     .search {
-        .searchInput {
+        input {
             display: block;
         }
 
@@ -148,12 +142,6 @@ $header-height: 80px;
 @media (min-width: 1220px) {
     .header {
         grid-template-columns: auto [right] 335px [center] auto [left] 335px auto;
-    }
-
-    .nav {
-        a {
-            width: 128px;
-        }
     }
 }
 

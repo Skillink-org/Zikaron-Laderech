@@ -1,13 +1,16 @@
 import React from "react";
-import styles from "./ImageWithTitle.module.scss";
+import styles from "./style.module.scss";
 
-const ImageWithTitle = ({ imageUrl, title, subtitle }) => {
+const ImageWithTitle = ({ imageUrl, title, subtitle,onClick }) => {
   return (
     <div
       className={styles.imageWithTitle}
       style={{
         backgroundImage: `url(${imageUrl})`,
       }}
+      onClick={onClick} 
+      role={onClick ? "button" : undefined} 
+      tabIndex={onClick ? 0 : undefined} 
     >
       <div className={styles.content}>
         <h1>{title}</h1>
