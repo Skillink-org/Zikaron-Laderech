@@ -3,20 +3,25 @@ import styles from "./style.module.scss";
 import GenericInput from "../GenericInput/index";
 import Button from "../Button";
 import GoogleAuth from "./GoogleAuth";
+import { loginFields, signupFields } from "@/lib/FormFields";
 
 export default function AuthPopup({ onClose }) {
     const [isLogin, setIsLogin] = useState(true);
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [phone, setPhone] = useState("");
 
-    const handleEmailChange = (e) => setEmail(e.target.value);
-    const handlePasswordChange = (e) => setPassword(e.target.value);
-    const handleFirstNameChange = (e) => setFirstName(e.target.value);
-    const handleLastNameChange = (e) => setLastName(e.target.value);
-    const handlePhoneChange = (e) => setPhone(e.target.value);
+    const [formData, setFormData] = useState({
+        email: "",
+        password: "",
+        firstName: "",
+        lastName: "",
+        phone: "",
+    });
+
+    const handleChange = (key) => (e) => {
+        setFormData((prev) => ({
+            ...prev,
+            [key]: e.target.value,
+        }));
+    };
 
     const toggleForm = () => setIsLogin(!isLogin);
 
@@ -28,6 +33,8 @@ export default function AuthPopup({ onClose }) {
         console.error("Google login failed:", error);
     };
 
+    const currentFields = isLogin ? loginFields : signupFields;
+
     return (
         <div className={styles.overlay}>
             <div className={styles.popup}>
@@ -36,40 +43,16 @@ export default function AuthPopup({ onClose }) {
                 </button>
                 <h2 className={styles.title}>{isLogin ? "התחברות" : "הרשמה"}</h2>
                 <form className={styles.form}>
-                    {!isLogin && (
-                        <>
-                            <GenericInput
-                                type="text"
-                                placeholder="שם פרטי"
-                                value={firstName}
-                                onChange={handleFirstNameChange}
-                            />
-                            <GenericInput
-                                type="text"
-                                placeholder="שם משפחה"
-                                value={lastName}
-                                onChange={handleLastNameChange}
-                            />
-                            <GenericInput
-                                type="phone"
-                                placeholder="טלפון"
-                                value={phone}
-                                onChange={handlePhoneChange}
-                            />
-                        </>
-                    )}
-                    <GenericInput
-                        type="email"
-                        placeholder="אימייל"
-                        value={email}
-                        onChange={handleEmailChange}
-                    />
-                    <GenericInput
-                        type="password"
-                        placeholder="סיסמה"
-                        value={password}
-                        onChange={handlePasswordChange}
-                    />
+                    {currentFields.map(({ type, placeholder, stateKey }) => (
+                        <GenericInput
+                            key={stateKey}
+                            type={type}
+                            placeholder={placeholder}
+                            value={formData[stateKey]}
+                            onChange={handleChange(stateKey)}
+                        />
+                    ))}
+
                     <Button className={styles.submitButton}>
                         {isLogin ? "התחברות" : "הרשמה"}
                     </Button>
@@ -77,7 +60,7 @@ export default function AuthPopup({ onClose }) {
                     <GoogleAuth
                         onSuccess={handleGoogleLoginSuccess}
                         onFailure={handleGoogleLoginFailure}
-                        className={styles.googleLoginWrapper} 
+                        className={styles.googleLoginWrapper}
                     />
 
                     <div className={styles.toggleButton} onClick={toggleForm}>

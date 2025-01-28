@@ -8,15 +8,23 @@ import AuthButton from './AuthButton'
 import UserProfile from './UserProfile'
 
 export default function Header() {
-    const [isLoggedIn, setIsLoggedIn] = useState(true); // לדוגמה, מציין אם המשתמש מחובר או לא
-    const user = { firstName: "Yosef", lastName: "Coen", imageSrc: '' };
+    const [isLoggedIn, setIsLoggedIn] = useState(true);
+    const exampleUser = {
+        firstName: "Yosef",
+        lastName: "Coen",
+        imageSrc: '/profileImage.webp'
+    };
     return (
         <header className={styles.header}>
             <div className={styles.logo}><span>זיכרון </span>לדרך</div>
             <NavList />
             <MobileNav />
             <Search />
-            {isLoggedIn ? <UserProfile firstName={user.firstName} lastName={user.lastName} imageSrc={user.imageSrc} /> : <AuthButton />}
+            {isLoggedIn ? <UserProfile
+                firstName={exampleUser.firstName}
+                lastName={exampleUser.lastName}
+                imageSrc={exampleUser.imageSrc} />
+                : <AuthButton />}
         </header>
     )
 }
