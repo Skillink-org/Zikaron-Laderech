@@ -2,6 +2,7 @@ import styles from './style.module.scss'
 import MobileNav from './MobileNav'
 import Search from './Search'
 import NavList from './NavList'
+import AuthButton from './AuthButton'
 
 export default function Header() {
     return (
@@ -10,6 +11,7 @@ export default function Header() {
             <NavList />
             <MobileNav />
             <Search />
+            <AuthButton/>
         </header>
     )
 }
