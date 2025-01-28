@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 import styles from "./style.module.scss";
 import GenericInput from "../GenericInput/index";
 import Button from "../Button";
@@ -19,6 +20,15 @@ export default function AuthPopup({ onClose }) {
 
     const toggleForm = () => setIsLogin(!isLogin);
 
+    // פונקציה שתטפל בהתחברות באמצעות גוגל
+    const handleGoogleLoginSuccess = (response) => {
+        console.log("Logged in with Google:", response);
+    };
+
+    const handleGoogleLoginFailure = (error) => {
+        console.error("Google login failed:", error);
+    };
+
     return (
         <div className={styles.overlay}>
             <div className={styles.popup}>
@@ -27,7 +37,6 @@ export default function AuthPopup({ onClose }) {
                 </button>
                 <h2 className={styles.title}>{isLogin ? "התחברות" : "הרשמה"}</h2>
                 <form className={styles.form}>
-                    {/* שדות של טופס התחברות */}
                     {!isLogin && (
                         <>
                             <GenericInput
@@ -65,6 +74,17 @@ export default function AuthPopup({ onClose }) {
                     <Button className={styles.submitButton}>
                         {isLogin ? "התחברות" : "ההרשמה"}
                     </Button>
+
+                    <GoogleOAuthProvider clientId="הכנס את ה-clientId שלך כאן">
+                        <div className={styles.googleLoginWrapper}>
+                        <GoogleLogin
+                            className={styles.goggleLoginButton}
+                            onSuccess={handleGoogleLoginSuccess}
+                            onError={handleGoogleLoginFailure}
+                            useOneTap
+                        />
+                        </div>
+                    </GoogleOAuthProvider>
                     <div className={styles.toggleButton} onClick={toggleForm}>
                         <small>{isLogin ? "אין לך חשבון? לחץ כאן להרשמה" : "נרשמת בעבר? לחץ כאן להתחברות"}</small>
                     </div>

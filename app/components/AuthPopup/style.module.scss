@@ -43,6 +43,7 @@
 .form {
   display: flex;
   flex-direction: column;
+  // gap:5px
 }
 
 .input {
@@ -73,10 +74,17 @@
 }
 
 .toggleButton {
-  width: 100%;  
-  text-align: left;  
+  width: 100%;
+  text-align: left;
+  margin-top: 10px;
 }
 
 .toggleButton small {
-  cursor: pointer; 
+  cursor: pointer;
+}
+
+.googleLoginWrapper {
+  margin-top: 10px;
+  display: block;
+  width: 100%;
 }
