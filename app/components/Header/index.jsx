@@ -8,15 +8,14 @@ import AuthButton from './AuthButton'
 import UserProfile from './UserProfile'
 
 export default function Header() {
-    const [isLoggedIn, setIsLoggedIn] = useState(true);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const exampleUser = {
-        firstName: "Yosef",
-        lastName: "Coen",
+        firstName: "יוסף",
+        lastName: "כהן",
         imageSrc: '/profileImage.webp'
     };
     return (
         <header className={styles.header}>
-            <div className={styles.logo}><span>זיכרון </span>לדרך</div>
             <NavList />
             <MobileNav />
             <Search />
@@ -25,6 +24,7 @@ export default function Header() {
                 lastName={exampleUser.lastName}
                 imageSrc={exampleUser.imageSrc} />
                 : <AuthButton />}
+            <div className={styles.logo}><span>זיכרון </span>לדרך</div>
         </header>
     )
 }

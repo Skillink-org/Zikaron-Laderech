@@ -10,11 +10,11 @@ export default function UserProfile({ firstName, lastName, imageSrc }) {
 
     return (
         <div className={styles.userProfile}>
-            <span className={styles.userName}>{`${firstName} ${lastName}`}</span>
             {imageSrc ? (
                 <Image
-                    src={imageSrc}
                     className={styles.profilePicture}
+                    alt={`${firstName} ${lastName}`}
+                    src={imageSrc}
                     width={40}
                     height={40}
                 />
@@ -24,6 +24,7 @@ export default function UserProfile({ firstName, lastName, imageSrc }) {
                     {getInitials(lastName)}
                 </div>
             )}
+            <span className={styles.userName}>{`${firstName} ${lastName}`}</span>
         </div>
     );
 }
