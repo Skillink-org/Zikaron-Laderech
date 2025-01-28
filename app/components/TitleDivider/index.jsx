@@ -1,4 +1,4 @@
-import styles from './page.module.scss';
+import styles from './style.module.scss';
 
 const TitleDivider = ({ title }) => {
   return (

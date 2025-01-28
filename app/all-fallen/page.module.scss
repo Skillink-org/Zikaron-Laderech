@@ -1,0 +1,59 @@
+@use '@/styles/_vars.scss' as *;
+
+.customBubble {
+    display: flex;
+    justify-content: space-between !important;
+    align-items: center;
+    width: 100%;
+    gap: 10px;
+    padding: 10px 0;
+    height: min-content;
+    flex-direction: row !important;
+
+    .header {
+        color: $primary;
+        font-weight: bold;
+        font-size: $text-lg;
+    }
+
+    .searchContainer {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+}
+
+.itemsContainer {
+    margin: 10px 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .customBubble {
+        flex-direction: column !important;
+    }
+
+    .searchContainer {
+        width: 100%;
+        flex-direction: column !important;
+    }
+
+    .searchInput,
+    .searchButton {
+        width: 100%;
+    }
+
+    .itemsContainer {
+        justify-content: space-evenly;
+    }
+}
+
+@media (min-width: 1300px) {
+    .itemsContainer {
+        justify-content: flex-start;
+    }
+}

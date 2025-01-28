@@ -2,7 +2,7 @@
 
 @use 'sass:color';
 
-.hobbyBubble {
+.hobbyTag {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -16,4 +16,12 @@
     color: $bubbleTextColor;
 }
 
+@media (max-width: 768px) {
+    .dynamicBackground {
+        width: 45%;
+    }
 
+    .hobbyTag {
+        width: 100%;
+    }
+}
