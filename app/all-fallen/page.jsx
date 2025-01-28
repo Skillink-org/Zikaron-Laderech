@@ -7,7 +7,7 @@ import TitleDivider from "../components/TitleDivider";
 export default function AllFallenPage() {
   return (
     <>
-      <CustomBubble className={styles.customBubble}>
+      <CustomBubble classNames={styles.customBubble}>
         <p className={styles.header}>מצאו נופל לפי שם או תחביב</p>
         <div className={styles.searchContainer}>
           <SearchInput className={styles.searchInput} />
@@ -17,7 +17,7 @@ export default function AllFallenPage() {
       <TitleDivider title={"סינון לפי תחביבים נפוצים"} />
 
       {/* TODO: Add HobbyTags here */}
-      {/* TODO: Iterate through fallens and render ProfileCars */}
+      {/* TODO: Iterate through fallens and render ProfileCards */}
     </>
   );
 }
