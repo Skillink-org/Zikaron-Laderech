@@ -1,9 +1,4 @@
 @use '@/styles/_vars.scss' as *;
-@use "@/styles/mixins.scss" as *;
-
-.container {
-    @include page-layout;
-}
 
 .customBubble {
     display: flex;
