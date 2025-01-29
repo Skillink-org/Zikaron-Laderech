@@ -1,4 +1,9 @@
 @use '@/styles/_vars.scss' as *;
+@use "@/styles/mixins.scss" as *;
+
+.container {
+    @include page-layout;
+}
 
 .customBubble {
     display: flex;
@@ -39,7 +44,7 @@
 
     .searchContainer {
         width: 100%;
-        flex-direction: column !important;
+        flex-direction: column;
     }
 
     .searchInput,

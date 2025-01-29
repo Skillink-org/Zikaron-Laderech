@@ -1,6 +1,5 @@
-import styles from './page.module.scss'
+import styles from "./page.module.scss";
+
 export default function FallenProfilePage() {
-    return (
-        <div>FallenProfilePage</div>
-    )
+  return <div className={styles.container}>FallenProfilePage</div>;
 }

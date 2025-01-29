@@ -1,0 +1,5 @@
+@use "@/styles/mixins.scss" as *;
+
+.container {
+    @include page-layout;
+}

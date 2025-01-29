@@ -87,7 +87,7 @@ export default async function AllFallenPage() {
   ];
 
   return (
-    <>
+    <div className={styles.container}>
       {/* Search and filter area */}
       <CustomBubble classNames={styles.customBubble}>
         <p className={styles.header}>מצאו נופל לפי שם או תחביב</p>
@@ -118,6 +118,6 @@ export default async function AllFallenPage() {
           />
         ))}
       </div>
-    </>
+    </div>
   );
 }
