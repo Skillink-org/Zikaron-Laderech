@@ -1,7 +1,13 @@
 @mixin page-layout($padding: 200px, $min-height: 100vh) {
     padding-left: $padding;
     padding-right: $padding;
+    padding-bottom: 40px;
     display: flex;
     flex-direction: column;
     gap: 20px;
+
+    @media (max-width: 768px) {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
 }

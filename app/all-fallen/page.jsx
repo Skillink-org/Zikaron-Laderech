@@ -108,16 +108,18 @@ export default async function AllFallenPage() {
       {/* Fallen list */}
       <div className={styles.itemsContainer}>
         {fallens.map((fallen) => (
-          <ProfileCard
-            firstName={fallen.firstName}
-            lastName={fallen.lastName}
-            birthYear={fallen.birthYear}
-            deathYear={fallen.deathYear}
-            imageUrl={fallen.imageUrl}
-            key={fallen.id}
-          />
+          <div className={styles.cardBackground} key={fallen.id}>
+            <ProfileCard
+              firstName={fallen.firstName}
+              lastName={fallen.lastName}
+              birthYear={fallen.birthYear}
+              deathYear={fallen.deathYear}
+              imageUrl={fallen.imageUrl}
+            />
+          </div>
         ))}
       </div>
+
     </>
   );
 }
