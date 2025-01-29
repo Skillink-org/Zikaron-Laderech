@@ -19,10 +19,13 @@ export default function ProfileCard({
                     height={200}
                 />
             </div>
+            <div>
+
             <h3 className={styles.name}>{`${firstName} ${lastName}`}</h3>
             <p className={styles.years}>
                 {birthYear} - {deathYear}
             </p>
+            </div>
         </div>
     );
 }

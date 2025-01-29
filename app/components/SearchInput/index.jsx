@@ -3,7 +3,7 @@
 import { useState } from "react";
 import styles from "./style.module.scss";
 
-const SearchInput = ({ className = "", ...props }) => {
+const SearchInput = ({ className = "", width = "100%", ...props }) => {
   const [searchQuery, setSearchQuery] = useState("");
 
   function handleChange(e) {
@@ -25,6 +25,7 @@ const SearchInput = ({ className = "", ...props }) => {
       type="search"
       value={searchQuery}
       className={`${styles.searchInput} ${className}`}
+      style={{ width }}
       placeholder="חיפוש תחביב או שם"
       onChange={handleChange}
       onKeyDown={handleKeydown}
