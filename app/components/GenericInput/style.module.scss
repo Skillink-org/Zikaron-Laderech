@@ -1,0 +1,20 @@
+.input {
+    margin-bottom: 1rem;
+    padding: 0.8rem 1rem;
+    border: 1px solid var(--lightblue); 
+    border-radius: 10px;
+    font-size: var(--text-md); 
+    font-family: var(--font-family); 
+    transition: all 0.3s ease;
+  
+    &:focus {
+      border-color: var(--blue); 
+      outline: none;
+      box-shadow: 0 0 5px rgba(39, 44, 85, 0.5); 
+    }
+  
+    &::placeholder {
+      color: var(--placeHolderColor); 
+    }
+  }
+  
