@@ -5,6 +5,8 @@ import ImageWithTitle from '../components/ImageWithTitle/index'
 import Button from '../components/Button';
 import StatusMessage from '../components/StatusMessage';
 export default function AddFallenPage() {
+    const cloudName = process.env.CLOUDINARY_NAME;
+    // const uploadPresent=process.env.;
     const currentYear = new Date().getFullYear();
     const todayDate = new Date().toISOString().split("T")[0];
     const minDeathDate = "2023-10-07";
@@ -55,9 +57,9 @@ export default function AddFallenPage() {
             // Upload image to Cloudinary
             const imageData = new FormData();
             imageData.append('file', formData.image);
-            imageData.append('upload_preset', 'your_upload_preset'); // Replace with your Cloudinary preset
+            imageData.append('upload_preset', uploadPresent); // Replace with your Cloudinary preset
 
-            const cloudinaryResponse = await fetch('https://api.cloudinary.com/v1_1/your_cloud_name/image/upload', {
+            const cloudinaryResponse = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
                 method: 'POST',
                 body: imageData,
             });
@@ -74,7 +76,6 @@ export default function AddFallenPage() {
             });
 
             if (!response.ok) throw new Error('Failed to save data');
-            console.log("formData", formData);
 
             setStatusMessage('ההודעה נשלחה בהצלחה! תודה רבה');
             setStatusType('success');
@@ -89,7 +90,6 @@ export default function AddFallenPage() {
                 image: null,
             });
         } catch (error) {
-            console.log("error", error);
             setStatusMessage('אירעה שגיאה. נא לנסות שוב.');
             setStatusType('error');
         }
@@ -103,6 +103,7 @@ export default function AddFallenPage() {
                 subtitle={
                     'הוסיפו את יקירכם למאגר של המיזם. נא למלא מידע ככל האפשר על הנופל והקשר שלו לתחביב. אנו נעבור על המידע ונפרסם אותו. במידה שנפלה טעות, נעדכן אתכם'
                 }
+                style={{ height: "300px" }}
             />
             <form className={styles.form} onSubmit={handleSubmit}>
                 <div className={styles.allFormDetails}>
@@ -139,6 +140,8 @@ export default function AddFallenPage() {
                             required
                             className={styles.date}
                             placeholder="תאריך פטירה"
+                            min={minDeathDate}
+                            max={todayDate}
                         />
 
                     </div>

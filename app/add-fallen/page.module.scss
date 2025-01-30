@@ -1,27 +1,16 @@
 @import '../../styles/mixins';
-// .container {
-//   @include page-layout(20px, 100vh);
-// }
+
 .container {
   @include page-layout(20px, 100vh);
   align-items: center;
-  //width: 1840px;
   height: 2000px;
 }
 
-// .imgTitle {
-//   position: absolute;
-//   width: 1400px;
-//   height: 300px;
-//   left: calc(50% - 1400px / 2 + 7px);
-//   top: 140px;
-// }
 .form {
   box-sizing: border-box;
   position: absolute;
   width: 1400px;
   height: 627px;
-  // right: 58px;
   background: linear-gradient(
     0deg,
     rgba(245, 245, 245, 0.3) 0%,
@@ -30,7 +19,6 @@
   );
   border: 1px solid #e8f1f8;
   border-radius: 10px;
-  //left: 220px;
   top: 480px;
   display: flex;
   flex-direction: column;
@@ -42,21 +30,16 @@
 .allFormDetails {
   width: 1242px;
   height: 552px;
-  // left: 5%;
   padding: 20px 0 0 0;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  //top: 520px;
-  // margin: 0 auto;
 }
 
 .line1 {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  //align-items: center;
-  //gap: 20px;
 }
 
 .name,
@@ -68,12 +51,10 @@
 .familyMessage,
 .highlightQuote,
 .customFileUpload {
-  // position: absolute;
   width: 1241.5px;
   height: 48px;
   border: 0.5px solid #dddddd;
   border-radius: 15px;
-  // left: calc(50% - 1241.5px / 2 - 0.25px);
   resize: none;
   font-style: normal;
   font-weight: 600;
@@ -82,7 +63,7 @@
   display: flex;
   align-items: center;
   text-align: right;
-  color: #dddddd;
+  color: #ffffff;
   padding: 15px 20px 15px 20px;
   &::placeholder {
     color: #dddddd;
@@ -107,9 +88,5 @@
   height: 48px;
 }
 .statusMessage {
-  //width: 1400px;
-  //height: auto;
-  //text-align: center;
   margin-top: 1947px;
-  //margin-left: 6%;
 }
