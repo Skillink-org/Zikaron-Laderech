@@ -7,6 +7,7 @@
  *   Text
  * </CustomBubble>
  */
+
 'use client'
 import React from 'react';
 import styles from './style.module.scss';
@@ -17,6 +18,4 @@ const CustomBubble = ({ children, className = '', style = {}, onClick, ...props 
       {children}
     </button>
   );
-};
-
-export default CustomBubble;
+}

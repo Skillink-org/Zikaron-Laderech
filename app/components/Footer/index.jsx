@@ -1,17 +1,16 @@
-import Link from 'next/link'
 import styles from './style.module.scss'
+import { footerNavList } from '@/lib/NavigationList'
+import NavLink from '@/app/components/NavLink'
 
 export default function Footer() {
     return (
         <footer className={styles.footer}>
             <nav className={styles.nav}>
-                <Link href='/'>בית</Link>
-                <Link href='/all-fallen'>השמות והתחביבים</Link>
-                <Link href='/about'>אודות</Link>
-                <Link href='/contact'>יצירת קשר</Link>
-                <Link href='/'>הוספת נופל</Link>
+                {footerNavList.map((link, index) => (
+                    <NavLink key={index} href={link.href}>{link.label}</NavLink>
+                ))}
             </nav>
-            <small className={styles.small}>2025 | נבנה ופותח ע”י Skillink</small>
+            <div className={styles.copyright}>2025 | נבנה ופותח ע”י Skillink</div>
         </footer>
     )
 }

@@ -3,6 +3,7 @@
 .footer {
     height: 80px;
     padding-block: 34px;
+    padding-block: 28px;
     margin-inline: auto;
     display: flex;
     flex-direction: column;
@@ -10,6 +11,7 @@
     justify-content: space-between;
     gap: 16px;
 
+    border-top: 1px solid $lightblueBorder;
     font-family: $font-family;
 }
 
@@ -30,13 +32,14 @@
     }
 }
 
-.small {
+.copyright {
     font-size: 16px;
 }
 
 @media (min-width: 768px) {
     .footer {
         height: 150px;
+        padding-block: 34px;
     }
 
 

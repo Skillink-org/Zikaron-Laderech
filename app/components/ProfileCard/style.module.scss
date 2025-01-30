@@ -1,0 +1,35 @@
+@use "@/styles/_vars.scss" as *;
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: $font-family;
+  gap: 10px;
+  .name {
+    font-size: $text-lg;
+    font-weight: 600;
+    color: $titleColor;
+    display: flex;
+  }
+  .profileImage {
+    position: relative;
+    border-radius: 60px;
+    overflow: hidden;
+    object-fit: cover;
+
+    
+  }
+
+  .years {
+    text-align: center;
+    width: 100%;
+  }
+
+  .years {
+    font-size: $text-sm;
+    font-weight: 400;
+    color: $textColor;
+  }
+}
