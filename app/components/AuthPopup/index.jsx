@@ -4,6 +4,8 @@ import GenericInput from "../GenericInput/index";
 import Button from "../Button";
 import GoogleAuth from "./GoogleAuth";
 import { loginFields, signupFields } from "@/lib/FormFields";
+import { signIn } from "next-auth/react";
+import GoogleIcon from '@mui/icons-material/Google'
 
 export default function AuthPopup({ onClose }) {
     const [isLogin, setIsLogin] = useState(true);
@@ -25,13 +27,42 @@ export default function AuthPopup({ onClose }) {
 
     const toggleForm = () => setIsLogin(!isLogin);
 
-    const handleGoogleLoginSuccess = (response) => {
-        console.log("Logged in with Google:", response);
-    };
+    const handleClick = async (e) => {
+        e.preventDefault();
+        if (isLogin)
+            await handleEmailSignin()
+    }
+    const handleEmailSignin = async () => {
+        const response = await signIn("credentials", {
+            redirect: false,
+            email: formData.email,
+            password: formData.password,
+        });
 
-    const handleGoogleLoginFailure = (error) => {
-        console.error("Google login failed:", error);
+        if (response?.error) {
+            console.error("Email login failed:", response.error);
+        } else {
+            console.log("Logged in with Email:", response);
+            onClose();
+        }
     };
+    // // פונקציה שתופסת את התגובה מההתחברות עם גוגל
+    // const handleGoogleLoginSuccess = async (response) => {
+    //     const res = await signIn('google', {
+    //         redirect: false,
+    //         access_token: response.credential // שליחת ה-credential מ-GoogleLogin ל-signIn של next-auth
+    //     });
+
+    //     if (res?.error) {
+    //         console.error("Google login failed:", res.error);
+    //     } else {
+    //         console.log("Logged in with Google:", res);
+    //     }
+    // };
+
+    // const handleGoogleLoginFailure = (error) => {
+    //     console.error("Google login failed:", error);
+    // };
 
     const currentFields = isLogin ? loginFields : signupFields;
 
@@ -53,15 +84,19 @@ export default function AuthPopup({ onClose }) {
                         />
                     ))}
 
-                    <Button className={styles.submitButton}>
+                    <Button type="submit" onClick={handleClick} className={styles.submitButton}>
                         {isLogin ? "התחברות" : "הרשמה"}
                     </Button>
 
-                    <GoogleAuth
+                    {/* <GoogleAuth
                         onSuccess={handleGoogleLoginSuccess}
                         onFailure={handleGoogleLoginFailure}
                         className={styles.googleLoginWrapper}
-                    />
+                    /> */}
+                    <Button onClick={() => { signIn("google") }} className={styles.googleButton}>
+                        <GoogleIcon />
+                        <p className={styles.googleText}>כניסה עם גוגל</p>
+                    </Button>
 
                     <div className={styles.toggleButton} onClick={toggleForm}>
                         <small>{isLogin ? "אין לך חשבון? לחץ כאן להרשמה" : "נרשמת בעבר? לחץ כאן להתחברות"}</small>
@@ -71,3 +106,4 @@ export default function AuthPopup({ onClose }) {
         </div>
     );
 }
+

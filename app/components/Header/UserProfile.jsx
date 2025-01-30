@@ -4,6 +4,7 @@ import Image from 'next/image';
 
 export default function UserProfile({ firstName, lastName, imageSrc }) {
     const getInitials = (name) => {
+        if (!name) return '';  
         const nameParts = name.split(' ');
         return nameParts.map(part => part.charAt(0).toUpperCase()).join('');
     };
