@@ -4,23 +4,27 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 2%;
-  width: 250px;
-  height: 350px;
+  justify-content: center;
   font-family: $font-family;
-
-  .profileImage {
-    position: relative;
-    margin-bottom: 10px;
-    border-radius: 60px;
-    overflow: hidden;
-    object-fit: cover
-  }
-
+  gap: 10px;
   .name {
     font-size: $text-lg;
-    font-weight: 700;
+    font-weight: 600;
     color: $titleColor;
+    display: flex;
+  }
+  .profileImage {
+    position: relative;
+    border-radius: 60px;
+    overflow: hidden;
+    object-fit: cover;
+
+    
+  }
+
+  .years {
+    text-align: center;
+    width: 100%;
   }
 
   .years {

@@ -7,11 +7,11 @@
     color: $textColor;
 
     &:hover {
-        color: $buttonColor;
+        color: $titleColor;
     }
 
     &.active {
-        color: $placeHolderColor;
+        color: $titleColor;
     }
 }
 
