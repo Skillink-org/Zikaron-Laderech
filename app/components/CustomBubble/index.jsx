@@ -19,3 +19,5 @@ const CustomBubble = ({ children, className = '', style = {}, onClick, ...props 
     </button>
   );
 }
+
+export default CustomBubble;
