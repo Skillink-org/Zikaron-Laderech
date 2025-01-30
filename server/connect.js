@@ -2,7 +2,7 @@
 import mongoose from 'mongoose';
 
 /**
- * Connet app to MongoDB database using mongoose
+ * Connet app to MongoDB database using Mongoose
  * @returns {Promise<void>}
  */
 export const connectToDB = async () => {
@@ -25,7 +25,7 @@ export const connectToDB = async () => {
     );
 
     // Handle connection errors
-  } catch (error) {
+  } catch (err) {
     console.log({ status: 'error', message: err.errmsg });
   }
 };
