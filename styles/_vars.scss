@@ -16,6 +16,7 @@ $grayBackground: var(--gray);
 $lightblueBorder: var(--lightblue);
 $textColor: var(--darkGray);
 $buttonColor: var(--mutedBlue);
+$bubbleTextColor: var(--mutedBlue);
 $placeHolderColor: var(--lightGray);
 
 //Gradients
@@ -28,5 +29,6 @@ $font-family: 'Noto Sans Hebrew', sans-serif;
 $text-xxl: 64px; // כותרת ענק
 $text-xl: 36px; // כותרת
 $text-lg: 24px; // משנה
-$text-md: 18px; // טקסט רגיל
+$text-md: 18px; // טקסט מוגדל
+$text-base: 16px; // טקסט בסיס
 $text-sm: 14px; //טקסט קטן
