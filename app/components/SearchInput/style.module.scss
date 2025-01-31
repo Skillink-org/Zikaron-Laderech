@@ -1,5 +1,9 @@
 @use '@/styles/_vars.scss' as *;
 
+.formContainer {
+    display: flex;
+}
+
 .searchInput {
     color: $textColor;
     border: 0.5px solid $lightblueBorder;
