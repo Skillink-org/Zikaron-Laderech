@@ -1,0 +1,92 @@
+@import '../../styles/mixins';
+
+.container {
+  @include page-layout(20px, 100vh);
+  align-items: center;
+  height: 2000px;
+}
+
+.form {
+  box-sizing: border-box;
+  position: absolute;
+  width: 1400px;
+  height: 627px;
+  background: linear-gradient(
+    0deg,
+    rgba(245, 245, 245, 0.3) 0%,
+    #ffffff 60.1%,
+    #ffffff 100%
+  );
+  border: 1px solid #e8f1f8;
+  border-radius: 10px;
+  top: 480px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+.allFormDetails {
+  width: 1242px;
+  height: 552px;
+  padding: 20px 0 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.line1 {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.name,
+.birthDate,
+.date,
+.hobbies,
+.image,
+.about,
+.familyMessage,
+.highlightQuote,
+.customFileUpload {
+  width: 1241.5px;
+  height: 48px;
+  border: 0.5px solid #dddddd;
+  border-radius: 15px;
+  resize: none;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 22px;
+  display: flex;
+  align-items: center;
+  text-align: right;
+  color: #ffffff;
+  padding: 15px 20px 15px 20px;
+  &::placeholder {
+    color: #dddddd;
+  }
+}
+
+.name,
+.birthDate,
+.date {
+  width: 387.17px;
+}
+
+.about,
+.familyMessage {
+  height: 96px;
+}
+
+.hiddenInput {
+  display: none;
+}
+.submitButton {
+  height: 48px;
+}
+.statusMessage {
+  margin-top: 1947px;
+}
