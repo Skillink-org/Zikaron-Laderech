@@ -24,12 +24,15 @@ export default function AuthPopup({ onClose }) {
         }));
     };
 
-    const toggleForm = () => setIsLogin(!isLogin);
+    const toggleForm = () => {
+        setIsLogin(!isLogin);
+    }
 
     const handleClick = async (e) => {
         e.preventDefault();
-        if (isLogin)
-            await handleEmailSignin()
+        if (isLogin) {
+            await handleEmailSignin();
+        }
     }
     const handleEmailSignin = async () => {
         const response = await signIn("credentials", {
@@ -70,7 +73,7 @@ export default function AuthPopup({ onClose }) {
                         {isLogin ? "התחברות" : "הרשמה"}
                     </Button>
 
-                    <Button onClick={() => { signIn("google",{redirect:"http://localhost:3000"}) }} className={styles.googleButton}>
+                    <Button onClick={() => { signIn("google") }} className={styles.googleButton}>
                         <GoogleIcon />
                         <p className={styles.googleText}>כניסה עם גוגל</p>
                     </Button>
