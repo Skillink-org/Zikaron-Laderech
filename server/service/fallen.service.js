@@ -80,6 +80,9 @@ export async function getAllFallen() {
 
 export async function getFilteredFallen(query) {
   return fallen.filter(
-    (fallen) => fallen.firstName === query || fallen.hobbies.includes(query)
+    (fallen) =>
+      fallen.firstName.includes(query) ||
+      fallen.lastName.includes(query) ||
+      fallen.hobbies.includes(query)
   );
 }

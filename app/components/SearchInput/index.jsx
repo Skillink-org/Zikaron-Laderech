@@ -2,8 +2,8 @@
 
 import styles from "./style.module.scss";
 import { useEffect, useState } from "react";
+import { useDebouncedCallback } from "use-debounce";
 import { useRouter, useSearchParams } from "next/navigation";
-import { queryFallen } from "@/server/actions/fallen.action";
 
 const SearchInput = ({
   className = "",
@@ -19,26 +19,28 @@ const SearchInput = ({
     setQuery(initialValue);
   }, [initialValue]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleChange = (e) => {
+    setQuery(e.target.value);
+    handleSearch();
+  };
 
+  const handleSearch = useDebouncedCallback(() => {
     const params = new URLSearchParams(searchParams);
     query ? params.set("q", query) : params.delete("q");
 
     router.push(`?${params.toString()}`, { scroll: false });
-  };
+  }, 300);
 
-  // TODO: use form action
   return (
-    <form className={styles.formContainer} onSubmit={handleSubmit}>
+    <form className={styles.formContainer} onSubmit={(e) => e.preventDefault()}>
       <input
         type="search"
         name="searchQuery"
-        value={query}
+        defaultValue={query}
         className={`${styles.searchInput} ${className}`}
         style={{ width }}
         placeholder="חיפוש תחביב או שם"
-        onChange={(e) => setQuery(e.target.value)}
+        onChange={handleChange}
         {...props}
       />
     </form>

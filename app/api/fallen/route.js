@@ -10,7 +10,5 @@ export async function GET(request) {
 
   const fallen = query ? await getFilteredFallen(query) : await getAllFallen();
 
-  console.log(fallen);
-
   return NextResponse.json(fallen);
 }
