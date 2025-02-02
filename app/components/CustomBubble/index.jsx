@@ -14,9 +14,9 @@ import styles from './style.module.scss';
 
 const CustomBubble = ({ children, className = '', style = {}, onClick, ...props }) => {
   return (
-    <button className={`${styles.customBubble} ${className}`} style={style} onClick={onClick} {...props}>
+    <div className={`${styles.customBubble} ${className}`} style={style} onClick={onClick} {...props}>
       {children}
-    </button>
+    </div>
   );
 }
 

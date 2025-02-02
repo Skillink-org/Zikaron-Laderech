@@ -20,7 +20,7 @@ export default async function AllFallenPage({ searchParams }) {
   return (
     <>
       {/* Search and filter area */}
-      <CustomBubble classNames={styles.customBubble}>
+      <CustomBubble className={styles.customBubble}>
         <p className={styles.header}>מצאו נופל לפי שם או תחביב</p>
         <div className={styles.searchContainer}>
           <SearchInput className={styles.searchInput} initialValue={q} />
