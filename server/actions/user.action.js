@@ -9,10 +9,10 @@ const users = [
     },
     {
         id: 1,
-        firstName: "אבישג",
-        lastName: "גווילי",
+        firstName: "מאי",
+        lastName: "הלל",
         image: "/profileImage.webp",
-        email: "b3206003@gmail.com",
+        email: "may.example@gmail.com",
         password: "654321"
     },
 ]
