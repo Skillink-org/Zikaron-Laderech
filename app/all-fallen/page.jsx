@@ -8,7 +8,7 @@ import CustomBubble from "../components/CustomBubble";
 import TitleDivider from "../components/TitleDivider";
 
 export default async function AllFallenPage({ searchParams }) {
-  const  q = (await searchParams).q || "";
+  const q = (await searchParams).q || "";
   // TODO: Replace dummy data in real hobbies from API
   const hobbies = ["טניס", "שירה", "ריצה", "אפיה", "סריגה", "שחיה"];
 
@@ -54,13 +54,7 @@ function FallenList({ fallenPromise }) {
     <>
       {fallen.map((fallen) => (
         <div className={styles.cardBackground} key={fallen.id}>
-          <ProfileCard
-            firstName={fallen.firstName}
-            lastName={fallen.lastName}
-            birthYear={fallen.birthYear}
-            deathYear={fallen.deathYear}
-            imageUrl={fallen.imageUrl}
-          />
+          <ProfileCard fallen={fallen} />
         </div>
       ))}
     </>
