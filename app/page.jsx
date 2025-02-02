@@ -1,11 +1,13 @@
 import Image from "next/image";
 import styles from "./page.module.scss";
 import imageWithTitle from "./components/ImageWithTitle";
+import FallenPage from "./components/FallenPage";
 
 export default function Home() {
   return (
     <div className={styles.page}>
       <main className={styles.main}>
+        <FallenPage/>
         <Image
           className={styles.logo}
           src="/next.svg"
