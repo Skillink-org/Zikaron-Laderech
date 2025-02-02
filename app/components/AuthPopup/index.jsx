@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import styles from "./style.module.scss";
 import GenericInput from "../GenericInput/index";
 import Button from "../Button";
-import GoogleAuth from "./GoogleAuth";
 import { loginFields, signupFields } from "@/lib/FormFields";
 import { signIn } from "next-auth/react";
 import GoogleIcon from '@mui/icons-material/Google'
@@ -46,23 +45,6 @@ export default function AuthPopup({ onClose }) {
             onClose();
         }
     };
-    // // פונקציה שתופסת את התגובה מההתחברות עם גוגל
-    // const handleGoogleLoginSuccess = async (response) => {
-    //     const res = await signIn('google', {
-    //         redirect: false,
-    //         access_token: response.credential // שליחת ה-credential מ-GoogleLogin ל-signIn של next-auth
-    //     });
-
-    //     if (res?.error) {
-    //         console.error("Google login failed:", res.error);
-    //     } else {
-    //         console.log("Logged in with Google:", res);
-    //     }
-    // };
-
-    // const handleGoogleLoginFailure = (error) => {
-    //     console.error("Google login failed:", error);
-    // };
 
     const currentFields = isLogin ? loginFields : signupFields;
 
@@ -88,12 +70,7 @@ export default function AuthPopup({ onClose }) {
                         {isLogin ? "התחברות" : "הרשמה"}
                     </Button>
 
-                    {/* <GoogleAuth
-                        onSuccess={handleGoogleLoginSuccess}
-                        onFailure={handleGoogleLoginFailure}
-                        className={styles.googleLoginWrapper}
-                    /> */}
-                    <Button onClick={() => { signIn("google") }} className={styles.googleButton}>
+                    <Button onClick={() => { signIn("google",{redirect:"http://localhost:3000"}) }} className={styles.googleButton}>
                         <GoogleIcon />
                         <p className={styles.googleText}>כניסה עם גוגל</p>
                     </Button>

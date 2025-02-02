@@ -2,7 +2,7 @@ import "./globals.scss";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import styles from "./layout.module.scss";
-import SessionProvider from '../app/components/AuthPopup/SessionProvider';
+import SessionProvider from './components/providers/SessionProvider';
 import { auth } from "@/auth";
 
 export const metadata = {

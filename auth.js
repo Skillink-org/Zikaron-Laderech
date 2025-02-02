@@ -28,14 +28,16 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
   secret: process.env.NEXT_AUTH_SECRET,
   session: {
     strategy: "jwt",
+    maxAge: 7 * 24 * 60 * 60, 
+    updateAge: 24 * 60 * 60,
   },
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
         token.email = user.email;
-        token.firstName = user.firstName;
-        token.lastName = user.lastName;
+        token.firstName = user.firstName || user.name?.split(" ")[0];
+        token.lastName = user.lastName || user.name?.split(" ")[1] || "";
         token.image = user.image;
       }
       return token;

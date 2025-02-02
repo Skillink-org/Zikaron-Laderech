@@ -1,16 +1,16 @@
 const users = [
     {
         id: 0,
-        firstName: "מאי",
-        lastName: "הלל",
+        firstName: "חיה",
+        lastName: "יונגרמן",
         image: "/profileImage.webp",
         email: "chay6865@gmail.com",
         password: "123456"
     },
     {
         id: 1,
-        firstName: "מאי",
-        lastName: "הלל",
+        firstName: "אבישג",
+        lastName: "גווילי",
         image: "/profileImage.webp",
         email: "b3206003@gmail.com",
         password: "654321"
