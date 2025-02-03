@@ -1,0 +1,135 @@
+@use '@/styles/_vars.scss' as *;
+
+.wrapper {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+
+    .searchContainer {
+        position: relative;
+        display: flex;
+        align-items: center;
+        width: 100%;
+
+        .searchIcon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+        }
+
+        .searchInput {
+            color: $textColor;
+            border: 0.5px solid $lightblueBorder;
+            border-radius: 10px;
+            padding: 10px;
+            padding-right: 45px;
+            width: 100%;
+            font-size: $text-sm;
+            font-family: $font-family;
+
+            &::placeholder {
+                color: $placeHolderColor;
+            }
+        }
+    }
+
+    .filterButton {
+        background-color: white;
+        width: auto;
+        padding: 8px 20px;
+        gap: 5px;
+        border-radius: 10px;
+        font-size: $text-md;
+        font-family: $font-family;
+        border: 0.5px solid $lightblueBorder;
+        cursor: pointer;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        width: auto;
+    }
+}
+
+
+
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal {
+    background-color: white;
+    padding: 20px 30px;
+    border-radius: 15px;
+    position: relative;
+    width: auto;
+
+    text-align: center;
+
+    min-height: 150px;
+    min-width: 300px;
+}
+
+
+.modal h2 {
+    color: $titleColor;
+    margin-bottom: 15px;
+    font-size: $text-lg;
+}
+
+
+.modal label {
+    margin-top: 15px;
+}
+
+
+.modal select {
+    border: 0.5px solid $lightblueBorder;
+    border-radius: 8px;
+    padding: 8px;
+    font-size: 14px;
+    margin-right: 5px;
+}
+
+.applyButton {
+    color: white;
+    background-color: $buttonColor;
+
+    width: auto;
+    padding: 8px 15px;
+
+    border-radius: 10px;
+    font-size: $text-sm;
+    font-family: $font-family;
+
+    border: none;
+    cursor: pointer;
+
+    display: block;
+    margin-top: 15px;
+    margin-right: auto;
+}
+
+.closeButton {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background-color: transparent;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+}
