@@ -43,7 +43,6 @@
 .form {
   display: flex;
   flex-direction: column;
-  // gap:5px
 }
 
 .input {
@@ -83,8 +82,13 @@
   cursor: pointer;
 }
 
-.googleLoginWrapper {
+.googleButton {
   margin-top: 10px;
-  display: block;
-  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.googleText {
+  margin-right: 5px;
 }

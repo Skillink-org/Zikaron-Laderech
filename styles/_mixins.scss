@@ -1,3 +1,5 @@
+@use '@/styles/_vars.scss' as *;
+
 @mixin page-layout($padding: 200px, $min-height: 100vh) {
     padding-left: $padding;
     padding-right: $padding;
@@ -6,7 +8,7 @@
     flex-direction: column;
     gap: 20px;
 
-    @media (max-width: 768px) {
+    @media (max-width: $breakpoint-md) {
         padding-left: 20px;
         padding-right: 20px;
     }

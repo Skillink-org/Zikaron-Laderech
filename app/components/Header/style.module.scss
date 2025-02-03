@@ -1,10 +1,7 @@
 @use '@/styles/_vars.scss' as *;
 
-
-$header-height: 80px;
-
 .header {
-    height: $header-height;
+    height: $headerHeight;
     display: grid;
     grid-template-rows: auto;
     grid-template-columns: [right] 78px [center] 1fr [left] 78px;
@@ -29,11 +26,13 @@ $header-height: 80px;
 }
 
 .userProfile {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: flex-start;
     font-family: $font-family;
-    gap:5px;
+    gap: 5px;
+    cursor: pointer;
 
     .profilePicture {
         border-radius: 50%;
@@ -58,7 +57,23 @@ $header-height: 80px;
         font-weight: 600;
         font-size: $text-md;
         color: $textColor;
+        margin-right: 5px;
     }
+
+    .profileContainer {
+        display: flex;
+        align-items: center;
+    }
+}
+
+.menu {
+    position: absolute;
+    top: calc(80% - 5px);
+    right: 0;
+    padding: 5px;
+    z-index: 10;
+    width: 150px;
+    justify-content: center;
 }
 
 .logo {
@@ -137,12 +152,12 @@ $header-height: 80px;
 }
 
 
-@media (min-width: 768px) {}
+@media (min-width: $breakpoint-md) {}
 
 
 @media (min-width: 1024px) {
     .header {
-        height: 100px;
+        height: $headerHeight;
         grid-template-columns: auto [right] 280px [center] auto [left] 280px auto;
     }
 

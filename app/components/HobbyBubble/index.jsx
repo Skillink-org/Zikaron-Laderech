@@ -6,6 +6,7 @@ import styles from "./style.module.scss";
 import DynamicBackground from "../DynamicBackground";
 
 export default function HobbyBubble({
+  dynamicBackgroundClassName = "",
   className = "",
   children = "טניס",
   plusMode = true,
@@ -16,9 +17,12 @@ export default function HobbyBubble({
   return (
     <>
       {rand ? (
-        <DynamicBackground rand={rand}>
-          <div className={`${styles.hobbyBubble} ${className}`} onClick={onClick}>
-            {children}
+        <DynamicBackground rand={rand} className={dynamicBackgroundClassName}>
+          <div
+            className={`${styles.hobbyBubble} ${className}`}
+            onClick={onClick}
+          >
+            <span className={styles.title}>{children}</span>
             {plusMode ? (
               <Image
                 src="/plusIcon.svg"

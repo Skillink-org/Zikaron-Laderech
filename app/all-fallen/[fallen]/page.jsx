@@ -1,9 +1,9 @@
-import HobbyBubble from "@/app/components/HobbyBubble";
-import HobbyDataBubble from "@/app/components/HobbyDataBubble";
-import ProfileCard from "@/app/components/ProfileCard";
-import Button from "@/app/components/Button";
-import TitleDivider from "@/app/components/TitleDivider";
 import styles from "./page.module.scss";
+import Button from "@/app/components/Button";
+import ProfileCard from "@/app/components/ProfileCard";
+import HobbyBubble from "@/app/components/HobbyBubble";
+import TitleDivider from "@/app/components/TitleDivider";
+import HobbyDataBubble from "@/app/components/HobbyDataBubble";
 import StatusMessage from "@/app/components/StatusMessage";
 
 export default async function FallenPage({ params }) {
@@ -22,26 +22,41 @@ export default async function FallenPage({ params }) {
     <>
       <div className={styles.fallen}>
         <div className={`${styles.rightCol} ${styles.col}`} >
+        {/* right */}
+        <div className={`${styles.rightCol} ${styles.col}`}>
           <ProfileCard fallen={fallenDetails} />
-          <div>
-            <TitleDivider title={'התחביבים שלי'} />
-            <div className={styles.hobbies}>{fallenDetails.hobbies.map((hobby) => (
-              <HobbyBubble key={hobby.name} children={hobby.name} className={styles.hobby} />
+          <TitleDivider
+            title={"התחביבים שלי"}
+            containerClassName={styles.hobbiesDivider}
+          />
+          <div className={styles.hobbies}>
+            {fallenDetails.hobbies.map((hobby) => (
+              <HobbyBubble
+                key={hobby}
+                children={hobby}
+                dynamicBackgroundClassName={styles.hobby}
+                className={styles.hobbyBubble}
+              />
             ))}
-            </div>
           </div>
         </div>
+        {/* middle */}
         <div className={`${styles.middleCol} ${styles.col}`}>
-          <h1 className={styles.mainTitle}>{fallenDetails.familyWords}</h1>
-          <div>
-            <TitleDivider title={'אודות'} />
-            <p className={styles.paragraph}>{fallenDetails.about}</p>
-          </div>
-          <div>
-            <TitleDivider title={'קצת עליי'} />
-            <p className={styles.paragraph}>{fallenDetails.familyWords}</p>
-          </div>
+          <h1 className={styles.mainTitle}>{mainTitle}</h1>
+
+          <TitleDivider
+            title={"התחביבים שלי"}
+            dividerClassName={styles.sctionsDivider}
+          />
+          <p className={styles.paragraph}>{aboutParagraph}</p>
+
+          <TitleDivider
+            title={"קצת עליי"}
+            dividerClassName={styles.sctionsDivider}
+          />
+          <p className={styles.paragraph}>{additionalParagraph}</p>
         </div>
+        {/* left */}
         <div className={`${styles.leftCol} ${styles.col}`}>
           <div>
             <div className={styles.hobbiesWithData}>{fallenDetails.hobbies.map((hobby) => <HobbyDataBubble key={hobby.name} hobbyName={hobby.name} sumMode={false} fallenName={fallenDetails.firstName} />)}</div>
@@ -49,6 +64,16 @@ export default async function FallenPage({ params }) {
               <TitleDivider title={'סה"כ'} />
               <HobbyDataBubble sumMode={true} fallenName={fallenDetails.firstName} />
             </div>
+          <div className={styles.hobbiesWithData}>
+            {continuedHobbies.map((hobby, index) => (
+              <HobbyDataBubble hobbyName={hobby} sumMode={false} key={index} />
+            ))}
+
+            <TitleDivider
+              title={'סה"כ'}
+              containerClassName={styles.totalDivider}
+            />
+            <HobbyDataBubble sumMode={true} />
           </div>
           <Button className={styles.button} children={'שיתוף'} />
         </div>

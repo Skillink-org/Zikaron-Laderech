@@ -1,19 +1,15 @@
-@use '@/styles/_vars.scss'as *;
-@import '@/styles/_mixins.scss';
-
+@use '@/styles/_vars.scss' as *;
 
 .fallen {
-    @include page-layout(200px);
+    display: flex;
     flex-direction: row;
+    gap: $spacing-md;
 
     .col {
-        margin: 0;
+        gap: $spacing-md;
         padding: 15px 15px;
-        height: 884px;
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
-        gap: 20px;
         border-width: 0px 1px 1px 1px;
         background: $elementGradient;
         border-color: $lightblueBorder;
@@ -22,25 +18,31 @@
     }
 
     .rightCol {
-        min-width: 335px;
+        width: 25%;
 
         .hobbies {
             display: flex;
             flex-direction: row;
-            justify-content: space-around;
+            justify-content: space-between;
             flex-wrap: wrap;
             padding: 5px 0;
-            gap: 15px 0;
+
+            .hobby {
+                width: 49%;
+                display: flex;
+                flex-direction: column;
+                justify-content: end;
+            }
         }
     }
 
     .middleCol {
-        width: 690px;
+        width: 50%;
+        gap: $spacing-md;
 
         .mainTitle {
-            width: 610px;
             font-family: $font-family;
-            font-size: $text-xxl;
+            font-size: $text-xl;
             color: $titleColor;
         }
 
@@ -52,11 +54,10 @@
     }
 
     .leftCol {
-        width: 335px;
+        width: 25%;
 
         .hobbiesWithData {
-            gap: 20px;
-            padding: 20px 0;
+            gap: $spacing-md;
             display: flex;
             flex-direction: column;
             flex-wrap: wrap;
@@ -67,4 +68,48 @@
         }
     }
 
+}
+
+@media (max-width: $breakpoint-md) {
+    .sctionsDivider {
+        display: none !important;
+    }
+
+    .totalDivider {
+        flex-direction: row !important;
+    }
+}
+
+@media (max-width: 930px) {
+    .hobbyBubble {
+        aspect-ratio: 0 / 0 !important;
+    }
+
+    .fallen {
+        flex-direction: column;
+
+        .hobbiesDivider {
+            display: none !important;
+        }
+
+        .col {
+            height: auto;
+        }
+
+        .rightCol {
+            width: 100%;
+        }
+
+        .middleCol {
+            width: 100%;
+        }
+
+        .leftCol {
+            width: 100%;
+
+            .hobbiesWithData {
+                flex-direction: column;
+            }
+        }
+    }
 }
