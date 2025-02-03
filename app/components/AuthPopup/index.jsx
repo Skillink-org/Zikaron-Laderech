@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import styles from "./style.module.scss";
 import GenericInput from "../GenericInput/index";
 import Button from "../Button";
-import GoogleAuth from "./GoogleAuth";
 import { loginFields, signupFields } from "@/lib/FormFields";
+import { signIn } from "next-auth/react";
+import GoogleIcon from '@mui/icons-material/Google'
 
 export default function AuthPopup({ onClose }) {
     const [isLogin, setIsLogin] = useState(true);
@@ -23,14 +24,29 @@ export default function AuthPopup({ onClose }) {
         }));
     };
 
-    const toggleForm = () => setIsLogin(!isLogin);
+    const toggleForm = () => {
+        setIsLogin(!isLogin);
+    }
 
-    const handleGoogleLoginSuccess = (response) => {
-        console.log("Logged in with Google:", response);
-    };
+    const handleClick = async (e) => {
+        e.preventDefault();
+        if (isLogin) {
+            await handleEmailSignin();
+        }
+    }
+    const handleEmailSignin = async () => {
+        const response = await signIn("credentials", {
+            redirect: false,
+            email: formData.email,
+            password: formData.password,
+        });
 
-    const handleGoogleLoginFailure = (error) => {
-        console.error("Google login failed:", error);
+        if (response?.error) {
+            console.error("Email login failed:", response.error);
+        } else {
+            console.log("Logged in with Email:", response);
+            onClose();
+        }
     };
 
     const currentFields = isLogin ? loginFields : signupFields;
@@ -53,15 +69,14 @@ export default function AuthPopup({ onClose }) {
                         />
                     ))}
 
-                    <Button className={styles.submitButton}>
+                    <Button type="submit" onClick={handleClick} className={styles.submitButton}>
                         {isLogin ? "התחברות" : "הרשמה"}
                     </Button>
 
-                    <GoogleAuth
-                        onSuccess={handleGoogleLoginSuccess}
-                        onFailure={handleGoogleLoginFailure}
-                        className={styles.googleLoginWrapper}
-                    />
+                    <Button onClick={() => { signIn("google") }} className={styles.googleButton}>
+                        <GoogleIcon />
+                        <p className={styles.googleText}>כניסה עם גוגל</p>
+                    </Button>
 
                     <div className={styles.toggleButton} onClick={toggleForm}>
                         <small>{isLogin ? "אין לך חשבון? לחץ כאן להרשמה" : "נרשמת בעבר? לחץ כאן להתחברות"}</small>
@@ -71,3 +86,4 @@ export default function AuthPopup({ onClose }) {
         </div>
     );
 }
+

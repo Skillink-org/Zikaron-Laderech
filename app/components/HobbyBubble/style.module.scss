@@ -8,16 +8,15 @@
   align-items: end;
   justify-content: space-between;
   padding: 10px;
-  min-width: 100px;
   flex-grow: 1;
   aspect-ratio: 3/2;
-  gap: 10px;
   font-size: 18px;
   color: $bubbleTextColor;
 
-  .Image {
-    &:hover {
-      cursor: pointer;
-    }
+  .title {
+    font-size: $text-base;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }

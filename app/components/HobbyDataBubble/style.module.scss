@@ -2,14 +2,16 @@
 
 @use 'sass:color';
 
+.dynamicBackgroundContainer {
+    width: 100%;
+}
+
 .hobbyDataBubble {
     display: flex;
     flex-direction: column;
     // justify-content: center;
     align-items: start;
     padding: 10px;
-    min-width: 200px;
-    width: 100%;
     aspect-ratio: 3;
     font-size: $text-md;
     color: $bubbleTextColor;

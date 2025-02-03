@@ -56,53 +56,35 @@ export default function AddFallenPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("come");
-
     try {
-      // Upload image to Cloudinary
-      const imageData = new FormData();
-      imageData.append("file", formData.image);
-      imageData.append("upload_preset", uploadPresent); // Replace with your Cloudinary preset
+        const formDataToSend = new FormData();
+        formDataToSend.append("image", formData.image);
+        const imageUrl = await uploadImage(formDataToSend);
+        const response = await fetch('/api/add-fallen', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ ...formData, imageUrl }),
+        });
 
-      const cloudinaryResponse = await fetch(
-        `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
-        {
-          method: "POST",
-          body: imageData,
-        }
-      );
+        if (!response.ok) throw new Error('Failed to save data');
 
-      if (!cloudinaryResponse.ok) throw new Error("Failed to upload image");
-
-      const imageResponse = await cloudinaryResponse.json();
-      const imageUrl = imageResponse.secure_url;
-
-      // Send form data to the server
-      const response = await fetch("/api/add-fallen", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...formData, imageUrl }),
-      });
-
-      if (!response.ok) throw new Error("Failed to save data");
-
-      setStatusMessage("ההודעה נשלחה בהצלחה! תודה רבה");
-      setStatusType("success");
-      setFormData({
-        fullName: "",
-        birthYear: "",
-        deathDate: "",
-        hobbies: "",
-        about: "",
-        familyMessage: "",
-        highlightQuote: "",
-        image: null,
-      });
+        setStatusMessage('ההודעה נשלחה בהצלחה! תודה רבה');
+        setStatusType('success');
+        setFormData({
+            fullName: '',
+            birthYear: '',
+            deathDate: '',
+            hobbies: '',
+            about: '',
+            familyMessage: '',
+            highlightQuote: '',
+            image: null,
+        });
     } catch (error) {
-      setStatusMessage("אירעה שגיאה. נא לנסות שוב.");
-      setStatusType("error");
+        setStatusMessage('אירעה שגיאה. נא לנסות שוב.');
+        setStatusType('error');
     }
-  };
+};
 
   return (
     <>
