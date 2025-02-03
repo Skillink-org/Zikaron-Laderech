@@ -1,8 +1,10 @@
+"use client";
+
 import Image from "next/image";
 import Button from "../Button";
-import React, { useState } from "react";
 import styles from "./style.module.scss";
 import { signIn } from "next-auth/react";
+import { useEffect, useState } from "react";
 import GenericInput from "../GenericInput/index";
 import { loginFields, signupFields } from "@/lib/FormFields";
 
@@ -48,6 +50,20 @@ export default function AuthPopup({ onClose }) {
       onClose();
     }
   };
+
+  // Close popup on escape key press
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        onClose();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [onClose]);
 
   const currentFields = isLogin ? loginFields : signupFields;
 
