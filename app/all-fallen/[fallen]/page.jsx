@@ -4,14 +4,13 @@ import ProfileCard from "@/app/components/ProfileCard";
 import HobbyBubble from "@/app/components/HobbyBubble";
 import TitleDivider from "@/app/components/TitleDivider";
 import HobbyDataBubble from "@/app/components/HobbyDataBubble";
+import { getBaseUrl } from "@/lib/baseUrl";
 
 export default async function FallenPage({ params }) {
   const fallenId = (await params).fallen;
 
-  // TODO: Generlize base URL depending on the environment
-  const fallenDetails = await fetch(
-    `http://localhost:3000/api/fallen/${fallenId}`
-  )
+  const baseUrl = getBaseUrl();
+  const fallenDetails = await fetch(`${baseUrl}/api/fallen/${fallenId}`)
     .then((response) => response.json())
     .then((data) => data);
 
