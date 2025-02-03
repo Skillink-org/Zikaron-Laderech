@@ -17,11 +17,13 @@ export default async function FallenPage({ params }) {
   }
 
   const fallenDetails = await response.json();
+  const continuedHobbies = fallenDetails.hobbies.filter(
+    (hobby) => hobby.continueCount > 0)
+  const hobbyContinuersSum = continuedHobbies.reduce((sum, hobby) => sum + hobby.continueCount, 0);
 
   return (
     <>
       <div className={styles.fallen}>
-        <div className={`${styles.rightCol} ${styles.col}`} >
         {/* right */}
         <div className={`${styles.rightCol} ${styles.col}`}>
           <ProfileCard fallen={fallenDetails} />
@@ -30,10 +32,10 @@ export default async function FallenPage({ params }) {
             containerClassName={styles.hobbiesDivider}
           />
           <div className={styles.hobbies}>
-            {fallenDetails.hobbies.map((hobby) => (
+            {fallenDetails.hobbies.map((hobby, index) => (
               <HobbyBubble
-                key={hobby}
-                children={hobby}
+                key={index}
+                children={hobby.name}
                 dynamicBackgroundClassName={styles.hobby}
                 className={styles.hobbyBubble}
               />
@@ -42,38 +44,32 @@ export default async function FallenPage({ params }) {
         </div>
         {/* middle */}
         <div className={`${styles.middleCol} ${styles.col}`}>
-          <h1 className={styles.mainTitle}>{mainTitle}</h1>
+          <h1 className={styles.mainTitle}>{fallenDetails.familyWords}</h1>
 
           <TitleDivider
-            title={"התחביבים שלי"}
+            title={"אודות"}
             dividerClassName={styles.sctionsDivider}
           />
-          <p className={styles.paragraph}>{aboutParagraph}</p>
+          <p className={styles.paragraph}>{fallenDetails.about}</p>
 
           <TitleDivider
             title={"קצת עליי"}
             dividerClassName={styles.sctionsDivider}
           />
-          <p className={styles.paragraph}>{additionalParagraph}</p>
+          <p className={styles.paragraph}>{fallenDetails.familyWords}</p>
         </div>
         {/* left */}
         <div className={`${styles.leftCol} ${styles.col}`}>
-          <div>
-            <div className={styles.hobbiesWithData}>{fallenDetails.hobbies.map((hobby) => <HobbyDataBubble key={hobby.name} hobbyName={hobby.name} sumMode={false} fallenName={fallenDetails.firstName} />)}</div>
-            <div>
-              <TitleDivider title={'סה"כ'} />
-              <HobbyDataBubble sumMode={true} fallenName={fallenDetails.firstName} />
-            </div>
           <div className={styles.hobbiesWithData}>
             {continuedHobbies.map((hobby, index) => (
-              <HobbyDataBubble hobbyName={hobby} sumMode={false} key={index} />
+              <HobbyDataBubble hobbyName={hobby.name} sumMode={false} key={index} fallenName={fallenDetails.firstName} hobbyContinuers={hobby.continueCount} />
             ))}
 
             <TitleDivider
               title={'סה"כ'}
               containerClassName={styles.totalDivider}
             />
-            <HobbyDataBubble sumMode={true} />
+            <HobbyDataBubble sumMode={true} hobbyContinuersSum={hobbyContinuersSum} />
           </div>
           <Button className={styles.button} children={'שיתוף'} />
         </div>
@@ -81,54 +77,3 @@ export default async function FallenPage({ params }) {
     </>
   )
 }
-
-//     <>
-//       <div className={styles.fallen}>
-//         <div className={`${styles.rightCol} ${styles.col}`}>
-//           <ProfileCard fallen={fallenDetails} />
-//           <div>
-//             <TitleDivider title={"התחביבים שלי"} />
-//             <div className={styles.hobbies}>
-//               {hobbies.map((hobby) => (
-//                 <HobbyBubble
-//                   key={hobby}
-//                   children={hobby}
-//                   className={styles.hobby}
-//                 />
-//               ))}
-//             </div>
-//           </div>
-//         </div>
-//         <div className={`${styles.middleCol} ${styles.col}`}>
-//           <h1 className={styles.mainTitle}>{mainTitle}</h1>
-//           <div>
-//             <TitleDivider title={"התחביבים שלי"} />
-//             <p className={styles.paragraph}>{aboutParagraph}</p>
-//           </div>
-//           <div>
-//             <TitleDivider title={"קצת עליי"} />
-//             <p className={styles.paragraph}>{additionalParagraph}</p>
-//           </div>
-//         </div>
-//         <div className={`${styles.leftCol} ${styles.col}`}>
-//           <div>
-//             <div className={styles.hobbiesWithData}>
-//               {hh.map((hobby, index) => (
-//                 <HobbyDataBubble
-//                   hobbyName={hobby}
-//                   sumMode={false}
-//                   key={index}
-//                 />
-//               ))}
-//             </div>
-//             <div>
-//               <TitleDivider title={'סה"כ'} />
-//               <HobbyDataBubble sumMode={true} />
-//             </div>
-//           </div>
-//           <Button className={styles.button} children={"שיתוף"} />
-//         </div>
-//       </div>
-//     </>
-//   );
-// }
