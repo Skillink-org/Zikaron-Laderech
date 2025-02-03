@@ -1,0 +1,20 @@
+.imageWithTitle {
+    background-image: url('https://images.pexels.com/photos/27212688/pexels-photo-27212688/free-photo-of-lake-in-mountains.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');  // כתובת התמונה
+    background-size: cover;  // התמונה תכסה את כל הרקע
+    background-position: center;  // מיקום התמונה במרכז
+    padding: 60px;  // אפשר להוסיף ריפוד פנימי אם רוצים שהטקסט לא יתמזג עם הקצוות
+    border-radius: 8px;  // אם רוצים לעגל את הקצוות של הרקע
+    color: white;  // לצורך קריאות הטקסט על הרקע
+  }
+  
+  .title {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .subtitle {
+    font-size: 18px;
+    font-weight: normal;
+  }
+  
