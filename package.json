@@ -12,6 +12,7 @@
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@mui/icons-material": "^6.4.2",
+    "@mui/material": "^6.4.2",
     "dotenv": "^16.4.7",
     "lucide-react": "^0.474.0",
     "mongoose": "^8.9.5",
