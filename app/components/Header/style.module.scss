@@ -1,10 +1,7 @@
 @use '@/styles/_vars.scss' as *;
 
-
-$header-height: 80px;
-
 .header {
-    height: $header-height;
+    height: $headerHeight;
     display: grid;
     grid-template-rows: auto;
     grid-template-columns: [right] 78px [center] 1fr [left] 78px;
@@ -142,7 +139,7 @@ $header-height: 80px;
 
 @media (min-width: 1024px) {
     .header {
-        height: 100px;
+        height: $headerHeight;
         grid-template-columns: auto [right] 280px [center] auto [left] 280px auto;
     }
 

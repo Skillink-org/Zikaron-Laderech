@@ -16,8 +16,9 @@ export default function FallenPage() {
         imageSrc: '/profileImage.webp'
     }
     const mainTitle = 'תמשיכו לבנות לגו. זה החלום והתחביב הכי גדול שלי'
-    const aboutParagraph = 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nihil reiciendis, rerum tempore officiis molestias ab consequuntur est, doloremque accusamus reprehenderit quod voluptates enim, deleniti ex atque sint quisquam? Debitis, officiis!'
-    const additionalParagraph = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis, perferendis, sequi dolore quisquam obcaecati molestiae consequuntur minus laboriosam est itaque qui saepe provident, iusto in quod! Consectetur voluptates alias velit?'
+    const aboutParagraph = 'מאי תמיד חיפשה השראה בכל תחביב – בין אם זה בטניס המרגש, בשירה המחברת את הלב או בריצה החופשית. היא מצאה בכל תנועה ובכל צליל נגיעה שהעלה את נשמתה לרמות חדשות של התעלות והשראה. דרך האומנות והספורט, היא גילתה את עוצמתה הפנימית והבינה שכל תחביב הוא הזדמנות ללמוד, לצמוח ולהביע את רגשותיה.';
+    const additionalParagraph = 'מאי, בחורה יוצאת דופן שנולדה בשנת 2000, הייתה דמות מלאת חיים, יצירתיות וחמלה. היא חיה את חייה לפי תשוקותיה והעניקה אור וחום לכל מי שסבב אותה. לצערנו, ב-7/10, במתקפת הטרור הנוראית של חמאס, נפלה מאי והשאירה אחריה חלל עצום בלבבות של כל מי שהכיר אותה. זכרונה ממשיך להאיר את דרכנו, ומסר החיים שלה – מלא אומץ, אהבה ואמנות – מהדהד בכל מקום.' 
+    
 
     return (
         <>
@@ -31,20 +32,24 @@ export default function FallenPage() {
                     </div>
                 </div>
                 <div className={`${styles.middleCol} ${styles.col}`}>
-                    <h1 className={styles.mainTitle}>{mainTitle}</h1>
-                    <div>
-                        <TitleDivider title={'התחביבים שלי'} />
-                        <p className={styles.paragraph}>{aboutParagraph}</p>
-                    </div>
-                    <div>
-                        <TitleDivider title={'קצת עליי'} />
-                        <p className={styles.paragraph}>{additionalParagraph}</p>
-                    </div>
-                </div>
+   <div className={styles.content}>
+       <h1 className={styles.mainTitle}>{mainTitle}</h1>
+       <div className={styles.sections}>
+           <div className={styles.section}>
+               <TitleDivider title={'התחביבים שלי'} />
+               <p className={styles.paragraph}>{aboutParagraph}</p>
+           </div>
+           <div className={styles.section}>
+               <TitleDivider title={'קצת עליי'} />
+               <p className={styles.paragraph}>{additionalParagraph}</p>
+           </div>
+       </div>
+   </div>
+</div>
                 <div className={`${styles.leftCol} ${styles.col}`}>
                     <div className={styles.hobbiesWithData}>{hh.map((hobby) => <HobbyDataBubble hobbyName={hobby} sumMode={false} />)}
                     </div>
-                        <TitleDivider title={'סה"כ'} />
+                    <TitleDivider title={'סה"כ'} />
                     <div>
                         <HobbyDataBubble sumMode={true} />
                     </div>
