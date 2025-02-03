@@ -86,3 +86,7 @@ export async function getFilteredFallen(query) {
       fallen.hobbies.includes(query)
   );
 }
+
+export async function getFallenById(id) {
+  return fallen.find((fallen) => fallen.id == id);
+}
