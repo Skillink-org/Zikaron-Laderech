@@ -35,10 +35,29 @@ export default function AdminPage() {
         // TODO: Implement the filtering logic here based on the search query.
     }
 
+    // TODO: Replace the static data with real data from the database
+    const [fallenData, setFallenData] = useState([
+        { date: '01/02/2025', name: 'ישראל ישראלי', status: 'ממתין לאישור' },
+        { date: '02/02/2025', name: 'ישראל ישראלי', status: 'מאושר' },
+        { date: '03/02/2025', name: 'ישראל ישראלי', status: 'נדחה' }
+    ]);
+
+    const getStatusClass = (status) => {
+        switch (status) {
+            case 'ממתין לאישור':
+                return styles.pending;
+            case 'מאושר':
+                return styles.approved;
+            case 'נדחה':
+                return styles.rejected;
+            default:
+                return '';
+        }
+    };
+
     return (
         <>
             <div className={styles.wrapper}>
-
                 <div className={styles.searchContainer}>
                     <Image
                         src="/search-icon.svg"
@@ -104,7 +123,72 @@ export default function AdminPage() {
                     <button className={styles.applyButton} onClick={applyFilter}>החל סינון</button>
                 </Modal>
             </div>
-            <br /><br /><br />
+
+            <table className={styles.fallenTable}>
+                <thead>
+                    <tr>
+                        <th>תאריך הגשה</th>
+                        <th>שם הנופל</th>
+                        <th>סטטוס</th>
+                        <th>פעולות</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {fallenData.map((item, index) => (
+                        <tr key={index}>
+                            <td className={styles.date}>{item.date}</td>
+
+                            <td>{item.name}</td>
+
+                            <td>
+                                <span className={`${styles.status} ${getStatusClass(item.status)}`}>
+                                    {item.status}
+                                </span>
+                            </td>
+
+                            <td className={styles.actions}>
+                                <button
+                                    type="button"
+                                // onClick={}
+                                >
+                                    <Image
+                                        src="/approveIcon.svg"
+                                        alt="Approve icon"
+                                        width={20}
+                                        height={20}
+                                    />
+                                </button>
+
+                                <button
+                                    type="button"
+                                // onClick={}
+                                // TODO: Implement a function to approve the profile
+                                >
+                                    <Image
+                                        src="/editIcon.svg"
+                                        alt="Edit icon"
+                                        width={20}
+                                        height={20}
+                                    />
+                                </button>
+
+                                <button
+                                    type="button"
+                                // onClick={}
+                                // TODO: Implement a function to reject the profile
+                                >
+                                    <Image
+                                        src="/rejectIcon.svg"
+                                        alt="Reject icon"
+                                        width={20}
+                                        height={20}
+                                    />
+                                </button>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
         </>
     )
 }
