@@ -1,0 +1,69 @@
+@use '@/styles/_vars.scss' as *;
+
+.customBubble {
+    display: flex;
+    justify-content: center !important;
+    align-items: center;
+    width: 100%;
+    gap: 40px;
+    padding: 10px 0;
+    height: min-content;
+    flex-direction: row !important;
+
+    .header {
+        color: $primary;
+        font-weight: bold;
+        font-size: $text-lg;
+    }
+
+    .searchContainer {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+}
+
+.itemsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    width: 100%;
+
+    .cardBackground {
+        background-color: $elementGradient;
+        border-bottom: 1px solid $lightblueBorder;
+        border-left: 1px solid $lightblueBorder;
+        border-right: 1px solid $lightblueBorder;
+        border-radius: 0px 0px 15px 15px;
+        padding: 10px;
+        width: 250px;
+    }
+}
+
+@media (max-width: 768px) {
+    .customBubble {
+        flex-direction: column !important;
+     
+    }
+
+    .searchContainer {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .searchInput,
+    .searchButton {
+        width: 100%;
+    }
+
+    .itemsContainer {
+        justify-content: space-evenly;
+    }
+}
+
+@media (min-width: 1300px) {
+    .itemsContainer {
+        justify-content: center;
+    }
+}

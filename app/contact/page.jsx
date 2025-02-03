@@ -1,7 +1,5 @@
-import styles from './page.module.scss'
+import styles from "./page.module.scss";
 
 export default function ContactPage() {
-    return (
-        <div>ContactPage</div>
-    )
+  return <>ContactPage</>;
 }

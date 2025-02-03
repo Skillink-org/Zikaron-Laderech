@@ -1,0 +1,21 @@
+@use '@/styles/_vars.scss' as *;
+
+@use 'sass:color';
+
+.hobbyDataBubble {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    padding: 10px;
+    width: 300px;
+    aspect-ratio: 3;
+    font-size: 18px;
+    color: $bubbleTextColor;
+
+    .hobbyContinuers {
+        font-size: $text-xl;
+        font-weight: bold;
+        color: $titleColor;
+    }
+}
