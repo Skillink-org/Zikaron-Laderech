@@ -24,12 +24,10 @@ export default function FallenPage() {
             <div className={styles.fallen}>
                 <div className={`${styles.rightCol} ${styles.col}`} >
                     <ProfileCard firstName={firstName} lastName={lastName} birthYear={birthYear} deathYear={deathYear} imageUrl={imageSrc} />
-                    <div>
-                        <TitleDivider title={'התחביבים שלי'} />
-                        <div className={styles.hobbies}>{hobbies.map((hobby) => (
-                            <HobbyBubble key={hobby} children={hobby} className={styles.hobby} />
-                        ))}
-                        </div>
+                    <TitleDivider title={'התחביבים שלי'} />
+                    <div className={styles.hobbies}>{hobbies.map((hobby) => (
+                        <HobbyBubble key={hobby} children={hobby} className={styles.hobby} />
+                    ))}
                     </div>
                 </div>
                 <div className={`${styles.middleCol} ${styles.col}`}>
@@ -44,14 +42,13 @@ export default function FallenPage() {
                     </div>
                 </div>
                 <div className={`${styles.leftCol} ${styles.col}`}>
-                    <div>
-                        <div className={styles.hobbiesWithData}>{hh.map((hobby) => <HobbyDataBubble hobbyName={hobby} sumMode={false} />)}</div>
-                        <div>
-                            <TitleDivider title={'סה"כ'} />
-                            <HobbyDataBubble sumMode={true} />
-                        </div>
+                    <div className={styles.hobbiesWithData}>{hh.map((hobby) => <HobbyDataBubble hobbyName={hobby} sumMode={false} />)}
                     </div>
-                    <Button className={styles.button} children={'שיתוף'}/>
+                        <TitleDivider title={'סה"כ'} />
+                    <div>
+                        <HobbyDataBubble sumMode={true} />
+                    </div>
+                    <Button className={styles.button} children={'שיתוף'} />
                 </div>
             </div>
         </>
