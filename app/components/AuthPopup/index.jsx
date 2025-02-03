@@ -28,7 +28,7 @@ export default function AuthPopup({ onClose }) {
     setIsLogin(!isLogin);
   };
 
-  const handleClick = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (isLogin) {
       await handleEmailSignin();
@@ -58,22 +58,20 @@ export default function AuthPopup({ onClose }) {
           ✖
         </button>
         <h2 className={styles.title}>{isLogin ? "התחברות" : "הרשמה"}</h2>
-        <form className={styles.form}>
+        <form className={styles.form} onSubmit={handleSubmit}>
           {currentFields.map(({ type, placeholder, stateKey }) => (
             <GenericInput
               key={stateKey}
               type={type}
+              name={type}
               placeholder={placeholder}
               value={formData[stateKey]}
+              required={true}
               onChange={handleChange(stateKey)}
             />
           ))}
 
-          <Button
-            type="submit"
-            onClick={handleClick}
-            className={styles.submitButton}
-          >
+          <Button type="submit" className={styles.submitButton}>
             {isLogin ? "התחברות" : "הרשמה"}
           </Button>
 
