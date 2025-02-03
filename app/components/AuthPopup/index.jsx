@@ -99,8 +99,8 @@ export default function AuthPopup({ onClose }) {
           >
             <Image
               src="/google-icon.svg"
-              width={20}
-              height={20}
+              width={16}
+              height={16}
               alt="google icon"
               unoptimized
             />

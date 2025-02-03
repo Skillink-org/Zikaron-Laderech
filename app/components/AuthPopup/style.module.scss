@@ -58,7 +58,6 @@
 }
 
 .submitButton {
-  padding: 0.5rem;
   background: $buttonColor;
   color: $grayBackground;
   font-size: $text-md;
@@ -74,6 +73,8 @@
   width: 100%;
   text-align: left;
   margin-top: 10px;
+  display: flex;
+  justify-content: start;
 }
 
 .toggleButton small {
