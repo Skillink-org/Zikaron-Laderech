@@ -4,10 +4,10 @@
     height="24"
     viewBox="0 0 24 24"
     fill="none"
-    stroke="black"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
+    stroke="#72838A"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
 >
     <path d="M6 18L18 6M6 6L18 18" />
 </svg>
