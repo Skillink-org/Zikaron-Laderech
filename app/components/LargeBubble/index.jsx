@@ -1,6 +1,6 @@
 import React from 'react'
 import styles from './style.module.scss'
-import Button from '../Button/Button';
+import Button from '../Button';
 
 export default function LargeBubble({ title, subtitle, buttonText, onButtonClick }) {
     return (
