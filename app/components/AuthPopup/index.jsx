@@ -10,6 +10,8 @@ import { loginFields, signupFields } from "@/lib/FormFields";
 
 export default function AuthPopup({ onClose }) {
   const [isLogin, setIsLogin] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const [formData, setFormData] = useState({
     email: "",
@@ -28,10 +30,13 @@ export default function AuthPopup({ onClose }) {
 
   const toggleForm = () => {
     setIsLogin(!isLogin);
+    setErrorMessage("");
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setErrorMessage("");
     if (isLogin) {
       await handleEmailSignin();
     }
@@ -44,12 +49,14 @@ export default function AuthPopup({ onClose }) {
     });
 
     if (response?.error) {
-      console.error("Email login failed:", response.error);
+      setErrorMessage("התחברות נכשלה. בדוק את הפרטים ונסה שוב.");
+      setLoading(false);
     } else {
-      console.log("Logged in with Email:", response);
-      onClose();
-    }
-  };
+      setTimeout(() => {
+        onClose();
+      }, 2000);
+    };
+  }
 
   // Close popup on escape key press
   useEffect(() => {
@@ -86,9 +93,11 @@ export default function AuthPopup({ onClose }) {
               onChange={handleChange(stateKey)}
             />
           ))}
-
-          <Button type="submit" className={styles.submitButton}>
-            {isLogin ? "התחברות" : "הרשמה"}
+          <Button
+            type="submit"
+            className={styles.submitButton}
+            disabled={loading}>
+            {loading ? <div className={styles.loader}></div> : (isLogin ? "התחברות" : "הרשמה")}
           </Button>
 
           <Button
@@ -107,6 +116,8 @@ export default function AuthPopup({ onClose }) {
 
             <p className={styles.googleText}>כניסה עם גוגל</p>
           </Button>
+
+          {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
 
           <div className={styles.toggleButton} onClick={toggleForm}>
             <small>
