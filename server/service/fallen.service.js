@@ -1,3 +1,5 @@
+import Fallen from "../models/fallen";
+
 const fallen = [
   {
     id: 0,
@@ -74,11 +76,11 @@ const fallen = [
 ];
 
 export async function getAllFallen() {
-  return fallen;
+  return await Fallen.find({});
 }
 
 export async function getFilteredFallen(query) {
-  return fallen.filter(
+  return Fallen.filter(
     (fallen) =>
       fallen.firstName.includes(query) ||
       fallen.lastName.includes(query) ||
@@ -90,11 +92,6 @@ export async function getFallenById(id) {
   return fallen.find((fallen) => fallen.id == id);
 }
 
-
-export async function addFallen(fallen) {
-  return await Fallen.create(fallen);
-}
-
 export async function updateFallen(fallen) {
   return await Fallen.findByIdAndUpdate(fallen.id, fallen);
 }
@@ -104,30 +101,32 @@ export async function deleteFallen(id) {
 } 
 
 
-// import Fallen from '../models/fallen';
+export async function addFallen(fallenData) {
+  try {
+    // Basic validation
+    if (!fallenData.firstName || !fallenData.lastName) {
+      throw new Error('Missing first name or last name');
+    }
 
-// export const fallenService = {
-//   async create(fallenData) {
-//     try {
-//       // המרת התחביבים למערך
-//       const hobbies = fallenData.hobbies
-//         .split(',')
-//         .map(hobby => hobby.trim())
-//         .filter(hobby => hobby);
+    // Ensure dates are valid
+    const birthDate = new Date(fallenData.birthDate);
+    const deathDate = new Date(fallenData.deathDate);
+    
+    if (isNaN(birthDate.getTime()) || isNaN(deathDate.getTime())) {
+      throw new Error('Invalid birth or death date');
+    }
 
-//       // יצירת אובייקט חדש עם הנתונים המעובדים
-//       const newFallen = new Fallen({
-//         ...fallenData,
-//         hobbies,
-//         isAccepted: false
-//       });
+    // Create a new record
+    const fallen = await Fallen.create({
+      ...fallenData,
+      birthDate,
+      deathDate,
+      isAccepted: false
+    });
 
-//       // שמירה במסד הנתונים
-//       const savedFallen = await newFallen.save();
-//       return savedFallen;
-//     } catch (error) {
-//       console.error('Error in fallenService.create:', error);
-//       throw error;
-//     }
-//   }
-// };
+    return fallen;
+  } catch (error) {
+    console.error('Error in addFallen:', error);
+    throw error;
+  }
+}

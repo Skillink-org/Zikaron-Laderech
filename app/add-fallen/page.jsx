@@ -5,10 +5,10 @@ import ImageWithTitle from "../components/ImageWithTitle/index";
 import Button from "../components/Button";
 import StatusMessage from "../components/StatusMessage";
 import CustomBubble from "../components/CustomBubble";
+import { uploadImage } from "@/server/actions/uploadImage.action";
 
 export default function AddFallenPage() {
   const cloudName = process.env.CLOUDINARY_NAME;
-  // const uploadPresent = process.env.;
   const currentYear = new Date().getFullYear();
   const todayDate = new Date().toISOString().split("T")[0];
   const minDeathDate = "2023-10-07";
@@ -20,8 +20,8 @@ export default function AddFallenPage() {
     hobbies: "",
     about: "",
     familyMessage: "",
-    highlightQuote: "",
     image: null,
+    imageFile: null
   });
 
   const [statusMessage, setStatusMessage] = useState("");
@@ -51,39 +51,150 @@ export default function AddFallenPage() {
   };
 
   const handleFileChange = (e) => {
-    setFormData({ ...formData, image: e.target.files[0] });
+    const file = e.target.files[0];
+    if (file) {
+      if (!file.type.startsWith('image/')) {
+        setStatusMessage('נא להעלות קובץ תמונה בלבד');
+        setStatusType('error');
+        return;
+      }
+      
+      if (file.size > 5 * 1024 * 1024) {
+        setStatusMessage('התמונה גדולה מדי. נא להעלות תמונה עד 5MB');
+        setStatusType('error');
+        return;
+      }
+  
+      setFormData(prev => ({
+        ...prev,
+        imageFile: file,
+        image: URL.createObjectURL(file) // save the image for preview purposes
+      }));
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validateForm()) return;
+  
     try {
-        const formDataToSend = new FormData();
-        formDataToSend.append("image", formData.image);
-        const imageUrl = await uploadImage(formDataToSend);
-        const response = await fetch('/api/add-fallen', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ ...formData, imageUrl }),
-        });
+      setStatusMessage("מעלה תמונה...");
+      setStatusType("loading");
+  
+      const formDataToSend = new FormData();
+      formDataToSend.append("image", formData.imageFile);
+      const imageUrl = await uploadImage(formDataToSend);
 
-        if (!response.ok) throw new Error('Failed to save data');
+      //split the fullname into first name and last name
+      const [firstName, ...lastNameParts] = formData.fullName.trim().split(" ");
+      const lastName = lastNameParts.join(" ");
 
-        setStatusMessage('ההודעה נשלחה בהצלחה! תודה רבה');
-        setStatusType('success');
+      //format the hobbies into an array of objects
+      const hobbies = formData.hobbies
+        .split(',')
+        .map(hobby => hobby.trim())
+        .filter(hobby => hobby)
+        .map(name => ({ 
+          name,
+          continueCount: 0
+        }));
+
+      //send the form data to the server
+      const response = await fetch('/api/add-fallen', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          firstName,
+          lastName,
+          birthDate: new Date(formData.birthYear),
+          deathDate: new Date(formData.deathDate),
+          hobbies,
+          about: formData.about,
+          familyWords: formData.familyMessage,
+          imageUrl,
+          isAccepted: false
+        }),
+      });
+
+      const result = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(result.error || 'שגיאה בשמירת הנתונים');
+      }
+
+      setStatusMessage(`הנתונים נשמרו בהצלחה! 
+        ${result.data.firstName} ${result.data.lastName} נוסף למאגר וממתין לאישור.`);
+      setStatusType("success");
+
+      //reset the form
+      setTimeout(() => {
         setFormData({
-            fullName: '',
-            birthYear: '',
-            deathDate: '',
-            hobbies: '',
-            about: '',
-            familyMessage: '',
-            highlightQuote: '',
-            image: null,
+          fullName: "",
+          birthYear: "",
+          deathDate: "",
+          hobbies: "",
+          about: "",
+          familyMessage: "",
+          image: null,
+          imageFile: null
         });
+      }, 3000);
+
     } catch (error) {
-        setStatusMessage('אירעה שגיאה. נא לנסות שוב.');
-        setStatusType('error');
+      console.error("שגיאה:", error);
+      setStatusMessage(error.message || "אירעה שגיאה. נא לנסות שוב.");
+      setStatusType("error");
     }
+};
+
+//validation function
+const validateForm = () => {
+  const nameParts = formData.fullName.trim().split(" ");
+  if (nameParts.length < 2) {
+    setStatusMessage("נא להזין שם מלא (שם פרטי ושם משפחה)");
+    setStatusType("error");
+    return false;
+  }
+
+  if (!formData.birthYear) {
+    setStatusMessage("נא להזין שנת לידה");
+    setStatusType("error");
+    return false;
+  }
+
+  if (!formData.deathDate) {
+    setStatusMessage("נא להזין תאריך פטירה");
+    setStatusType("error");
+    return false;
+  }
+
+  if (!formData.hobbies.trim()) {
+    setStatusMessage("נא להזין לפחות תחביב אחד");
+    setStatusType("error");
+    return false;
+  }
+
+  if (!formData.about.trim()) {
+    setStatusMessage("נא להזין מידע אודות הנופל");
+    setStatusType("error");
+    return false;
+  }
+
+  if (!formData.familyMessage.trim()) {
+    setStatusMessage("נא להזין מסר מהמשפחה");
+    setStatusType("error");
+    return false;
+  }
+
+  if (!formData.imageFile) {
+    setStatusMessage("נא להעלות תמונה");
+    setStatusType("error");
+    return false;
+  }
+
+  return true;
 };
 
   return (
@@ -178,16 +289,24 @@ export default function AddFallenPage() {
               required
             />
 
-            <label className={styles.customFileUpload}>
-              העלאת תמונה
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleFileChange}
-                required
-                className={styles.hiddenInput}
-              />
-            </label>
+<label className={styles.customFileUpload}>
+  העלאת תמונה
+  <input
+    type="file"
+    accept="image/*"
+    onChange={handleFileChange}
+    required
+    className={styles.hiddenInput}
+  />
+  {formData.image && (
+    <img 
+      src={formData.image} 
+      alt="תצוגה מקדימה" 
+      className={styles.imagePreview} 
+      style={{ maxWidth: '100px', marginTop: '10px' }}
+    />
+  )}
+</label>
 
             <Button
               type="submit"
