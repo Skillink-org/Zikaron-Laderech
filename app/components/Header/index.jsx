@@ -5,7 +5,7 @@ import MobileNav from './MobileNav'
 import NavList from './NavList'
 import AuthButton from './AuthButton'
 import UserProfile from './UserProfile'
-
+import Search from './Search'
 export default function Header() {
     const { data: session } = useSession();
 
@@ -16,6 +16,7 @@ export default function Header() {
             <MobileNav />
             <div className={styles.logo}><span>זיכרון </span>לדרך</div>
             <NavList />
+            <Search />
             <div className={styles.auth}>
                 {isLoggedIn ? <UserProfile
                     firstName={session?.user?.firstName}
