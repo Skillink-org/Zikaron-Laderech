@@ -16,11 +16,11 @@ export default function AuthButton() {
     }
 
     return (
-        <div>
+        <>
             <Button onClick={openAuthPopup}>
                 התחברות
             </Button>
             {isAuthPopupOpen && <AuthPopup onClose={closeAuthPopup} />}
-        </div>
+        </>
     )
 }

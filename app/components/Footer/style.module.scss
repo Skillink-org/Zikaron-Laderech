@@ -1,15 +1,12 @@
 @use '@/styles/_vars.scss' as *;
 
 .footer {
-    height: $headerHeight;
-    // padding-block: 34px;
-    // padding-block: 28px;
-    // margin-inline: auto;
+    height: $footerHeight - 50px;
     display: flex;
     gap: 20px;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     border-top: 1px solid $lightblueBorder;
     font-family: $font-family;
 }
@@ -37,8 +34,7 @@
 
 @media (min-width: $breakpoint-md) {
     .footer {
-        height: $headerHeight;
-        padding-block: 34px;
+        height: $footerHeight;
     }
 
 
