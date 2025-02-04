@@ -50,6 +50,7 @@ export default function AuthPopup({ onClose }) {
 
     if (response?.error) {
       setErrorMessage("התחברות נכשלה. בדוק את הפרטים ונסה שוב.");
+      setLoading(false);
     } else {
       setTimeout(() => {
         onClose();
@@ -94,10 +95,9 @@ export default function AuthPopup({ onClose }) {
           ))}
           <Button
             type="submit"
-            onClick={handleClick}
             className={styles.submitButton}
             disabled={loading}>
-            {loading ? <CircularProgress className={styles.progressCircle} /> : (isLogin ? "התחברות" : "הרשמה")}
+            {loading ? <div className={styles.loader}></div> : (isLogin ? "התחברות" : "הרשמה")}
           </Button>
 
           <Button
@@ -116,7 +116,9 @@ export default function AuthPopup({ onClose }) {
 
             <p className={styles.googleText}>כניסה עם גוגל</p>
           </Button>
+
           {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
+
           <div className={styles.toggleButton} onClick={toggleForm}>
             <small>
               {isLogin
