@@ -1,24 +1,26 @@
-const users = [
-    {
-        id: 0,
-        firstName: "חיה",
-        lastName: "יונגרמן",
-        image: "/profileImage.webp",
-        email: "chay6865@gmail.com",
-        password: "123456"
-    },
-    {
-        id: 1,
-        firstName: "מאי",
-        lastName: "הלל",
-        image: "/profileImage.webp",
-        email: "may.example@gmail.com",
-        password: "654321"
-    },
-]
-export function getUserByEmail(email) {
-    const user = users.find(user => user.email === email);
-    if (user)
-        return user;
-    return { status: 404, message: "user not found" }
+import bcrypt from 'bcryptjs';
+import * as service from '@/server/service/user.service';
+import { signIn } from "next-auth/react";
+
+export async function signUp(user) {
+    if (user.password) {
+        const saltRounds = 10;
+        const hashedPassword = await bcrypt.hash(user.password, saltRounds);
+        user.password = hashedPassword;
+    }
+    const newUser = service.createUser(user);
+    return newUser;
+}
+
+export async function signInByGoogle() {
+    signIn("google");
+}
+
+export async function signInByEmail(user) {
+    const response = await signIn("credentials", {
+        redirect: false,
+        email: user.email,
+        password: user.password,
+    });
+    return response;
 }

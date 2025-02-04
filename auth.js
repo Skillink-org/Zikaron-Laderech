@@ -1,6 +1,6 @@
 import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
-import { getUserByEmail } from "./server/actions/user.action";
+import { getUserByEmail } from "./server/service/user.service";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
