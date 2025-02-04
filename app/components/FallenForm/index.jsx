@@ -132,8 +132,6 @@ export default function FallenForm
                 />
             </label>
 
-
-
             <div className={styles.formButtons}>
                 <button type="button" onClick={handleSubmit}>שמור שינויים</button>
                 <button type="button" onClick={handleCancel}>ביטול</button>
