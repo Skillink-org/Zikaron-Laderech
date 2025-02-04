@@ -1,42 +1,103 @@
 @use '@/styles/_vars.scss' as *;
 
 
-$header-height: 80px;
-
 .header {
-    height: $header-height;
+    height: $headerHeight;
     display: grid;
-    grid-template-rows: auto;
-    grid-template-columns: [right] 78px [center] 1fr [left] 78px;
+    grid-template-rows: 1fr;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    justify-items: center;
+    padding-inline: 20px;
     font-family: $font-family;
 
-    &>* {
-        grid-row: 1;
+    &:has(.mobileNav.open) {
+        margin-right: 26px;
     }
-
 }
 
 .search {
-    grid-column: left;
-    place-self: center;
-    display: flex;
+    display: none;
     align-items: center;
     cursor: pointer;
 
-    .searchInput {
+    input {
+        // display: none;
+    }
+
+    .searchIcon {
         display: none;
     }
 }
 
-.logo {
-    grid-column: center;
-    place-self: center;
+.auth {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    justify-self: start;
+}
 
+
+.userProfile {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-family: $font-family;
+    gap: 5px;
+    cursor: pointer;
+
+    .profilePicture {
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    .initials {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: $buttonColor;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        font-size: $text-md;
+        color: white;
+    }
+
+    .userName {
+        display: none;
+        font-weight: 600;
+        font-size: $text-md;
+        color: $textColor;
+        margin-right: 5px;
+    }
+
+    .profileContainer {
+        display: flex;
+        align-items: center;
+    }
+}
+
+.menu {
+    position: absolute;
+    top: calc(100% + 5px);
+
+    left: 0;
+    z-index: 10;
+    justify-content: center;
+
+    button {
+        padding: 10px;
+    }
+}
+
+.logo {
+    text-align: center;
     font-weight: 700;
     font-size: 35px;
-    color: $primary;
-
     padding-bottom: 5px;
+    color: $primary;
 
     span {
         color: $textColor;
@@ -44,43 +105,33 @@ $header-height: 80px;
 }
 
 .nav {
-    grid-column: center;
     display: none;
     flex-direction: row;
     align-items: center;
     justify-content: center;
 
     a {
-        text-align: center;
-        width: 100px;
-        padding-block: 30px;
-        font-size: $text-md;
-
-        &:hover {}
-
-        &.active {}
-    }
-
-    a:nth-child(2) {
-        width: 160px;
+        font-size: 18px;
     }
 }
 
 .mobileNav {
-    grid-column: right;
     display: flex;
     align-items: center;
     justify-content: center;
 
-
-
     .navIcon {
-        position: fixed;
+        position: static;
         cursor: pointer;
-        z-index: 10;
+        z-index: 999;
     }
 
     &.open {
+        .navIcon {
+            position: fixed;
+            right: 20px;
+        }
+
         .nav {
             transform: translateX(0);
         }
@@ -94,6 +145,7 @@ $header-height: 80px;
 
     & .nav {
         position: fixed;
+        z-index: 998;
         height: 100vh;
         width: 50%;
         right: 0;
@@ -108,17 +160,24 @@ $header-height: 80px;
         color: $textColor;
         border-left: 1px solid $lightblueBorder;
         transition: all 0.2s ease-in-out;
+
+        a {
+            padding-block: 30px;
+        }
+
     }
 }
 
+@media (min-width: 1100px) {
 
-@media (min-width: 768px) {}
-
-
-@media (min-width: 1024px) {
     .header {
-        height: 100px;
-        grid-template-columns: auto [right] 280px [center] auto [left] 280px auto;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .search {
+        display: flex;
+        padding-inline: 20px;
     }
 
     .mobileNav {
@@ -128,33 +187,14 @@ $header-height: 80px;
     .nav {
         display: flex;
     }
-
-    .logo {
-        grid-column: right;
-    }
-
-    .search {
-        .searchInput {
-            display: block;
-        }
-
-        .searchIcon {
-            display: none;
-        }
-    }
-
 }
 
-@media (min-width: 1220px) {
+
+@media (min-width: 1440px) {
     .header {
-        grid-template-columns: auto [right] 335px [center] auto [left] 335px auto;
+        max-width: 1400px;
+        margin-inline: auto;
+        padding-inline: 0px;
     }
 
-    .nav {
-        a {
-            width: 128px;
-        }
-    }
 }
-
-@media (min-width: 1440px) {}

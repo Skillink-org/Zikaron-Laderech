@@ -1,0 +1,115 @@
+@use '@/styles/_vars.scss' as *;
+
+.profileForm {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin: 0 auto;
+    padding: 15px;
+    gap: 16px;
+    align-items: center;
+    text-align: right;
+
+    label {
+        display: flex;
+        flex-direction: column;
+        font-weight: bold;
+        gap: 8px;
+    }
+
+    input,
+    textarea {
+        padding: 8px;
+        border: 0.5px solid $lightblueBorder;
+        border-radius: 4px;
+        font-size: 16px;
+    }
+
+    h2 {
+        color: $titleColor;
+        margin-bottom: 15px;
+        font-size: $text-lg;
+    }
+    
+    .topSection {
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        gap: 16px;
+        width: 80%;
+
+        .rightSide {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+
+            .imageContainer {
+                width: 200px;
+                height: 200px;
+                background-color: var(--lightGray);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                overflow: hidden;
+                border-radius: 8px;
+                margin-left: auto;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+
+            }
+
+            .fileLabel input {
+                border: none;
+            }
+        }
+
+        .leftSide {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+
+            .dateInputs {
+                display: flex;
+                gap: 16px;
+                flex-wrap: wrap;
+
+                .dateLabel {
+                    min-width: 150px;
+                }
+            }
+        }
+    }
+
+    .fullWidthLabel {
+        width: 80%;
+    }
+
+    .formButtons {
+        display: flex;
+        justify-content: left;
+        gap: 16px;
+        width: 80%;
+
+        button {
+            color: white;
+            background-color: $buttonColor;
+            width: auto;
+            padding: 8px 20px;
+            gap: 5px;
+            border-radius: 10px;
+            font-size: $text-md;
+            font-family: $font-family;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: auto;
+        }
+    }
+}

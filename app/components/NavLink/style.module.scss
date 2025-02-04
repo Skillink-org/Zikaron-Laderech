@@ -1,0 +1,26 @@
+@use '@/styles/_vars.scss' as *;
+
+.link {
+    text-align: center;
+    width: 100px;
+    font-size: $text-md;
+    color: $textColor;
+
+    &:hover {
+        color: $titleColor;
+    }
+
+    &.active {
+        color: $titleColor;
+    }
+}
+
+.link:nth-child(2) {
+    width: 160px;
+}
+
+@media (min-width: 1220px) {
+    .link {
+        width: 128px;
+    }
+}

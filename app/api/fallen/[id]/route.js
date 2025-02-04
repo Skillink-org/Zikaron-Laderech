@@ -1,0 +1,17 @@
+import { NextResponse } from "next/server";
+import { getFallenById } from "@/server/actions/fallen.action";
+import { connectToDB } from "@/server/connect";
+
+await connectToDB();
+
+export async function GET(request, { params }) {
+  
+  const { id } = await params;
+  const fallen = await getFallenById(id);
+
+  if (!fallen) {
+    return NextResponse.json({ error: "Not found" }, { status: 404 });
+  }
+  
+  return NextResponse.json(fallen);
+}

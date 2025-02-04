@@ -1,21 +1,27 @@
-import React from "react";
+import Link from "next/link";
+import Image from "next/image";
 import styles from "./style.module.scss";
 
-const ProfileCard = ({ firstName, lastName, birthYear, deathYear, imageSrc }) => {
-    return (
-        <div className={styles.card}>
-            <div className={styles.profileImage}>
-                <img
-                    src={imageSrc}
-                    alt={`${firstName} ${lastName}`}
-                />
-            </div>
-            <h3 className={styles.name}>{`${firstName} ${lastName}`}</h3>
-            <p className={styles.years}>
-                {birthYear} - {deathYear}
-            </p>
-        </div>
-    );
-};
-
-export default ProfileCard;
+export default function ProfileCard({ fallen }) {
+  return (
+    <Link className={styles.card} href={`/all-fallen/${String(fallen.id)}`}>
+      <div className={styles.profileImage}>
+        <Image
+          className={styles.profileImage}
+          src={fallen.imageUrl}
+          alt={`${fallen.firstName} ${fallen.lastName}`}
+          width={150}
+          height={200}
+        />
+      </div>
+      <div>
+        <h3
+          className={styles.name}
+        >{`${fallen.firstName} ${fallen.lastName}`}</h3>
+        <p className={styles.years}>
+          {fallen.birthYear} - {fallen.deathYear}
+        </p>
+      </div>
+    </Link>
+  );
+}

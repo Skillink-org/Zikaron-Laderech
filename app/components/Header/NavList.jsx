@@ -1,13 +1,14 @@
 import styles from './style.module.scss'
-import Link from 'next/link'
+import NavLink from '@/app/components/NavLink'
+import { headerNavList } from '@/lib/NavigationList'
 
 export default function NavList() {
+
     return (
         <div className={styles.nav}>
-            <Link href='/HomePage'>בית</Link>
-            <Link href='/all-fallen'>השמות והתחביבים</Link>
-            <Link href='/about'>אודות</Link>
-            <Link href='/contact'>יצירת קשר</Link>
+            {headerNavList.map((link, index) => (
+                <NavLink key={index} href={link.href}>{link.label}</NavLink>
+            ))}
         </div>
     )
 }

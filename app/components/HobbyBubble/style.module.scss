@@ -3,22 +3,20 @@
 @use 'sass:color';
 
 .hobbyBubble {
-    display: flex;
-    flex-direction: row;
-    align-items: end;
-    justify-content: space-between;
-    padding: 10px;
-    border: 1px solid var(--darkerBorderColor);
-    border-radius: 10px;
-    width: 100px;
-    aspect-ratio: 3/2;
-    gap: 10px;
-    font-size: 18px;
-    color: black;
-    background: linear-gradient( -45deg, var(--baseColor) 10%, var(--lighterColor) 100%);
-    .Image {
-        &:hover {
-          cursor: pointer;
-        }
-      }
+  display: flex;
+  flex-direction: row;
+  align-items: end;
+  justify-content: space-between;
+  padding: 10px;
+  flex-grow: 1;
+  aspect-ratio: 3/2;
+  font-size: 18px;
+  color: $bubbleTextColor;
+
+  .title {
+    font-size: $text-base;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }

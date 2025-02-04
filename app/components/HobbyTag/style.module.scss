@@ -1,0 +1,30 @@
+@use '@/styles/_vars.scss' as *;
+
+@use 'sass:color';
+
+.hobbyTag {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    border-radius: $border-radius-md;
+    width: 150px;
+    height: 40px;
+    gap: 10px;
+    font-size: 18px;
+    color: $bubbleTextColor;
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+@media (max-width: $breakpoint-md) {
+    .dynamicBackground {
+        width: 45%;
+    }
+
+    .hobbyTag {
+        width: 100%;
+    }
+}
