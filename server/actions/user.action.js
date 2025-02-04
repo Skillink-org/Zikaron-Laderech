@@ -15,6 +15,14 @@ const users = [
         email: "may.example@gmail.com",
         password: "654321"
     },
+    {
+        id: 2,
+        firstName: "שחף",
+        lastName: "נוקד",
+        image: "/profileImage.webp",
+        email: "shahaf123@gmail.com",
+        password: "123123"
+    },
 ]
 export function getUserByEmail(email) {
     const user = users.find(user => user.email === email);
