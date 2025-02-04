@@ -209,12 +209,8 @@
 
 @media (min-width: 1440px) {
     .header {
-        padding-inline: 150px;
-    }
-}
-
-@media (min-width: 1600px) {
-    .header {
-        padding-inline: 200px;
+        max-width: 1400px;
+        margin-inline: auto;
+        padding-inline: 20px;
     }
 }
