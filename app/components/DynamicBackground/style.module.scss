@@ -5,8 +5,8 @@
 .dynamicBackground {
     display: inline-block;
     border: 1px solid var(--darkerBorderColor);
-    border-radius: 10px;
-    background: linear-gradient( -45deg, var(--baseColor) 10%, var(--lighterColor) 100%);
+    border-radius: $border-radius-md;
+    background: linear-gradient( -35deg, var(--baseColor) 10%, var(--lighterColor) 90%);
     .Image {
         &:hover {
           cursor: pointer;

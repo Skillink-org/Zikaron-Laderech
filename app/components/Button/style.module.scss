@@ -3,11 +3,11 @@
 .button {
     color: white;
     background-color: $buttonColor;
-    width: 100%;
-    padding: 10px 60px;
-    border-radius: 15px;
-    font-size: $text-md;
+    padding: 10px 20px;
+    border-radius: $border-radius-md;
+    font-size: $text-base;
     font-family: $font-family;
     border: none;
     cursor: pointer;
+    line-height: 20px;
 }

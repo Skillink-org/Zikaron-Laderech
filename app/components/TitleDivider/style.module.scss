@@ -3,14 +3,14 @@
 .container {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 20px;
   width: 100%;
 }
 
 .divider {
   flex-grow: 1;
   height: 1px;
-  background-color: $buttonColor;
+  background-color: $lightblueBorder;
 }
 
 .title {
@@ -18,9 +18,19 @@
   font-style: normal;
   font-weight: 600;
   line-height: 1.4;
-  font-size: $text-lg;
+  font-size: $text-md;
   display: flex;
   align-items: center;
   text-align: right;
-  color: $buttonColor;
+  color: $textColor;
+}
+
+@media (max-width: $breakpoint-md) {
+  .container {
+    flex-direction: column;
+  }
+
+  .divider {
+    width: 100%;
+  }
 }

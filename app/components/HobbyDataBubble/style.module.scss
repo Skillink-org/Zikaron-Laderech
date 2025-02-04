@@ -1,0 +1,24 @@
+@use '@/styles/_vars.scss' as *;
+
+@use 'sass:color';
+
+.dynamicBackgroundContainer {
+    width: 100%;
+}
+
+.hobbyDataBubble {
+    display: flex;
+    flex-direction: column;
+    // justify-content: center;
+    align-items: start;
+    padding: 10px;
+    aspect-ratio: 3;
+    font-size: $text-md;
+    color: $bubbleTextColor;
+
+    .hobbyContinuers {
+        font-size: $text-xl;
+        font-weight: bold;
+        color: $titleColor;
+    }
+}
