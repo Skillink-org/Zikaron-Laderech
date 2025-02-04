@@ -1,14 +1,22 @@
 import React from "react";
-import styles from './style.module.scss'
+import styles from "./style.module.scss";
 
-export default function GenericInput({ type, placeholder, value, onChange, className=styles.input }) {
+export default function GenericInput({
+  type,
+  placeholder,
+  value,
+  onChange,
+  className = "",
+  ...props
+}) {
   return (
     <input
       type={type}
       placeholder={placeholder}
       value={value}
       onChange={onChange}
-      className={className}
+      className={`${styles.input} ${className}`}
+      {...props}
     />
   );
 }

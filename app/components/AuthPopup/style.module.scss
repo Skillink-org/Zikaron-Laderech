@@ -58,12 +58,14 @@
 }
 
 .submitButton {
-  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: $buttonColor;
   color: $grayBackground;
-  border: none;
-  border-radius: 4px;
   font-size: $text-md;
+  min-width: 120px; 
+  height: 40px; 
   cursor: pointer;
   transition: background 0.3s;
 
@@ -76,6 +78,8 @@
   width: 100%;
   text-align: left;
   margin-top: 10px;
+  display: flex;
+  justify-content: start;
 }
 
 .toggleButton small {
@@ -91,4 +95,37 @@
 
 .googleText {
   margin-right: 5px;
+}
+
+.progressCircle {
+  width: 16px !important;
+  height: 16px !important;
+  color: inherit !important;
+}
+
+.errorMessage {
+  background-color: #f8d7da; 
+  color: #721c24; 
+  padding: 10px 20px; 
+  border-radius: 5px; 
+  margin-top: 10px; 
+  font-size: $text-sm;
+  text-align: center;
+  border: 1px solid #f5c6cb;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.loader {
+  width: 24px;
+  height: 24px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top: 3px solid #fff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  display: inline-block;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

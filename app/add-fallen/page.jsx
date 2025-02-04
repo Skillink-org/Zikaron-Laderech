@@ -58,13 +58,13 @@ export default function AddFallenPage() {
         setStatusType('error');
         return;
       }
-      
+
       if (file.size > 5 * 1024 * 1024) {
         setStatusMessage('התמונה גדולה מדי. נא להעלות תמונה עד 5MB');
         setStatusType('error');
         return;
       }
-  
+
       setFormData(prev => ({
         ...prev,
         imageFile: file,
@@ -76,11 +76,11 @@ export default function AddFallenPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
-  
+
     try {
       setStatusMessage("מעלה תמונה...");
       setStatusType("loading");
-  
+
       const formDataToSend = new FormData();
       formDataToSend.append("image", formData.imageFile);
       const imageUrl = await uploadImage(formDataToSend);
@@ -94,7 +94,7 @@ export default function AddFallenPage() {
         .split(',')
         .map(hobby => hobby.trim())
         .filter(hobby => hobby)
-        .map(name => ({ 
+        .map(name => ({
           name,
           continueCount: 0
         }));
@@ -119,7 +119,7 @@ export default function AddFallenPage() {
       });
 
       const result = await response.json();
-      
+
       if (!response.ok) {
         throw new Error(result.error || 'שגיאה בשמירת הנתונים');
       }
@@ -147,55 +147,55 @@ export default function AddFallenPage() {
       setStatusMessage(error.message || "אירעה שגיאה. נא לנסות שוב.");
       setStatusType("error");
     }
-};
+  };
 
-//validation function
-const validateForm = () => {
-  const nameParts = formData.fullName.trim().split(" ");
-  if (nameParts.length < 2) {
-    setStatusMessage("נא להזין שם מלא (שם פרטי ושם משפחה)");
-    setStatusType("error");
-    return false;
-  }
+  //validation function
+  const validateForm = () => {
+    const nameParts = formData.fullName.trim().split(" ");
+    if (nameParts.length < 2) {
+      setStatusMessage("נא להזין שם מלא (שם פרטי ושם משפחה)");
+      setStatusType("error");
+      return false;
+    }
 
-  if (!formData.birthYear) {
-    setStatusMessage("נא להזין שנת לידה");
-    setStatusType("error");
-    return false;
-  }
+    if (!formData.birthYear) {
+      setStatusMessage("נא להזין שנת לידה");
+      setStatusType("error");
+      return false;
+    }
 
-  if (!formData.deathDate) {
-    setStatusMessage("נא להזין תאריך פטירה");
-    setStatusType("error");
-    return false;
-  }
+    if (!formData.deathDate) {
+      setStatusMessage("נא להזין תאריך פטירה");
+      setStatusType("error");
+      return false;
+    }
 
-  if (!formData.hobbies.trim()) {
-    setStatusMessage("נא להזין לפחות תחביב אחד");
-    setStatusType("error");
-    return false;
-  }
+    if (!formData.hobbies.trim()) {
+      setStatusMessage("נא להזין לפחות תחביב אחד");
+      setStatusType("error");
+      return false;
+    }
 
-  if (!formData.about.trim()) {
-    setStatusMessage("נא להזין מידע אודות הנופל");
-    setStatusType("error");
-    return false;
-  }
+    if (!formData.about.trim()) {
+      setStatusMessage("נא להזין מידע אודות הנופל");
+      setStatusType("error");
+      return false;
+    }
 
-  if (!formData.familyMessage.trim()) {
-    setStatusMessage("נא להזין מסר מהמשפחה");
-    setStatusType("error");
-    return false;
-  }
+    if (!formData.familyMessage.trim()) {
+      setStatusMessage("נא להזין מסר מהמשפחה");
+      setStatusType("error");
+      return false;
+    }
 
-  if (!formData.imageFile) {
-    setStatusMessage("נא להעלות תמונה");
-    setStatusType("error");
-    return false;
-  }
+    if (!formData.imageFile) {
+      setStatusMessage("נא להעלות תמונה");
+      setStatusType("error");
+      return false;
+    }
 
-  return true;
-};
+    return true;
+  };
 
   return (
     <>
@@ -289,24 +289,24 @@ const validateForm = () => {
               required
             />
 
-<label className={styles.customFileUpload}>
-  העלאת תמונה
-  <input
-    type="file"
-    accept="image/*"
-    onChange={handleFileChange}
-    required
-    className={styles.hiddenInput}
-  />
-  {formData.image && (
-    <img 
-      src={formData.image} 
-      alt="תצוגה מקדימה" 
-      className={styles.imagePreview} 
-      style={{ maxWidth: '100px', marginTop: '10px' }}
-    />
-  )}
-</label>
+            <label className={styles.customFileUpload}>
+              העלאת תמונה
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleFileChange}
+                required
+                className={styles.hiddenInput}
+              />
+              {formData.image && (
+                <img
+                  src={formData.image}
+                  alt="תצוגה מקדימה"
+                  className={styles.imagePreview}
+                  style={{ maxWidth: '100px', marginTop: '10px' }}
+                />
+              )}
+            </label>
 
             <Button
               type="submit"
@@ -317,11 +317,11 @@ const validateForm = () => {
         </form>
       </CustomBubble>
 
-        {statusMessage && (
-          <div className={styles.statusMessage}>
-            <StatusMessage message={statusMessage} type={statusType} />
-          </div>
-        )}
+      {statusMessage && (
+        <div className={styles.statusMessage}>
+          <StatusMessage message={statusMessage} type={statusType} />
+        </div>
+      )}
     </>
   );
 }
