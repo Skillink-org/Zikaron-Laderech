@@ -1,4 +1,3 @@
-// TODO: Replace dummy data in real data from DB using the appropriate model
 const fallen = [
   {
     id: 0,
@@ -90,3 +89,45 @@ export async function getFilteredFallen(query) {
 export async function getFallenById(id) {
   return fallen.find((fallen) => fallen.id == id);
 }
+
+
+export async function addFallen(fallen) {
+  return await Fallen.create(fallen);
+}
+
+export async function updateFallen(fallen) {
+  return await Fallen.findByIdAndUpdate(fallen.id, fallen);
+}
+
+export async function deleteFallen(id) {
+  return await Fallen.findByIdAndDelete(id);
+} 
+
+
+// import Fallen from '../models/fallen';
+
+// export const fallenService = {
+//   async create(fallenData) {
+//     try {
+//       // המרת התחביבים למערך
+//       const hobbies = fallenData.hobbies
+//         .split(',')
+//         .map(hobby => hobby.trim())
+//         .filter(hobby => hobby);
+
+//       // יצירת אובייקט חדש עם הנתונים המעובדים
+//       const newFallen = new Fallen({
+//         ...fallenData,
+//         hobbies,
+//         isAccepted: false
+//       });
+
+//       // שמירה במסד הנתונים
+//       const savedFallen = await newFallen.save();
+//       return savedFallen;
+//     } catch (error) {
+//       console.error('Error in fallenService.create:', error);
+//       throw error;
+//     }
+//   }
+// };
