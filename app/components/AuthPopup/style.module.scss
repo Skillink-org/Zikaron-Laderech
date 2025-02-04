@@ -64,8 +64,8 @@
   background: $buttonColor;
   color: $grayBackground;
   font-size: $text-md;
-  min-width: 120px; 
-  height: 40px; 
+  min-width: 120px;
+  height: 40px;
   cursor: pointer;
   transition: background 0.3s;
 
@@ -97,21 +97,27 @@
   margin-right: 5px;
 }
 
-.progressCircle {
-  width: 16px !important;
-  height: 16px !important;
-  color: inherit !important;
-}
-
 .errorMessage {
-  background-color: #f8d7da; 
-  color: #721c24; 
-  padding: 10px 20px; 
-  border-radius: 5px; 
-  margin-top: 10px; 
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 10px 20px;
+  border-radius: 5px;
+  margin-top: 10px;
   font-size: $text-sm;
   text-align: center;
   border: 1px solid #f5c6cb;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.successMessage {
+  background-color: #dcf2c4;
+  color: #156f44;
+  padding: 10px 20px;
+  border-radius: 5px;
+  margin-top: 10px;
+  font-size: $text-sm;
+  text-align: center;
+  border: 1px solid #91f397;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -126,6 +132,11 @@
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }

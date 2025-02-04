@@ -1,4 +1,4 @@
-import User from '@/server/models/fallen.model';
+import User from '@/server/models/user.model';
 
 export async function getUserByEmail(email) {
     const user = await User.findOne({ email });

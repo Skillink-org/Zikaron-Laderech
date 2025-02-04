@@ -1,7 +1,8 @@
 import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
-import { getUserByEmail } from "./server/service/user.service";
+import { getUserByEmail,createUser } from "./server/service/user.service";
 import CredentialsProvider from "next-auth/providers/credentials";
+import bcrypt from "bcryptjs"
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
   providers: [
@@ -17,21 +18,41 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       },
       async authorize(credentials) {
         const user = getUserByEmail(credentials.email);
-
-        if (user && user.password == credentials.password) {
-          return user;
+        if (!user) {
+          throw new Error("User Not Found");
         }
-        return null;
+        const isMatch = bcrypt.compare(credentials.password, user.password);
+        if (!isMatch) {
+          throw new Error("Invalid password");
+        }
+        return user;
       },
     }),
   ],
   secret: process.env.NEXT_AUTH_SECRET,
   session: {
     strategy: "jwt",
-    maxAge: 7 * 24 * 60 * 60, 
+    maxAge: 7 * 24 * 60 * 60,
     updateAge: 24 * 60 * 60,
   },
   callbacks: {
+    async signIn({ user, account }) {
+      if (account.provider === "google") {
+        let existingUser = await getUserByEmail(user.email);
+        if (!existingUser) {
+          existingUser = await createUser({
+            email: user.email,
+            firstName: user.name.split(" ")[0],
+            lastName: user.name.split(" ")[1] || "",
+            image: user.image,
+            role: "user",
+          });
+        }
+        user.id = existingUser.id;
+        user.role = existingUser.role;
+      }
+      return true;
+    },
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
@@ -39,6 +60,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         token.firstName = user.firstName || user.name?.split(" ")[0];
         token.lastName = user.lastName || user.name?.split(" ")[1] || "";
         token.image = user.image;
+        token.role = user.role;
       }
       return token;
     },
@@ -48,6 +70,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       session.user.firstName = token.firstName;
       session.user.lastName = token.lastName;
       session.user.image = token.image;
+      session.user.role = token.role;
       return session;
     },
   },
