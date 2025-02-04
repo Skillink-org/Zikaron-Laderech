@@ -4,16 +4,17 @@ import ProfileCard from "@/app/components/ProfileCard";
 import HobbyBubble from "@/app/components/HobbyBubble";
 import TitleDivider from "@/app/components/TitleDivider";
 import HobbyDataBubble from "@/app/components/HobbyDataBubble";
+import { getBaseUrl } from "@/lib/baseUrl";
 import StatusMessage from "@/app/components/StatusMessage";
 
 export default async function FallenPage({ params }) {
-  const fallenId = (await params).fallen;
+  const fallenId = params.fallen;
 
-  // TODO: Generlize base URL depending on the environment
-  const response = await fetch(`http://localhost:3000/api/fallen/${fallenId}`);
+  const baseUrl = getBaseUrl();
+  const response = await fetch(`${baseUrl}/api/fallen/${fallenId}`);
 
-  if (response.status != 200) {
-    return <StatusMessage message={response.statusText || 'An error occurred'} type="error" />;
+  if (!response.ok) {
+    return <StatusMessage message={response.statusText || 'אירעה שגיאה'} type="error" />;
   }
 
   const fallenDetails = await response.json();
