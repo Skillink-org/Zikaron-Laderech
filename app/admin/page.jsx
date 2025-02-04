@@ -7,6 +7,7 @@ import styles from './page.module.scss'
 
 import Image from "next/image"
 
+import FallenForm from "../components/FallenForm";
 
 export default function AdminPage() {
     const [searchQuery, setSearchQuery] = useState('');
@@ -14,6 +15,7 @@ export default function AdminPage() {
     const [isOpen, setIsOpen] = useState(false);
     const openModal = () => setIsOpen(true);
     const closeModal = () => setIsOpen(false);
+
 
     const [status, setStatus] = useState('');
 
@@ -37,9 +39,9 @@ export default function AdminPage() {
 
     // TODO: Replace the static data with real data from the database
     const [fallenData, setFallenData] = useState([
-        { date: '01/02/2025', name: 'ישראל ישראלי', status: 'ממתין לאישור' },
-        { date: '02/02/2025', name: 'ישראל ישראלי', status: 'מאושר' },
-        { date: '03/02/2025', name: 'ישראל ישראלי', status: 'נדחה' }
+        { date: '01/02/2025', fullName: 'ישראל ישראלי', status: 'ממתין לאישור' },
+        { date: '02/02/2025', fullName: 'ישראל ישראלי', status: 'מאושר' },
+        { date: '03/02/2025', fullName: 'ישראל ישראלי', status: 'נדחה' }
     ]);
 
     const getStatusClass = (status) => {
@@ -54,6 +56,23 @@ export default function AdminPage() {
                 return '';
         }
     };
+
+    const [selectedProfile, setSelectedProfile] = useState({});
+    const [isEditFallenOpen, setIsEditFallenOpen] = useState(false);
+    const openEditFallenModal = (profile) => {
+        setSelectedProfile(profile);
+        setIsEditFallenOpen(true)
+    };
+    const closeEditFallenModal = () => {
+        setSelectedProfile({});
+        setIsEditFallenOpen(false);
+    };
+
+    const editFallenProfile = (profile) => {
+        // TODO: Implement here the logic to edit the profile
+
+        closeEditFallenModal();
+    }
 
     return (
         <>
@@ -102,8 +121,7 @@ export default function AdminPage() {
                     <button className={styles.closeButton} onClick={closeModal}>
                         <Image
                             src="/closeIcon.svg"
-                            alt="Filter icon"
-                            className={styles.filterIcon}
+                            alt="Close icon"
                             width={20}
                             height={20}
                         />
@@ -138,7 +156,7 @@ export default function AdminPage() {
                         <tr key={index}>
                             <td className={styles.date}>{item.date}</td>
 
-                            <td>{item.name}</td>
+                            <td>{item.fullName}</td>
 
                             <td>
                                 <span className={`${styles.status} ${getStatusClass(item.status)}`}>
@@ -150,6 +168,7 @@ export default function AdminPage() {
                                 <button
                                     type="button"
                                 // onClick={}
+                                // TODO: Implement a function to approve the profile
                                 >
                                     <Image
                                         src="/approveIcon.svg"
@@ -161,8 +180,7 @@ export default function AdminPage() {
 
                                 <button
                                     type="button"
-                                // onClick={}
-                                // TODO: Implement a function to approve the profile
+                                    onClick={() => openEditFallenModal(item)}
                                 >
                                     <Image
                                         src="/editIcon.svg"
@@ -189,6 +207,26 @@ export default function AdminPage() {
                     ))}
                 </tbody>
             </table>
+
+            <Modal
+                isOpen={isEditFallenOpen}
+                onRequestClose={closeEditFallenModal}
+                contentLabel="עריכת נופל"
+                className={styles.modalEditFallen}
+                overlayClassName={styles.modalOverlay}
+                ariaHideApp={false}
+            >
+                <button className={styles.closeButtonEditFallenModal} onClick={closeEditFallenModal}>
+                    <Image
+                        src="/closeIcon.svg"
+                        alt="Close icon"
+                        width={20}
+                        height={20}
+                    />
+                </button>
+
+                <FallenForm profile={selectedProfile} onSave={editFallenProfile} onCancel={closeEditFallenModal} />
+            </Modal>
         </>
     )
 }
