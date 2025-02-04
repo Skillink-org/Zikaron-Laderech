@@ -9,20 +9,20 @@ import UserProfile from './UserProfile'
 
 export default function Header() {
     const { data: session } = useSession();
-    
+
     const isLoggedIn = session ? true : false;
 
     return (
         <header className={styles.header}>
-            <NavList />
             <MobileNav />
+            <div className={styles.logo}><span>זיכרון </span>לדרך</div>
+            <NavList />
             <Search />
             {isLoggedIn ? <UserProfile
                 firstName={session?.user?.firstName}
                 lastName={session?.user?.lastName}
                 imageSrc={session?.user?.image} />
                 : <AuthButton />}
-            <div className={styles.logo}><span>זיכרון </span>לדרך</div>
         </header>
     )
 }
