@@ -4,23 +4,23 @@ import ProfileCard from "@/app/components/ProfileCard";
 import HobbyBubble from "@/app/components/HobbyBubble";
 import TitleDivider from "@/app/components/TitleDivider";
 import HobbyDataBubble from "@/app/components/HobbyDataBubble";
+import { getBaseUrl } from "@/lib/baseUrl";
+import StatusMessage from "@/app/components/StatusMessage";
 
 export default async function FallenPage({ params }) {
-  const fallenId = (await params).fallen;
+  const fallenId = params.fallen;
 
-  // TODO: Generlize base URL depending on the environment
-  const fallenDetails = await fetch(
-    `http://localhost:3000/api/fallen/${fallenId}`
-  )
-    .then((response) => response.json())
-    .then((data) => data);
+  const baseUrl = getBaseUrl();
+  const response = await fetch(`${baseUrl}/api/fallen/${fallenId}`);
 
-  const continuedHobbies = ["טניס", "שירה", "ריצה"];
-  const mainTitle = "תמשיכו לבנות לגו. זה החלום והתחביב הכי גדול שלי";
-  const aboutParagraph =
-    "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nihil reiciendis, rerum tempore officiis molestias ab consequuntur est, doloremque accusamus reprehenderit quod voluptates enim, deleniti ex atque sint quisquam? Debitis, officiis!";
-  const additionalParagraph =
-    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis, perferendis, sequi dolore quisquam obcaecati molestiae consequuntur minus laboriosam est itaque qui saepe provident, iusto in quod! Consectetur voluptates alias velit?";
+  if (!response.ok) {
+    return <StatusMessage message={response.statusText || 'אירעה שגיאה'} type="error" />;
+  }
+
+  const fallenDetails = await response.json();
+  const continuedHobbies = fallenDetails.hobbies.filter(
+    (hobby) => hobby.continueCount > 0)
+  const hobbyContinuersSum = continuedHobbies.reduce((sum, hobby) => sum + hobby.continueCount, 0);
 
   return (
     <>
@@ -33,10 +33,10 @@ export default async function FallenPage({ params }) {
             containerClassName={styles.hobbiesDivider}
           />
           <div className={styles.hobbies}>
-            {fallenDetails.hobbies.map((hobby) => (
+            {fallenDetails.hobbies.map((hobby, index) => (
               <HobbyBubble
-                key={hobby}
-                children={hobby}
+                key={index}
+                children={hobby.name}
                 dynamicBackgroundClassName={styles.hobby}
                 className={styles.hobbyBubble}
               />
@@ -45,36 +45,36 @@ export default async function FallenPage({ params }) {
         </div>
         {/* middle */}
         <div className={`${styles.middleCol} ${styles.col}`}>
-          <h1 className={styles.mainTitle}>{mainTitle}</h1>
+          <h1 className={styles.mainTitle}>{fallenDetails.familyWords}</h1>
 
           <TitleDivider
-            title={"התחביבים שלי"}
+            title={"אודות"}
             dividerClassName={styles.sctionsDivider}
           />
-          <p className={styles.paragraph}>{aboutParagraph}</p>
+          <p className={styles.paragraph}>{fallenDetails.about}</p>
 
           <TitleDivider
             title={"קצת עליי"}
             dividerClassName={styles.sctionsDivider}
           />
-          <p className={styles.paragraph}>{additionalParagraph}</p>
+          <p className={styles.paragraph}>{fallenDetails.familyWords}</p>
         </div>
         {/* left */}
         <div className={`${styles.leftCol} ${styles.col}`}>
           <div className={styles.hobbiesWithData}>
             {continuedHobbies.map((hobby, index) => (
-              <HobbyDataBubble hobbyName={hobby} sumMode={false} key={index} />
+              <HobbyDataBubble hobbyName={hobby.name} sumMode={false} key={index} fallenName={fallenDetails.firstName} hobbyContinuers={hobby.continueCount} />
             ))}
 
             <TitleDivider
               title={'סה"כ'}
               containerClassName={styles.totalDivider}
             />
-            <HobbyDataBubble sumMode={true} />
+            <HobbyDataBubble sumMode={true} hobbyContinuersSum={hobbyContinuersSum} />
           </div>
-          <Button className={styles.button} children={"שיתוף"} />
+          <Button className={styles.button} children={'שיתוף'} />
         </div>
       </div>
     </>
-  );
+  )
 }

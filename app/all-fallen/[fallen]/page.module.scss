@@ -32,6 +32,7 @@
                 display: flex;
                 flex-direction: column;
                 justify-content: end;
+                margin-bottom: 2%;
             }
         }
     }
@@ -71,10 +72,6 @@
 }
 
 @media (max-width: $breakpoint-md) {
-    .hobbyBubble {
-        aspect-ratio: 0 / 0 !important;
-    }
-
     .sctionsDivider {
         display: none !important;
     }
@@ -85,6 +82,10 @@
 }
 
 @media (max-width: 930px) {
+    .hobbyBubble {
+        aspect-ratio: 0 / 0 !important;
+    }
+
     .fallen {
         flex-direction: column;
 

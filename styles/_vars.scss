@@ -26,12 +26,16 @@ $darkElementGradient: linear-gradient(to top, var(--mutedBlue) 20%, var(--darkGr
 
 //Text sizing
 $font-family: 'Noto Sans Hebrew', sans-serif;
-$text-xxl: 64px; // כותרת ענק
+$text-xxl: 48px; // כותרת ענק
 $text-xl: 36px; // כותרת
 $text-lg: 24px; // משנה
-$text-md: 18px; // טקסט מוגדל
-$text-base: 16px; // טקסט בסיס
-$text-sm: 14px; //טקסט קטן
+$text-md: 16px; // טקסט מוגדל
+$text-base: 14px; // טקסט בסיס
+$text-sm: 12px; //טקסט קטן
+
+//header and footer height
+$headerHeight: 80px;
+$footerHeight: 120px;
 
 //Spacing
 // TODO: Add more spacing sizes

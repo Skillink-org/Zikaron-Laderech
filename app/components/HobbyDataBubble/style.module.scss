@@ -9,11 +9,11 @@
 .hobbyDataBubble {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    // justify-content: center;
     align-items: start;
     padding: 10px;
     aspect-ratio: 3;
-    font-size: 18px;
+    font-size: $text-md;
     color: $bubbleTextColor;
 
     .hobbyContinuers {
