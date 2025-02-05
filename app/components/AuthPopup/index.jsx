@@ -7,6 +7,7 @@ import { signIn } from "next-auth/react";
 import { useEffect, useState } from "react";
 import GenericInput from "../GenericInput/index";
 import { loginFields, signupFields } from "@/lib/FormFields";
+import { createUserAction } from '@/server/actions/user.action';
 
 export default function AuthPopup({ onClose }) {
   const [isLogin, setIsLogin] = useState(true);
@@ -62,14 +63,8 @@ export default function AuthPopup({ onClose }) {
   }
 
   const handleSignUp = async () => {
-    const response = await fetch('/api/user', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData)
-    });
-    if (response.ok) {
+    const response = await createUserAction(formData);
+    if (response?.newUser) {
       setSuccessMessage("ההרשמה הצליחה. נא התחבר למערכת.");
       setErrorMessage("");
       setLoading(false);
@@ -104,7 +99,7 @@ export default function AuthPopup({ onClose }) {
         </button>
         <h2 className={styles.title}>{isLogin ? "התחברות" : "הרשמה"}</h2>
         <form className={styles.form} onSubmit={handleSubmit}>
-          {currentFields.map(({ type, placeholder, stateKey,autoComplete }) => (
+          {currentFields.map(({ type, placeholder, stateKey, autoComplete }) => (
             <GenericInput
               key={stateKey}
               type={type}
