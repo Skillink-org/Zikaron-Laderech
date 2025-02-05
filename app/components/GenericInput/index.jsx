@@ -7,6 +7,7 @@ export default function GenericInput({
   value,
   onChange,
   className = "",
+  autoComplete = "on",
   ...props
 }) {
   return (
@@ -16,6 +17,7 @@ export default function GenericInput({
       value={value}
       onChange={onChange}
       className={`${styles.input} ${className}`}
+      autoComplete={autoComplete}
       {...props}
     />
   );
