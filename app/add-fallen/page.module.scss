@@ -14,8 +14,15 @@
   // display: flex;
   // flex-direction: column;
   // align-items: center;
-  // gap: 20px;
+  gap: 20px;
   // padding: 20px;
+}
+
+
+.line1 > .name,
+.line1 > .birthDate,
+.line1 > .date {
+  flex: 1;
 }
 
 .allFormDetails {
@@ -42,7 +49,7 @@
 .highlightQuote,
 .customFileUpload {
   width: 100%;
-  height: 48px;
+  height: 40px;
   border: 1px solid $lightblueBorder;
   border-radius: 15px;
   resize: none;
@@ -71,7 +78,7 @@
 }
 
 .submitButton {
-  height: 48px;
+  height: 40px;
 }
 
 .statusMessageContainer {

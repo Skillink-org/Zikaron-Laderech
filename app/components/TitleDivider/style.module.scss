@@ -27,7 +27,7 @@
   color: $textColor;
 }
 
-@media (max-width: 768px) {
+@media (max-width: $breakpoint-md) {
   .container {
     flex-direction: column;
   }

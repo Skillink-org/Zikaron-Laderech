@@ -8,8 +8,8 @@
     align-items: center;
     justify-content: center;
     padding: 10px;
-    border-radius: 10px;
-    width: 200px;
+    border-radius: $border-radius-md;
+    width: 150px;
     height: 40px;
     gap: 10px;
     font-size: 18px;
@@ -19,7 +19,7 @@
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: $breakpoint-md) {
     .dynamicBackground {
         width: 45%;
     }

@@ -1,5 +1,5 @@
 "use client"
-import { useState } from 'react'
+import { useSession } from 'next-auth/react'
 import styles from './style.module.scss'
 import MobileNav from './MobileNav'
 import Search from './Search'
@@ -8,23 +8,21 @@ import AuthButton from './AuthButton'
 import UserProfile from './UserProfile'
 
 export default function Header() {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const exampleUser = {
-        firstName: "יוסף",
-        lastName: "כהן",
-        imageSrc: '/profileImage.webp'
-    };
+    const { data: session } = useSession();
+
+    const isLoggedIn = session ? true : false;
+
     return (
         <header className={styles.header}>
-            <NavList />
             <MobileNav />
+            <div className={styles.logo}><span>זיכרון </span>לדרך</div>
+            <NavList />
             <Search />
             {isLoggedIn ? <UserProfile
-                firstName={exampleUser.firstName}
-                lastName={exampleUser.lastName}
-                imageSrc={exampleUser.imageSrc} />
+                firstName={session?.user?.firstName}
+                lastName={session?.user?.lastName}
+                imageSrc={session?.user?.image} />
                 : <AuthButton />}
-            <div className={styles.logo}><span>זיכרון </span>לדרך</div>
         </header>
     )
 }
