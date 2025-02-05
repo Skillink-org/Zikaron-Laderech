@@ -9,6 +9,8 @@ import Image from "next/image"
 
 import FallenForm from "../components/FallenForm";
 
+// TODO-YOSEF: talk with Refael about popup system - with zustand
+
 export default function AdminPage() {
     const [searchQuery, setSearchQuery] = useState('');
 

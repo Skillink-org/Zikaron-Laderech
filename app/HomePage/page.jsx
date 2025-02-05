@@ -3,6 +3,9 @@ import styles from './style.module.scss';
 import Image from 'next/image';
 import HobbyList from './HobbyList';
 
+// TODO-YOSEF: dont make it use client - the client part move outside the component
+// TODO-YOSEF: button should be a Link
+// TODO-YOSEF: home gape need to be at top level - replace the default one
 
 const HomePage = () => {
   return (

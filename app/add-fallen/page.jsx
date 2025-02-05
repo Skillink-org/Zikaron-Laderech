@@ -7,6 +7,11 @@ import StatusMessage from "../components/StatusMessage";
 import CustomBubble from "../components/CustomBubble";
 import { uploadImage } from "@/server/actions/uploadImage.action";
 
+
+// TODO-YOSEF: replace fetch with action
+// TODO-YOSEF: replace form manual validation with zod
+
+
 export default function AddFallenPage() {
   const cloudName = process.env.CLOUDINARY_NAME;
   const currentYear = new Date().getFullYear();

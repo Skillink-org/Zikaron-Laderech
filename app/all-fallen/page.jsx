@@ -11,6 +11,8 @@ import TitleDivider from "../components/TitleDivider";
 export default async function AllFallenPage({ searchParams }) {
   const q = (await searchParams).q || "";
 
+  // TODO-YOSEF: connect to mongodb
+  // TODO-YOSEF: dont use fetch - use the service directly
   const baseUrl = getBaseUrl();
   const fallenPromise = (await fetch(`${baseUrl}/api/fallen?q=${q}`)).json();
 

@@ -1,5 +1,8 @@
 import styles from './style.module.scss';
 
+// TODO-YOSEF: add submit handler
+// TODO-YOSEF: use Generic Input component
+
 const ContactForm = () => {
   return (
     <form className={styles["contact-form"]}>
