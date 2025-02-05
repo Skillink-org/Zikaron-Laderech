@@ -12,13 +12,13 @@ export default function AuthPopup({ onClose }) {
   const [isLogin, setIsLogin] = useState(true);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
   const [formData, setFormData] = useState({
     email: "",
     password: "",
     firstName: "",
     lastName: "",
-    phone: "",
   });
 
   const handleChange = (key) => (e) => {
@@ -31,6 +31,7 @@ export default function AuthPopup({ onClose }) {
   const toggleForm = () => {
     setIsLogin(!isLogin);
     setErrorMessage("");
+    setSuccessMessage("");
   };
 
   const handleSubmit = async (e) => {
@@ -39,9 +40,12 @@ export default function AuthPopup({ onClose }) {
     setErrorMessage("");
     if (isLogin) {
       await handleEmailSignin();
-    }
+    } else {
+      await handleSignUp();
+    };
   };
   const handleEmailSignin = async () => {
+    console.log("signin in index")
     const response = await signIn("credentials", {
       redirect: false,
       email: formData.email,
@@ -56,6 +60,25 @@ export default function AuthPopup({ onClose }) {
         onClose();
       }, 2000);
     };
+  }
+
+  const handleSignUp = async () => {
+    const response = await fetch('/api/user', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData)
+    });
+    if (response.ok) {
+      setSuccessMessage("ההרשמה הצליחה. נא התחבר למערכת.");
+      setErrorMessage("");
+      setLoading(false);
+    } else {
+      setErrorMessage("ארעה תקלה. אנא נסה שוב.");
+      setSuccessMessage("");
+      setLoading(false);
+    }
   }
 
   // Close popup on escape key press
@@ -108,8 +131,8 @@ export default function AuthPopup({ onClose }) {
           >
             <Image
               src="/google-icon.svg"
-              width={16}
-              height={16}
+              width={18}
+              height={18}
               alt="google icon"
               unoptimized
             />
@@ -118,6 +141,7 @@ export default function AuthPopup({ onClose }) {
           </Button>
 
           {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
+          {successMessage && <p className={styles.successMessage}>{successMessage}</p>}
 
           <div className={styles.toggleButton} onClick={toggleForm}>
             <small>

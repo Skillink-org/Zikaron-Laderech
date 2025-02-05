@@ -30,7 +30,6 @@ export default function UserProfile({ firstName, lastName, imageSrc }) {
                         {getInitials(lastName)}
                     </div>
                 )}
-                <span className={styles.userName}>{`${firstName} ${lastName}`}</span>
             </div>
 
             {menuOpen && (
