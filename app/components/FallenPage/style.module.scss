@@ -1,0 +1,39 @@
+@use '@/styles/_vars.scss' as vars;
+
+// עיצוב הקונטיינר הראשי
+.container {
+  display: flex;
+  align-items: center;
+  gap: vars.$margin;
+  width: 100%;
+  background-color: vars.$gray;
+  border-radius: vars.$border-radius;
+  padding: vars.$padding;
+}
+
+// כותרת
+.title {
+  font-family: vars.$font-family;
+  font-size: vars.$font-size-lg;
+  font-weight: 600;
+  color: vars.$blue;
+  text-align: right;
+}
+
+// מחיצה
+.divider {
+  flex-grow: 1;
+  height: 1px;
+  background-color: vars.$mutedBlue;
+}
+
+// עיצוב רספונסיבי
+@media (max-width: vars.$breakpoint-mobile) {
+  .container {
+    flex-direction: column;
+  }
+
+  .divider {
+    width: 100%;
+  }
+}
