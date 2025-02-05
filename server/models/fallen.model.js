@@ -12,7 +12,7 @@ const fallenSchema = new mongoose.Schema({
     about: { type: String },
     familyWords: { type: String },
     imageUrl: { type: String },
-    isAccepted: { type: Boolean, default: false }
+    status: { type: String, enum: ["pending", "approved", "rejected"], default: "pending"},
 });
 
 const Fallen = mongoose.models.Fallen || mongoose.model('Fallen', fallenSchema);

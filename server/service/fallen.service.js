@@ -58,7 +58,7 @@ export async function addFallen(fallenData) {
       ...fallenData,
       birthDate,
       deathDate,
-      isAccepted: false,
+      status: "pending"
     });
 
     return fallen;

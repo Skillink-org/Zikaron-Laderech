@@ -119,7 +119,7 @@ export default function AddFallenPage() {
           about: formData.about,
           familyWords: formData.familyMessage,
           imageUrl,
-          isAccepted: false
+          status: "pending"
         }),
       });
 
