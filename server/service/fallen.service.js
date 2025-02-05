@@ -1,25 +1,28 @@
-import Fallen from '@/server/models/fallen.model';
-
+import Fallen from "@/server/models/fallen.model";
 
 export async function getAllFallen() {
   return await Fallen.find({});
 }
 
 export async function getFilteredFallen(query) {
-  return Fallen.filter(
-    (fallen) =>
-      fallen.firstName.includes(query) ||
-      fallen.lastName.includes(query) ||
-      fallen.hobbies.includes(query)
-  );
+  return await Fallen.find({
+    $or: [
+      { firstName: { $regex: query, $options: "i" } },
+      { lastName: { $regex: query, $options: "i" } },
+      {
+        hobbies: {
+          $elemMatch: { name: { $regex: query, $options: "i" } },
+        },
+      },
+    ],
+  });
 }
 
 export async function getFallenById(id) {
   try {
     return await Fallen.findById(id);
-  }
-  catch (error) {
-    console.log(error)
+  } catch (error) {
+    console.log(error);
   }
 }
 
@@ -39,15 +42,15 @@ export async function addFallen(fallenData) {
   try {
     // Basic validation
     if (!fallenData.firstName || !fallenData.lastName) {
-      throw new Error('Missing first name or last name');
+      throw new Error("Missing first name or last name");
     }
 
     // Ensure dates are valid
     const birthDate = new Date(fallenData.birthDate);
     const deathDate = new Date(fallenData.deathDate);
-    
+
     if (isNaN(birthDate.getTime()) || isNaN(deathDate.getTime())) {
-      throw new Error('Invalid birth or death date');
+      throw new Error("Invalid birth or death date");
     }
 
     // Create a new record
@@ -55,12 +58,12 @@ export async function addFallen(fallenData) {
       ...fallenData,
       birthDate,
       deathDate,
-      isAccepted: false
+      isAccepted: false,
     });
 
     return fallen;
   } catch (error) {
-    console.error('Error in addFallen:', error);
+    console.error("Error in addFallen:", error);
     throw error;
   }
 }

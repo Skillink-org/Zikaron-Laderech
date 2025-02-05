@@ -1,26 +1,24 @@
 import styles from "./page.module.scss";
 import Button from "@/app/components/Button";
+import { connectToDB } from "@/server/connect";
 import ProfileCard from "@/app/components/ProfileCard";
 import HobbyBubble from "@/app/components/HobbyBubble";
 import TitleDivider from "@/app/components/TitleDivider";
 import HobbyDataBubble from "@/app/components/HobbyDataBubble";
-import { getBaseUrl } from "@/lib/baseUrl";
-import StatusMessage from "@/app/components/StatusMessage";
+import { getFallenById } from "@/server/service/fallen.service";
 
 export default async function FallenPage({ params }) {
-  const fallenId = params.fallen;
+  await connectToDB();
 
-  const baseUrl = getBaseUrl();
-  const response = await fetch(`${baseUrl}/api/fallen/${fallenId}`);
-
-  if (!response.ok) {
-    return <StatusMessage message={response.statusText || 'אירעה שגיאה'} type="error" />;
-  }
-
-  const fallenDetails = await response.json();
+  const fallenId = (await params).fallen;
+  const fallenDetails = await getFallenById(fallenId);
   const continuedHobbies = fallenDetails.hobbies.filter(
-    (hobby) => hobby.continueCount > 0)
-  const hobbyContinuersSum = continuedHobbies.reduce((sum, hobby) => sum + hobby.continueCount, 0);
+    (hobby) => hobby.continueCount > 0
+  );
+  const hobbyContinuersSum = continuedHobbies.reduce(
+    (sum, hobby) => sum + hobby.continueCount,
+    0
+  );
 
   return (
     <>
@@ -63,18 +61,27 @@ export default async function FallenPage({ params }) {
         <div className={`${styles.leftCol} ${styles.col}`}>
           <div className={styles.hobbiesWithData}>
             {continuedHobbies.map((hobby, index) => (
-              <HobbyDataBubble hobbyName={hobby.name} sumMode={false} key={index} fallenName={fallenDetails.firstName} hobbyContinuers={hobby.continueCount} />
+              <HobbyDataBubble
+                hobbyName={hobby.name}
+                sumMode={false}
+                key={index}
+                fallenName={fallenDetails.firstName}
+                hobbyContinuers={hobby.continueCount}
+              />
             ))}
 
             <TitleDivider
               title={'סה"כ'}
               containerClassName={styles.totalDivider}
             />
-            <HobbyDataBubble sumMode={true} hobbyContinuersSum={hobbyContinuersSum} />
+            <HobbyDataBubble
+              sumMode={true}
+              hobbyContinuersSum={hobbyContinuersSum}
+            />
           </div>
-          <Button className={styles.button} children={'שיתוף'} />
+          <Button className={styles.button} children={"שיתוף"} />
         </div>
       </div>
     </>
-  )
+  );
 }
