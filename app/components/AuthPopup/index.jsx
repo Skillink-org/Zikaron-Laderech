@@ -45,7 +45,6 @@ export default function AuthPopup({ onClose }) {
     };
   };
   const handleEmailSignin = async () => {
-    console.log("signin in index")
     const response = await signIn("credentials", {
       redirect: false,
       email: formData.email,
@@ -105,7 +104,7 @@ export default function AuthPopup({ onClose }) {
         </button>
         <h2 className={styles.title}>{isLogin ? "התחברות" : "הרשמה"}</h2>
         <form className={styles.form} onSubmit={handleSubmit}>
-          {currentFields.map(({ type, placeholder, stateKey }) => (
+          {currentFields.map(({ type, placeholder, stateKey,autoComplete }) => (
             <GenericInput
               key={stateKey}
               type={type}
@@ -113,6 +112,7 @@ export default function AuthPopup({ onClose }) {
               placeholder={placeholder}
               value={formData[stateKey]}
               required={true}
+              autoComplete={autoComplete}
               onChange={handleChange(stateKey)}
             />
           ))}

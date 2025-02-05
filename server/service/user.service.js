@@ -1,7 +1,6 @@
 import User from '@/server/models/user.model';
 
 export async function getUserByEmail(email) {
-    console.log("aaa")
     const user = await User.findOne({ email });
     return user;
 }
