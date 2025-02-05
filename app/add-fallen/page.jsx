@@ -7,6 +7,8 @@ import StatusMessage from "../components/StatusMessage";
 import CustomBubble from "../components/CustomBubble";
 import { uploadImage } from "@/server/actions/uploadImage.action";
 import { z } from "zod";
+import { addFallen } from "@/server/actions/addFallen.action";
+
 
 
 // TODO-YOSEF: replace fetch with action
@@ -124,20 +126,31 @@ export default function AddFallenPage() {
           continueCount: 0
         }));
   
-      const response = await fetch('/api/add-fallen', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          firstName,
-          lastName,
-          birthDate: new Date(formData.birthYear),
-          deathDate: new Date(formData.deathDate),
-          hobbies,
-          about: formData.about,
-          familyWords: formData.familyMessage,
-          imageUrl,
-          isAccepted: false
-        }),
+      // const response = await fetch('/api/add-fallen', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify({
+      //     firstName,
+      //     lastName,
+      //     birthDate: new Date(formData.birthYear),
+      //     deathDate: new Date(formData.deathDate),
+      //     hobbies,
+      //     about: formData.about,
+      //     familyWords: formData.familyMessage,
+      //     imageUrl,
+      //     isAccepted: false
+      //   }),
+      // });
+
+      const response = await addFallen({
+        fullName: formData.fullName,
+        birthYear: formData.birthYear,
+        deathDate: formData.deathDate,
+        hobbies: formData.hobbies,
+        about: formData.about,
+        familyMessage: formData.familyMessage,
+        imageFile: formData.imageFile,
+        highlightQuote: formData.highlightQuote,
       });
   
       const result = await response.json();
