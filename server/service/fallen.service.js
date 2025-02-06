@@ -1,7 +1,8 @@
+import { serializer } from "@/lib/serializer";
 import Fallen from "@/server/models/fallen.model";
 
 export async function getAllFallen() {
-  return await Fallen.find({});
+  return serializer(await Fallen.find({}));
 }
 
 export async function getFilteredFallen(query) {
