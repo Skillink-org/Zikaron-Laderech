@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Modal from "react-modal";
 
 import styles from './page.module.scss'
@@ -12,50 +12,84 @@ import FallenForm from "../components/FallenForm";
 // TODO-YOSEF: talk with Refael about popup system - with zustand
 
 export default function AdminPage() {
+    const [fallenData, setFallenData] = useState([]);
+    const [filteredFallenData, setFilteredFallenData] = useState([]);
+
+    const fetchFallenData = async () => {
+        try {
+            const response = await fetch('/api/get-all-fallen');
+            if (!response.ok) {
+                throw new Error('Error fetching fallen data');
+            }
+            const data = await response.json();
+            setFallenData(data.data);
+            setFilteredFallenData(data.data)
+        } catch (err) {
+            console.error(err.message);
+        }
+    };
+
+    const filterData = (searchQuery, status) => {
+        let filteredData = [...fallenData];
+
+        if (status !== "") {
+            filteredData = filteredData.filter(item => item.status === status);
+        }
+
+        if (searchQuery !== "") {
+            filteredData = filteredData.filter(item => {
+                const fullName = `${item.firstName} ${item.lastName}`.toLowerCase();
+                return fullName.includes(searchQuery.trim());
+            });
+        }
+
+        setFilteredFallenData(filteredData);
+    };
+
+    useEffect(() => {
+        fetchFallenData();
+    }, []);
+
     const [searchQuery, setSearchQuery] = useState('');
+
+    function handleChange(e) {
+        const query = e.target.value.toLowerCase();
+        setSearchQuery(query);
+
+        filterData(query, status);
+    }
 
     const [isOpen, setIsOpen] = useState(false);
     const openModal = () => setIsOpen(true);
-    const closeModal = () => setIsOpen(false);
-
+    const closeModal = () => {
+        setStatus(previousStatus);
+        setIsOpen(false);
+    };
 
     const [status, setStatus] = useState('');
+    const [previousStatus, setPreviousStatus] = useState('');
 
     const handleStatusChange = (e) => {
+        setPreviousStatus(status);
         setStatus(e.target.value);
     };
 
     const applyFilter = () => {
-        console.log('Filtering by status:', status);
-
-        // TODO: Implement the filtering logic here based on the selected 'status'.
+        filterData(searchQuery, status);
 
         closeModal();
     };
 
-    function handleChange(e) {
-        setSearchQuery(e.target.value);
-
-        // TODO: Implement the filtering logic here based on the search query.
-    }
-
-    // TODO: Replace the static data with real data from the database
-    const [fallenData, setFallenData] = useState([
-        { date: '01/02/2025', fullName: 'ישראל ישראלי', status: 'ממתין לאישור' },
-        { date: '02/02/2025', fullName: 'ישראל ישראלי', status: 'מאושר' },
-        { date: '03/02/2025', fullName: 'ישראל ישראלי', status: 'נדחה' }
-    ]);
-
     const getStatusClass = (status) => {
         switch (status) {
-            case 'ממתין לאישור':
+            case "pending":
                 return styles.pending;
-            case 'מאושר':
+            case "approved":
                 return styles.approved;
-            case 'נדחה':
+            case "rejected":
                 return styles.rejected;
             default:
-                return '';
+                return "";
         }
     };
 
@@ -154,11 +188,11 @@ export default function AdminPage() {
                     </tr>
                 </thead>
                 <tbody>
-                    {fallenData.map((item, index) => (
+                    {filteredFallenData.map((item, index) => (
                         <tr key={index}>
-                            <td className={styles.date}>{item.date}</td>
+                            <td className={styles.date}>{item.createdAt ? item.createdAt.slice(0, 10) : 'תאריך לא זמין'}</td>
 
-                            <td>{item.fullName}</td>
+                            <td>{item.firstName} {item.lastName}</td>
 
                             <td>
                                 <span className={`${styles.status} ${getStatusClass(item.status)}`}>
