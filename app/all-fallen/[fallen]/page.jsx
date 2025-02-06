@@ -1,20 +1,24 @@
+
 import styles from "./page.module.scss";
 import Button from "@/app/components/Button";
 import { connectToDB } from "@/server/connect";
 import ProfileCard from "@/app/components/ProfileCard";
-import HobbyBubble from "@/app/components/HobbyBubble";
 import TitleDivider from "@/app/components/TitleDivider";
 import HobbyDataBubble from "@/app/components/HobbyDataBubble";
-import { getFallenById } from "@/server/service/fallen.service";
+import { getFallenById } from "@/server/actions/fallen.action";
+import HobbyJoin from "@/app/components/HobbyJoin";
 
 export default async function FallenPage({ params }) {
   await connectToDB();
 
   const fallenId = (await params).fallen;
+
   const fallenDetails = await getFallenById(fallenId);
+
   const continuedHobbies = fallenDetails.hobbies.filter(
     (hobby) => hobby.continueCount > 0
   );
+
   const hobbyContinuersSum = continuedHobbies.reduce(
     (sum, hobby) => sum + hobby.continueCount,
     0
@@ -32,9 +36,10 @@ export default async function FallenPage({ params }) {
           />
           <div className={styles.hobbies}>
             {fallenDetails.hobbies.map((hobby, index) => (
-              <HobbyBubble
+              <HobbyJoin
+                fallenId={fallenId}
                 key={index}
-                children={hobby.name}
+                hobby={hobby.name}
                 dynamicBackgroundClassName={styles.hobby}
                 className={styles.hobbyBubble}
               />
@@ -75,6 +80,8 @@ export default async function FallenPage({ params }) {
               containerClassName={styles.totalDivider}
             />
             <HobbyDataBubble
+              fallenName={fallenDetails.firstName}
+              hobbyContinuers={hobbyContinuersSum}
               sumMode={true}
               hobbyContinuersSum={hobbyContinuersSum}
             />

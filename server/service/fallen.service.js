@@ -1,3 +1,4 @@
+
 import Fallen from "@/server/models/fallen.model";
 
 export async function getAllFallen() {
@@ -30,8 +31,15 @@ export async function getFallenById(id) {
 //   return await Fallen.create(fallen);
 // }
 
-export async function updateFallen(fallen) {
-  return await Fallen.findByIdAndUpdate(fallen.id, fallen);
+export async function updateFallen(filter, update) {
+  console.log('service', filter, update)
+  try {
+    return await Fallen.findOneAndUpdate(filter, update);
+  }
+  catch (error) {
+    console.log(error);
+    return null;
+  }
 }
 
 export async function deleteFallen(id) {
