@@ -39,41 +39,59 @@ export default function AuthPopup({ onClose }) {
     e.preventDefault();
     setLoading(true);
     setErrorMessage("");
-    if (isLogin) {
-      await handleEmailSignin();
-    } else {
-      await handleSignUp();
-    };
-  };
-  const handleEmailSignin = async () => {
-    const response = await signIn("credentials", {
-      redirect: false,
-      email: formData.email,
-      password: formData.password,
-    });
 
-    if (response?.error) {
-      setErrorMessage("התחברות נכשלה. בדוק את הפרטים ונסה שוב.");
-      setLoading(false);
+    if (isLogin) {
+      try {
+        await handleEmailSignin();
+      } catch (error) {
+        setErrorMessage(error.message);
+      }
     } else {
-      setTimeout(() => {
-        onClose();
-      }, 2000);
-    };
-  }
+      try {
+        await handleSignUp();
+      } catch (error) {
+        setErrorMessage(error.message);
+      }
+    }
+
+    setLoading(false);
+  };
+
+
+  const handleEmailSignin = async () => {
+    try {
+      const response = await signIn("credentials", {
+        redirect: false,
+        email: formData.email,
+        password: formData.password,
+      });
+
+      if (response && !response.error) {
+        setTimeout(() => {
+          onClose();
+        }, 2000);
+        return;
+      }
+    } catch (error) {
+      throw new Error("התחברות נכשלה. בדוק את הפרטים ונסה שוב.");
+    }
+  };
+
 
   const handleSignUp = async () => {
-    const response = await createUserAction(formData);
-    if (response?.newUser) {
-      setSuccessMessage("ההרשמה הצליחה. נא התחבר למערכת.");
-      setErrorMessage("");
-      setLoading(false);
-    } else {
-      setErrorMessage("ארעה תקלה. אנא נסה שוב.");
-      setSuccessMessage("");
-      setLoading(false);
+    try {
+      const response = await createUserAction(formData);
+
+      if (response?.newUser) {
+        setSuccessMessage("ההרשמה הצליחה. נא התחבר למערכת.");
+        setErrorMessage("");
+        return;
+      }
+    } catch (error) {
+      throw new Error("שגיאה בהרשמה, נסה שוב.");
     }
-  }
+  };
+
 
   // Close popup on escape key press
   useEffect(() => {
