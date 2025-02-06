@@ -25,6 +25,7 @@ export default function AddFallenPage() {
     hobbies: "",
     about: "",
     familyMessage: "",
+    quote: "",
     image: null,
     imageFile: null
   });
@@ -118,6 +119,7 @@ export default function AddFallenPage() {
           hobbies,
           about: formData.about,
           familyWords: formData.familyMessage,
+          quote: formData.quote,
           imageUrl,
           status: "pending"
         }),
@@ -142,6 +144,7 @@ export default function AddFallenPage() {
           hobbies: "",
           about: "",
           familyMessage: "",
+          quote:"",
           image: null,
           imageFile: null
         });
@@ -286,10 +289,10 @@ export default function AddFallenPage() {
 
             <input
               type="text"
-              name="highlightQuote"
-              value={formData.highlightQuote}
+              name="quote"
+              value={formData.quote}
               onChange={handleChange}
-              className={styles.highlightQuote}
+              className={styles.quote}
               placeholder="ציטוט או משפט חשוב מהנופל"
               required
             />

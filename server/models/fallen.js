@@ -11,6 +11,7 @@ const fallenSchema = new mongoose.Schema({
     }],
     about: { type: String },
     familyWords: { type: String },
+    quote: { type: String },
     imageUrl: { type: String },
     status: { type: String, enum: ["pending", "approved", "rejected"], default: "pending", },
 });

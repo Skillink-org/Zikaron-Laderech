@@ -6,10 +6,11 @@ import React, { useState, useEffect } from "react";
 export default function FallenForm
     ({ profile = {}, onSave, onCancel }) {
 
-    const [fullName, setFullName] = useState(profile.fullName || "");
+    const [firstName, setFirstName] = useState(profile.firstName || "");
+    const [lastName, setLastName] = useState(profile.lastName || "");
     const [birthDate, setBirthDate] = useState(profile.birthDate || "");
     const [deathDate, setDeathDate] = useState(profile.deathDate || "");
-    const [hobbies, setHobbies] = useState(profile.hobbies || []);
+    const [hobbies, setHobbies] = useState([]);
     const [about, setAbout] = useState(profile.about || "");
     const [familyWords, setFamilyWords] = useState(profile.familyWords || "");
     const [quote, setQuote] = useState(profile.quote || "");
@@ -17,7 +18,7 @@ export default function FallenForm
 
     useEffect(() => {
         if (Array.isArray(profile.hobbies)) {
-            setHobbies(profile.hobbies.join(", "));
+            setHobbies(profile.hobbies.map(hobby => hobby.name).join(", "));
         }
     }, [profile]);
 
@@ -26,11 +27,22 @@ export default function FallenForm
     };
 
     const handleSubmit = () => {
+        const hobbiesArray = hobbies.split(",").map(hobbyName => {
+            hobbyName = hobbyName.trim();
+
+            const existingHobby = (Array.isArray(profile.hobbies) ? profile.hobbies : []).find(h => h.name === hobbyName);
+
+            return {
+                name: hobbyName,
+                continueCount: existingHobby ? existingHobby.continueCount : 0
+            };
+        });
+
         const profileData = {
             fullName,
             birthDate,
             deathDate,
-            hobbies: hobbies.split(',').map(hobby => hobby.trim()),
+            hobbies: hobbiesArray,
             about,
             familyWords,
             quote,
