@@ -1,9 +1,24 @@
 'use server'
 
+import { auth } from '@/auth';
 import * as service from '@/server/service/fallen.service.js';
 
 export async function getFallenById(id) {
-    return await service.getFallenById(id);
+    const response = await service.getFallenById(id);
+
+    if (!response) {
+        return {
+            ok: false,
+            message: 'Fallen not found',
+            status: 404
+        };
+    }
+    return {
+        ok: true,
+        message: 'Fallen found',
+        status: 200,
+        data: response
+    };
 }
 
 export async function getAllFallen() {
@@ -23,17 +38,29 @@ export async function deleteFallen(id) {
 }
 
 export async function joinHobby(fallenId, hobby) {
-    const response = await service.updateFallen({ '_id': fallenId, 'hobbies.name': hobby }, { '$inc': { 'hobbies.$.continueCount': 1 } });
-    if (!response) {
-        return {
-            ok: false,
-            message: 'Failed to join hobby',
-            status: 400
-        };
+    const session = await auth();
+
+    if (!session?.user?.id) {
+        console.log('Unauthorized');
+        return { ok: false, status: 401, message: "Unauthorized" };
     }
-    return {
-        ok: true,
-        message: 'Successfully joined hobby',
-        status: 200
-    };
+
+    const userId = session.user.id;
+    const isAlreadyJoined = await service.getFallen({ '_id': fallenId, 'hobbies': { '$elemMatch': { 'name': hobby, 'continuers': userId } } });
+
+    if (isAlreadyJoined)
+        return { ok: false, message: "Not updated", status: 400 };
+
+    const response = await service.updateFallen(
+        { '_id': fallenId, 'hobbies.name': hobby },
+        {
+            '$inc': { 'hobbies.$.continueCount': 1 },
+            '$push': { 'hobbies.$.continuers': userId }
+        }
+    );
+
+    if (response.matchedCount == 0)
+        return { ok: false, message: "Not found error", status: 404 };
+
+    return { ok: true, message: "Updated Succes", status: 200 };
 }

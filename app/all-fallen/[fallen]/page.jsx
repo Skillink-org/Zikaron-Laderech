@@ -1,4 +1,3 @@
-
 import styles from "./page.module.scss";
 import Button from "@/app/components/Button";
 import { connectToDB } from "@/server/connect";
@@ -6,19 +5,22 @@ import ProfileCard from "@/app/components/ProfileCard";
 import TitleDivider from "@/app/components/TitleDivider";
 import HobbyDataBubble from "@/app/components/HobbyDataBubble";
 import { getFallenById } from "@/server/actions/fallen.action";
-import HobbyJoin from "@/app/components/HobbyJoin";
+import StatusMessage from "@/app/components/StatusMessage";
+import HobbiesList from "@/app/all-fallen/[fallen]/HobbiesList";
 
 export default async function FallenPage({ params }) {
+
   await connectToDB();
-
   const fallenId = (await params).fallen;
+  const response = await getFallenById(fallenId);
 
-  const fallenDetails = await getFallenById(fallenId);
+  if (!response.ok)
+    return <StatusMessage message={response.message} type="error" />;
 
+  const fallenDetails = response.data;
   const continuedHobbies = fallenDetails.hobbies.filter(
     (hobby) => hobby.continueCount > 0
   );
-
   const hobbyContinuersSum = continuedHobbies.reduce(
     (sum, hobby) => sum + hobby.continueCount,
     0
@@ -34,17 +36,7 @@ export default async function FallenPage({ params }) {
             title={"התחביבים שלי"}
             containerClassName={styles.hobbiesDivider}
           />
-          <div className={styles.hobbies}>
-            {fallenDetails.hobbies.map((hobby, index) => (
-              <HobbyJoin
-                fallenId={fallenId}
-                key={index}
-                hobby={hobby.name}
-                dynamicBackgroundClassName={styles.hobby}
-                className={styles.hobbyBubble}
-              />
-            ))}
-          </div>
+          <HobbiesList hobbies={fallenDetails.hobbies.map((hobby) => hobby.name)} fallenName={fallenDetails.firstName} fallenId={fallenId} />
         </div>
         {/* middle */}
         <div className={`${styles.middleCol} ${styles.col}`}>
@@ -81,7 +73,6 @@ export default async function FallenPage({ params }) {
             />
             <HobbyDataBubble
               fallenName={fallenDetails.firstName}
-              hobbyContinuers={hobbyContinuersSum}
               sumMode={true}
               hobbyContinuersSum={hobbyContinuersSum}
             />

@@ -27,18 +27,25 @@ export async function getFallenById(id) {
   }
 }
 
+export async function getFallen(filter) {
+  try {
+    return await Fallen.findOne(filter);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 // export async function addFallen(fallen) {
 //   return await Fallen.create(fallen);
 // }
 
 export async function updateFallen(filter, update) {
-  console.log('service', filter, update)
+
   try {
-    return await Fallen.findOneAndUpdate(filter, update);
-  }
-  catch (error) {
+    return await Fallen.updateOne(filter, update);
+
+  } catch (error) {
     console.log(error);
-    return null;
   }
 }
 
