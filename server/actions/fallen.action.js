@@ -19,3 +19,11 @@ export async function updateFallen(fallen) {
 export async function deleteFallen(id) {
     return await service.deleteFallen(id);
 }
+
+export async function approveFallen(id) {
+    return await service.approveFallen(id); 
+}
+
+export async function rejectFallen(id, note) {
+    return await service.rejectFallen(id, note); 
+}

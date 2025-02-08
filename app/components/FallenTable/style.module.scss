@@ -98,6 +98,22 @@
         margin-right: 5px;
     }
 
+    .fullWidthLabel {
+        display: flex;
+        flex-direction: column;
+        font-weight: bold;
+        align-items: flex-start;
+
+        textarea {
+            margin-top: 8px;
+            width: 100%;
+            border-radius: 8px;
+            padding: 8px;
+            border: 0.5px solid $lightblueBorder;
+            resize: vertical;
+        }
+    }
+
     .applyButton {
         color: white;
         background-color: $buttonColor;
@@ -186,29 +202,5 @@
         padding: 5px;
         border: none;
         cursor: pointer;
-    }
-}
-
-.modalEditFallen {
-    background-color: white;
-    padding: 10px;
-    border-radius: 15px;
-    position: relative;
-    text-align: center;
-    min-height: 150px;
-    min-width: 300px;
-    overflow: auto; 
-    max-height: 90vh; 
-
-
-    .closeButtonEditFallenModal {
-        position: absolute;
-        top: 12px;
-        right: 12px;
-        background-color: transparent;
-        border: none;
-        font-size: 18px;
-        cursor: pointer;
-        color: var(--lightGray);
     }
 }

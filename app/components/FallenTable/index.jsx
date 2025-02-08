@@ -11,7 +11,7 @@ import FallenForm from "../FallenForm";
 
 // TODO-YOSEF: talk with Refael about popup system - with zustand
 
-export default function FallenTable({fallenData}) {
+export default function FallenTable({ fallenData }) {
     const [filteredFallenData, setFilteredFallenData] = useState(fallenData);
     const [searchQuery, setSearchQuery] = useState('');
     const [status, setStatus] = useState('');
@@ -34,7 +34,6 @@ export default function FallenTable({fallenData}) {
         setFilteredFallenData(filteredData);
     };
 
-
     function handleChange(e) {
         const query = e.target.value.toLowerCase();
         setSearchQuery(query);
@@ -49,7 +48,6 @@ export default function FallenTable({fallenData}) {
         setIsOpen(false);
     };
 
-   
     const handleStatusChange = (e) => {
         setPreviousStatus(status);
         setStatus(e.target.value);
@@ -74,6 +72,75 @@ export default function FallenTable({fallenData}) {
         }
     };
 
+    const approveFallen = async (id) => {
+        try {
+            const response = await fetch('/api/approve-fallen', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ id })
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                console.log(`The profile ${result.data.firstName} ${result.data.lastName} has been approved.`);
+                setFilteredFallenData(prevData => prevData.map(fallen =>
+                    fallen._id === id ? result.data : fallen
+                ));
+            } else {
+                console.error("Approval failed:", result.error);
+            }
+        } catch (error) {
+            console.error("Error occurred:", error);
+        }
+    };
+
+    const [isRejectFallenModalOpen, setIsRejectFallenModalOpen] = useState(false);
+    const [selectedProfileId, setSelectedProfileId] = useState({});
+    const [note, setNote] = useState('');
+
+    const openRejectFallenModal = (id) => {
+        setSelectedProfileId(id);
+        setIsRejectFallenModalOpen(true);
+    };
+    const closeRejectFallenModal = () => {
+        setSelectedProfileId('');
+        setNote('');
+        setIsRejectFallenModalOpen(false);
+    };
+
+    const rejectFallen = async (id) => {
+        try {
+            const response = await fetch('/api/reject-fallen', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ id, note }),
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                console.log(`The profile of ${result.data.firstName} ${result.data.lastName} has been rejected.`);
+                setFilteredFallenData(prevData => prevData.map(fallen =>
+                    fallen._id === id ? result.data : fallen
+                ));
+            } else {
+                console.error('Error rejecting fallen:', data.error);
+            }
+
+        } catch (error) {
+            console.error('Error:', error);
+        }
+
+        setSelectedProfileId('');
+        setNote('');
+        closeRejectFallenModal();
+    }
+
     const [selectedProfile, setSelectedProfile] = useState({});
     const [isEditFallenOpen, setIsEditFallenOpen] = useState(false);
     const openEditFallenModal = (profile) => {
@@ -93,9 +160,8 @@ export default function FallenTable({fallenData}) {
 
     useEffect(() => {
         setFilteredFallenData(fallenData);
-    }, [fallenData]); 
+    }, [fallenData]);
 
-    
     return (
         <>
             <div className={styles.wrapper}>
@@ -159,7 +225,6 @@ export default function FallenTable({fallenData}) {
                         <option value="rejected">נדחה</option>
                     </select>
 
-
                     <button className={styles.applyButton} onClick={applyFilter}>החל סינון</button>
                 </Modal>
             </div>
@@ -189,8 +254,7 @@ export default function FallenTable({fallenData}) {
                             <td className={styles.actions}>
                                 <button
                                     type="button"
-                                // onClick={}
-                                // TODO: Implement a function to approve the profile
+                                    onClick={() => approveFallen(item._id)}
                                 >
                                     <Image
                                         src="/approveIcon.svg"
@@ -214,8 +278,7 @@ export default function FallenTable({fallenData}) {
 
                                 <button
                                     type="button"
-                                // onClick={}
-                                // TODO: Implement a function to reject the profile
+                                    onClick={() => openRejectFallenModal(item._id)}
                                 >
                                     <Image
                                         src="/rejectIcon.svg"
@@ -231,14 +294,14 @@ export default function FallenTable({fallenData}) {
             </table>
 
             <Modal
-                isOpen={isEditFallenOpen}
-                onRequestClose={closeEditFallenModal}
-                contentLabel="עריכת נופל"
-                className={styles.modalEditFallen}
+                isOpen={isRejectFallenModalOpen}
+                onRequestClose={closeRejectFallenModal}
+                contentLabel="דחיית פרופיל נופל"
+                className={styles.modal}
                 overlayClassName={styles.modalOverlay}
                 ariaHideApp={false}
             >
-                <button className={styles.closeButtonEditFallenModal} onClick={closeEditFallenModal}>
+                <button className={styles.closeButton} onClick={closeRejectFallenModal}>
                     <Image
                         src="/closeIcon.svg"
                         alt="Close icon"
@@ -247,8 +310,21 @@ export default function FallenTable({fallenData}) {
                     />
                 </button>
 
-                <FallenForm profile={selectedProfile} onSave={editFallenProfile} onCancel={closeEditFallenModal} />
+                <h2>דחיית פרופיל</h2>
+
+                <label className={styles.fullWidthLabel}
+                >
+                    סיבת דחיה:
+                    <textarea
+                        value={note}
+                        onChange={(e) => setNote(e.target.value)}
+                    />
+                </label>
+
+                <button className={styles.applyButton} onClick={() => rejectFallen(selectedProfileId)}>דחיה</button>
             </Modal>
+
+            <FallenForm isOpen={isEditFallenOpen} contentLabel={"עריכת נופל"} profile={selectedProfile} onSave={editFallenProfile} onCancel={closeEditFallenModal} />
         </>
     )
 }
