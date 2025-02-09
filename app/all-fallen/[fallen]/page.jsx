@@ -2,16 +2,22 @@ import styles from "./page.module.scss";
 import Button from "@/app/components/Button";
 import { connectToDB } from "@/server/connect";
 import ProfileCard from "@/app/components/ProfileCard";
-import HobbyBubble from "@/app/components/HobbyBubble";
 import TitleDivider from "@/app/components/TitleDivider";
 import HobbyDataBubble from "@/app/components/HobbyDataBubble";
-import { getFallenById } from "@/server/service/fallen.service";
+import { getFallenById } from "@/server/actions/fallen.action";
+import StatusMessage from "@/app/components/StatusMessage";
+import HobbiesList from "@/app/all-fallen/[fallen]/HobbiesList";
 
 export default async function FallenPage({ params }) {
-  await connectToDB();
 
+  await connectToDB();
   const fallenId = (await params).fallen;
-  const fallenDetails = await getFallenById(fallenId);
+  const response = await getFallenById(fallenId);
+
+  if (!response.ok)
+    return <StatusMessage message={response.message} type="error" />;
+
+  const fallenDetails = response.data;
   const continuedHobbies = fallenDetails.hobbies.filter(
     (hobby) => hobby.continueCount > 0
   );
@@ -30,16 +36,7 @@ export default async function FallenPage({ params }) {
             title={"התחביבים שלי"}
             containerClassName={styles.hobbiesDivider}
           />
-          <div className={styles.hobbies}>
-            {fallenDetails.hobbies.map((hobby, index) => (
-              <HobbyBubble
-                key={index}
-                children={hobby.name}
-                dynamicBackgroundClassName={styles.hobby}
-                className={styles.hobbyBubble}
-              />
-            ))}
-          </div>
+          <HobbiesList hobbies={fallenDetails.hobbies.map((hobby) => hobby.name)} fallenName={fallenDetails.firstName} fallenId={fallenId} />
         </div>
         {/* middle */}
         <div className={`${styles.middleCol} ${styles.col}`}>
@@ -75,6 +72,7 @@ export default async function FallenPage({ params }) {
               containerClassName={styles.totalDivider}
             />
             <HobbyDataBubble
+              fallenName={fallenDetails.firstName}
               sumMode={true}
               hobbyContinuersSum={hobbyContinuersSum}
             />

@@ -88,7 +88,6 @@ export default function AddFallenPage() {
           name,
           continueCount: 0
         }));
-
       const response = await addFallen({
         fullName: formData.fullName,
         birthYear: formData.birthYear,
