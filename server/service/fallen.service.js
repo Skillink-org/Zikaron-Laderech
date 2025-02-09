@@ -40,6 +40,10 @@ export async function getFallen(filter) {
 //   return await Fallen.create(fallen);
 // }
 
+export async function updateFallenById(fallen) {
+  return await Fallen.findByIdAndUpdate(fallen._id, fallen, { new: true });
+}
+
 export async function updateFallen(filter, update) {
 
   try {
