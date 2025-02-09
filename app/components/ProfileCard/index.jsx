@@ -4,15 +4,13 @@ import styles from "./style.module.scss";
 export default function ProfileCard({ fallen }) {
   return (
     <div className={styles.card}>
-      <div className={styles.profileImage}>
-        <Image
-          className={styles.profileImage}
-          src={fallen.imageUrl}
-          alt={`${fallen.firstName} ${fallen.lastName}`}
-          width={150}
-          height={200}
-        />
-      </div>
+      <Image
+        className={styles.profileImage}
+        src={fallen.imageUrl}
+        alt={`${fallen.firstName} ${fallen.lastName}`}
+        width={150}
+        height={200}
+      />
       <div>
         <h3
           className={styles.name}

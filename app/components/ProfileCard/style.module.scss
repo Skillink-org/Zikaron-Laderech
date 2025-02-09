@@ -7,19 +7,20 @@
   justify-content: center;
   font-family: $font-family;
   gap: 10px;
+
   .name {
     font-size: $text-lg;
     font-weight: 600;
     color: $titleColor;
     display: flex;
   }
+
   .profileImage {
     position: relative;
-    border-radius: 60px;
+    border-radius: 50px;
     overflow: hidden;
     object-fit: cover;
-
-    
+    max-width: 100%;
   }
 
   .years {
