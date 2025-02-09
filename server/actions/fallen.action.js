@@ -43,6 +43,8 @@ export async function approveFallen(id) {
 
 export async function rejectFallen(id, note) {
     return await service.rejectFallen(id, note); 
+}
+
 export async function joinHobby(fallenId, hobby) {
     const session = await auth();
 

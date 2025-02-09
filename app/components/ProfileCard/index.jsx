@@ -4,6 +4,7 @@ import styles from "./style.module.scss";
 
 export default function ProfileCard({ fallen }) {
   return (
+    // TODO_YOEEF : href dont work
     <Link className={styles.card} href={`/all-fallen/${String(fallen.id)}`}>
       <div className={styles.profileImage}>
         <Image

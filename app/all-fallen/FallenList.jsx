@@ -7,6 +7,7 @@ function FallenList({ fallen }) {
     <>
       {fallen.length > 0 ? (
         fallen.map((fallen) => (
+          // TODO_YOEEF : key is wrong
           <div className={styles.cardBackground} key={fallen.id}>
             <ProfileCard fallen={fallen} />
           </div>
