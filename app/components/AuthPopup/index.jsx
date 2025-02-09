@@ -7,18 +7,19 @@ import { signIn } from "next-auth/react";
 import { useEffect, useState } from "react";
 import GenericInput from "../GenericInput/index";
 import { loginFields, signupFields } from "@/lib/FormFields";
+import { createUserAction } from '@/server/actions/user.action';
 
 export default function AuthPopup({ onClose }) {
   const [isLogin, setIsLogin] = useState(true);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
   const [formData, setFormData] = useState({
     email: "",
     password: "",
     firstName: "",
     lastName: "",
-    phone: "",
   });
 
   const handleChange = (key) => (e) => {
@@ -31,6 +32,7 @@ export default function AuthPopup({ onClose }) {
   const toggleForm = () => {
     setIsLogin(!isLogin);
     setErrorMessage("");
+    setSuccessMessage("");
   };
 
   const handleSubmit = async (e) => {
@@ -39,7 +41,9 @@ export default function AuthPopup({ onClose }) {
     setErrorMessage("");
     if (isLogin) {
       await handleEmailSignin();
-    }
+    } else {
+      await handleSignUp();
+    };
   };
   const handleEmailSignin = async () => {
     const response = await signIn("credentials", {
@@ -56,6 +60,19 @@ export default function AuthPopup({ onClose }) {
         onClose();
       }, 2000);
     };
+  }
+
+  const handleSignUp = async () => {
+    const response = await createUserAction(formData);
+    if (response?.newUser) {
+      setSuccessMessage("ההרשמה הצליחה. נא התחבר למערכת.");
+      setErrorMessage("");
+      setLoading(false);
+    } else {
+      setErrorMessage("ארעה תקלה. אנא נסה שוב.");
+      setSuccessMessage("");
+      setLoading(false);
+    }
   }
 
   // Close popup on escape key press
@@ -82,7 +99,7 @@ export default function AuthPopup({ onClose }) {
         </button>
         <h2 className={styles.title}>{isLogin ? "התחברות" : "הרשמה"}</h2>
         <form className={styles.form} onSubmit={handleSubmit}>
-          {currentFields.map(({ type, placeholder, stateKey }) => (
+          {currentFields.map(({ type, placeholder, stateKey, autoComplete }) => (
             <GenericInput
               key={stateKey}
               type={type}
@@ -90,6 +107,7 @@ export default function AuthPopup({ onClose }) {
               placeholder={placeholder}
               value={formData[stateKey]}
               required={true}
+              autoComplete={autoComplete}
               onChange={handleChange(stateKey)}
             />
           ))}
@@ -108,8 +126,8 @@ export default function AuthPopup({ onClose }) {
           >
             <Image
               src="/google-icon.svg"
-              width={16}
-              height={16}
+              width={18}
+              height={18}
               alt="google icon"
               unoptimized
             />
@@ -118,6 +136,7 @@ export default function AuthPopup({ onClose }) {
           </Button>
 
           {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
+          {successMessage && <p className={styles.successMessage}>{successMessage}</p>}
 
           <div className={styles.toggleButton} onClick={toggleForm}>
             <small>
