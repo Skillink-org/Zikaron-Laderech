@@ -7,12 +7,16 @@ const fallenSchema = new mongoose.Schema({
     deathDate: { type: Date, required: true },
     hobbies: [{
         name: { type: String, required: true },
-        continueCount: { type: Number, default: 0 }
+        continueCount: { type: Number, default: 0 },
+        continuers: { type: [String], default: [] },
     }],
     about: { type: String },
     familyWords: { type: String },
+    quote: { type: String },
     imageUrl: { type: String },
-    isAccepted: { type: Boolean, default: false }
+    status: { type: String, enum: ["pending", "approved", "rejected"], default: "pending", required: true },
+    email: { type: String, required: true },
+    phone: { type: String }
 });
 
 const Fallen = mongoose.models.Fallen || mongoose.model('Fallen', fallenSchema);
