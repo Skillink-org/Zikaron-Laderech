@@ -43,7 +43,6 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
             email: user.email,
             firstName: user.name.split(" ")[0],
             lastName: user.name.split(" ")[1] || "",
-            image: user.image,
             role: "user",
           });
         }
