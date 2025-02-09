@@ -151,7 +151,6 @@ export default function FallenForm
     };
 
     const handleImageUpload = (e) => {
-        // TODO: Implement image upload functionality to Cloudinary service
         const file = e.target.files[0];
         if (file) {
             if (!file.type.startsWith('image/')) {
