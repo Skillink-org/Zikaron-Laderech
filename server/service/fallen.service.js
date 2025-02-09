@@ -1,5 +1,6 @@
-import { serializer } from "@/lib/serializer";
 import { transporter } from "@/lib/email";
+import { getBaseUrl } from "@/lib/baseUrl";
+import { serializer } from "@/lib/serializer";
 import Fallen from "@/server/models/fallen.model";
 
 export async function getAllFallen() {
@@ -41,10 +42,8 @@ export async function getFallen(filter) {
 // }
 
 export async function updateFallen(filter, update) {
-
   try {
     return await Fallen.updateOne(filter, update);
-
   } catch (error) {
     console.log(error);
   }
@@ -74,7 +73,7 @@ export async function addFallen(fallenData) {
       ...fallenData,
       birthDate,
       deathDate,
-      status: "pending"
+      status: "pending",
     });
 
     return fallen;
@@ -86,7 +85,11 @@ export async function addFallen(fallenData) {
 
 export async function approveFallen(id) {
   try {
-    const fallen = await Fallen.findByIdAndUpdate(id, { status: "approved" }, { new: true });
+    const fallen = await Fallen.findByIdAndUpdate(
+      id,
+      { status: "approved" },
+      { new: true }
+    );
 
     if (!fallen) throw new Error("Fallen not found");
     if (!fallen.email) throw new Error("No email found for this record");
@@ -95,8 +98,7 @@ export async function approveFallen(id) {
       from: process.env.GMAIL_ADDRESS,
       to: fallen.email,
       subject: "Profile Approved",
-      // TODO: Update these URLs to the actual production address.`,
-      text: `The profile has been approved.\n\nView it here: http://192.168.14.253:3000/all-fallen/${id}`
+      text: `The profile has been approved.\n\nView it here: ${getBaseUrl()}/all-fallen/${id}`,
     };
 
     await transporter.sendMail(mailOptions);
@@ -110,7 +112,11 @@ export async function approveFallen(id) {
 
 export async function rejectFallen(id, note) {
   try {
-    const fallen = await Fallen.findByIdAndUpdate(id, { status: "rejected" }, { new: true });
+    const fallen = await Fallen.findByIdAndUpdate(
+      id,
+      { status: "rejected" },
+      { new: true }
+    );
 
     if (!fallen) throw new Error("Fallen not found");
     if (!fallen.email) throw new Error("No email found for this record");

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import styles from "./page.module.scss";
 import ProfileCard from "../components/ProfileCard";
 import StatusMessage from "@/app/components/StatusMessage";
@@ -7,9 +8,13 @@ function FallenList({ fallen }) {
     <>
       {fallen.length > 0 ? (
         fallen.map((fallen) => (
-          <div className={styles.cardBackground} key={fallen.id}>
+          <Link
+            key={fallen._id}
+            className={styles.cardBackground}
+            href={`/all-fallen/${String(fallen._id)}`}
+          >
             <ProfileCard fallen={fallen} />
-          </div>
+          </Link>
         ))
       ) : (
         <StatusMessage

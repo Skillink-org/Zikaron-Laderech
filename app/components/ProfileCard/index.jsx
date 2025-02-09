@@ -1,10 +1,9 @@
-import Link from "next/link";
 import Image from "next/image";
 import styles from "./style.module.scss";
 
 export default function ProfileCard({ fallen }) {
   return (
-    <Link className={styles.card} href={`/all-fallen/${String(fallen.id)}`}>
+    <div className={styles.card}>
       <div className={styles.profileImage}>
         <Image
           className={styles.profileImage}
@@ -22,6 +21,6 @@ export default function ProfileCard({ fallen }) {
           {fallen.birthYear} - {fallen.deathYear}
         </p>
       </div>
-    </Link>
+    </div>
   );
 }
