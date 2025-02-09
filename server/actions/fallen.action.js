@@ -29,8 +29,8 @@ export async function addFallen(fallen) {
     return await service.addFallen(fallen);
 }
 
-export async function updateFallen(fallen) {
-    return await service.updateFallen(fallen);
+export async function updateFallenById(fallen) {
+    return await service.updateFallenById(fallen);
 }
 
 export async function deleteFallen(id) {
@@ -38,11 +38,13 @@ export async function deleteFallen(id) {
 }
 
 export async function approveFallen(id) {
-    return await service.approveFallen(id); 
+    return await service.approveFallen(id);
 }
 
 export async function rejectFallen(id, note) {
-    return await service.rejectFallen(id, note); 
+    return await service.rejectFallen(id, note);
+}
+
 export async function joinHobby(fallenId, hobby) {
     const session = await auth();
 
