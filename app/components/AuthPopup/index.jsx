@@ -72,6 +72,9 @@ export default function AuthPopup({ onClose }) {
         }, 2000);
         return;
       }
+      else {
+        throw new Error("התחברות נכשלה. בדוק את הפרטים ונסה שוב.");
+      }
     } catch (error) {
       throw new Error("התחברות נכשלה. בדוק את הפרטים ונסה שוב.");
     }
@@ -81,11 +84,13 @@ export default function AuthPopup({ onClose }) {
   const handleSignUp = async () => {
     try {
       const response = await createUserAction(formData);
-
       if (response?.newUser) {
         setSuccessMessage("ההרשמה הצליחה. נא התחבר למערכת.");
         setErrorMessage("");
         return;
+      }
+      else {
+        throw new Error("שגיאה בהרשמה, נסה שוב.");
       }
     } catch (error) {
       throw new Error("שגיאה בהרשמה, נסה שוב.");
