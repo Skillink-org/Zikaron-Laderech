@@ -4,7 +4,7 @@ import styles from "./style.module.scss";
 
 export default function ProfileCard({ fallen }) {
   return (
-    <Link className={styles.card} href={`/all-fallen/${String(fallen.id)}`}>
+    <Link className={styles.card} href={`/all-fallen/${String(fallen._id)}`}>
       <div className={styles.profileImage}>
         <Image
           className={styles.profileImage}

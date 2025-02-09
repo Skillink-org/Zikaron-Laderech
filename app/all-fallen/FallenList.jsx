@@ -7,7 +7,7 @@ function FallenList({ fallen }) {
     <>
       {fallen.length > 0 ? (
         fallen.map((fallen) => (
-          <div className={styles.cardBackground} key={fallen.id}>
+          <div className={styles.cardBackground} key={fallen._id}>
             <ProfileCard fallen={fallen} />
           </div>
         ))
