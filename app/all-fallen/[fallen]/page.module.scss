@@ -1,4 +1,4 @@
-@use '@/styles/_vars.scss' as *;
+@use '@/styles/_vars.scss'as *;
 
 .fallen {
     display: flex;
@@ -33,6 +33,8 @@
                 flex-direction: column;
                 justify-content: end;
                 margin-bottom: 2%;
+
+                cursor: pointer;
             }
         }
     }
