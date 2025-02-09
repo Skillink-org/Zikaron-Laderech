@@ -153,7 +153,6 @@ export default function FallenTable({ fallenData }) {
     };
 
     const editFallenProfile = async (formData) => {
-        // TODO: Implement here the logic to edit the profile
         try {
             const response = await fetch("/api/update-fallen", {
                 method: "POST",
