@@ -9,4 +9,9 @@
     font-family: $font-family;
     border: none;
     cursor: pointer;
+
+    &:disabled {
+        opacity: 0.8;
+        cursor: auto;
+    }
 }
