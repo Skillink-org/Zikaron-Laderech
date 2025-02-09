@@ -207,6 +207,7 @@ export default function FallenForm
         }
 
         onSave(formData);
+        setStatusMessage("");
     };
 
     const handleCancel = () => {
