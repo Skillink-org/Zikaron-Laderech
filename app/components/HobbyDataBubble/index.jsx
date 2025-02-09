@@ -36,7 +36,7 @@ export default function HobbyDataBubble({
         {/* TODO: Add support for both feminine and masculine forms */}
         <div className={styles.hobbyText}>
           {sumMode
-            ? `זוכרים את ${fallenName} וממשיכים בדרכה`
+            ? ` ממשיכים בדרך של ${fallenName}`
             : `ממשיכים בתחביב ה${hobbyName} לזכר ${fallenName}`}
         </div>
       </div>
