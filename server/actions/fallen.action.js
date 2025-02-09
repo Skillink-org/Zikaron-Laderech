@@ -37,6 +37,12 @@ export async function deleteFallen(id) {
     return await service.deleteFallen(id);
 }
 
+export async function approveFallen(id) {
+    return await service.approveFallen(id); 
+}
+
+export async function rejectFallen(id, note) {
+    return await service.rejectFallen(id, note); 
 export async function joinHobby(fallenId, hobby) {
     const session = await auth();
 
