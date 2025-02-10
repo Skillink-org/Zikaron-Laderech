@@ -152,11 +152,31 @@ export default function FallenTable({ fallenData }) {
         setIsEditFallenOpen(false);
     };
 
-    const editFallenProfile = (profile) => {
-        // TODO: Implement here the logic to edit the profile
+    const editFallenProfile = async (formData) => {
+        try {
+            const response = await fetch("/api/update-fallen", {
+                method: "POST",
+                body: formData,
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                console.log("Data updated successfully:", result.data);
+                setFilteredFallenData(prevData =>
+                    prevData.map(fallen =>
+                        fallen._id === result.data._id ? result.data : fallen
+                    )
+                );
+            } else {
+                console.error("Failed to update data:", result.error);
+            }
+        } catch (error) {
+            console.error("Error while updating data:", error);
+        }
 
         closeEditFallenModal();
-    }
+    };
 
     useEffect(() => {
         setFilteredFallenData(fallenData);
@@ -240,7 +260,7 @@ export default function FallenTable({ fallenData }) {
                 </thead>
                 <tbody>
                     {filteredFallenData.map((item, index) => (
-                        <tr key={index}>
+                        <tr key={item._id}>
                             <td className={styles.date}>{item.createdAt ? item.createdAt.slice(0, 10) : 'תאריך לא זמין'}</td>
 
                             <td>{item.firstName} {item.lastName}</td>

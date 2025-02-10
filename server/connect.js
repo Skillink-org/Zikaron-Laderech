@@ -12,11 +12,12 @@ export const connectToDB = async () => {
 
     // Construct the database link
     let url = process.env.DB_LINK;
-    url = url
-      .replace('<DB_PASS>', process.env.DB_PASS)
-      .replace('<DB_USER>', process.env.DB_USER);
+    // url = url
+      // .replace('<DB_PASS>', process.env.DB_PASS)
+      // .replace('<DB_USER>', process.env.DB_USER);
 
     // Connect to the database
+    console.log({ status: 'info', message: `Connecting to MongoDB at ${url}` });
     await mongoose.connect(url);
 
     // Log the connection details
@@ -26,6 +27,6 @@ export const connectToDB = async () => {
 
     // Handle connection errors
   } catch (err) {
-    console.log({ status: 'error', message: err.errmsg });
+    console.log({ status: 'error', message: err.message });
   }
 };
