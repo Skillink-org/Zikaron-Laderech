@@ -10,11 +10,21 @@ export default function HobbyTag({ hobby, className = "", onClick, ...props }) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
+  const getParams = (params) => {
+    return new URLSearchParams(params);
+  };
+
   onClick = () => {
-    const params = new URLSearchParams(searchParams);
+    const params = getParams(searchParams);
     params.set("q", hobby);
 
     router.push(`?${params.toString()}`, { scroll: false });
+  };
+
+  const isChosenHobby = () => {
+    const params = getParams(searchParams);
+
+    return params.get("q") === hobby;
   };
 
   return (
@@ -27,6 +37,7 @@ export default function HobbyTag({ hobby, className = "", onClick, ...props }) {
             {...props}
           >
             {hobby}
+            {isChosenHobby() && <div className={styles.checkContainer}></div>}
           </div>
         </DynamicBackground>
       ) : (

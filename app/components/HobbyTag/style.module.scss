@@ -3,6 +3,7 @@
 @use 'sass:color';
 
 .hobbyTag {
+    position: relative;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -14,8 +15,18 @@
     gap: 10px;
     font-size: 18px;
     color: $bubbleTextColor;
+
     &:hover {
         cursor: pointer;
+    }
+
+    .checkContainer {
+        position: absolute;
+        right: 5;
+        top: 5;
+        background-color: $primary;
+        border-radius: 100%;
+        padding: 4px;
     }
 }
 
