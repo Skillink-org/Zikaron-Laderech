@@ -7,15 +7,19 @@ function FallenList({ fallen }) {
   return (
     <>
       {fallen.length > 0 ? (
-        fallen.map((fallen) => (
-          <Link
-            key={fallen._id}
-            className={styles.cardBackground}
-            href={`/all-fallen/${String(fallen._id)}`}
-          >
-            <ProfileCard fallen={fallen} />
-          </Link>
-        ))
+        fallen.map((fallen) =>
+          fallen.status === "approved" ? (
+            <Link
+              key={fallen._id}
+              className={styles.cardBackground}
+              href={`/all-fallen/${String(fallen._id)}`}
+            >
+              <ProfileCard fallen={fallen} />
+            </Link>
+          ) : (
+            <></>
+          )
+        )
       ) : (
         <StatusMessage
           message="לא נמצאו נופלים התואמים את החיפוש"
