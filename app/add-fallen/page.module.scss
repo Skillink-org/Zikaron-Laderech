@@ -74,6 +74,66 @@
   }
 }
 
+.customFileUpload {
+  min-height: 20px;
+  height: auto;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  color: $placeHolderColor;
+
+
+  &:hover{
+    cursor: pointer;
+  }
+  .imagePreview {
+    margin-top: 15px;
+    max-width: 200px;
+    border-radius: 8px;
+  }
+
+  // .uploadProgress {
+  //   position: absolute;
+  //   bottom: 5px;
+  //   left: 5px;
+  //   right: 5px;
+  //   height: 4px;
+  //   background: #f0f0f0;
+  //   border-radius: 2px;
+    
+  //   .progressBar {
+  //     height: 100%;
+  //     background: $primaryColor;
+  //     border-radius: 2px;
+  //     transition: width 0.3s ease;
+  //   }
+  // }
+}
+
+.imageContainer {
+  position: relative;
+  display: inline-block;
+}
+
+.removeImage {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: white;
+  border: 1px solid $lightblueBorder;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .about,
 .familyMessage {
   height: 96px;
