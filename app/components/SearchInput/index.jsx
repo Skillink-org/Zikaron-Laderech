@@ -27,6 +27,7 @@ const SearchInput = ({ className = "", initialValue = "", ...props }) => {
     <GenericInput
       type="search"
       name="searchQuery"
+      defaultValue={initialValue}
       className={`${styles.searchInput} ${className}`}
       placeholder="חיפוש תחביב או שם"
       onChange={handleChange}
