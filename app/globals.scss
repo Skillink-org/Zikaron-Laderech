@@ -7,8 +7,18 @@
   font-family: $font-family;
 }
 
-html{
+html {
   direction: rtl;
+}
+
+body {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex-grow: 1;
 }
 
 a {
