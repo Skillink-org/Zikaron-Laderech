@@ -38,14 +38,27 @@ $headerHeight: 80px;
 $footerHeight: 120px;
 
 //Spacing
-// TODO: Add more spacing sizes
-$spacing-md: 20px;
+$spacing-xxs: 4px;
+$spacing-xs: 8px;
+$spacing-sm: 12px;
+$spacing-md: 16px;
+$spacing-lg: 24px;
+$spacing-xl: 32px;
+$spacing-xxl: 40px;
+$spacing-xxxl: 64px;
 
 //Border radius
-// TODO: Add more border radius sizes
-$border-radius-md: 10px;
+$border-radius-sm: 4px;
+$border-radius-md: 8px;
+$border-radius-lg: 12px;
+$border-radius-xl: 16px;
+$border-radius-xxl: 24px;
+$border-radius-xxxl: 32px;
 
-
-//Breakpoints
-// TODO: Add more breakpoints
-$breakpoint-md: 768px;
+// Breakpoints
+$breakpoint-xs: 480px;  // Extra small devices (phones)
+$breakpoint-sm: 640px;  // Small tablets
+$breakpoint-md: 768px;  // Medium tablets, small laptops
+$breakpoint-lg: 1024px; // Desktops, larger tablets
+$breakpoint-xl: 1280px; // Large desktops
+$breakpoint-xxl: 1536px; // Extra-large screens (4K+)
