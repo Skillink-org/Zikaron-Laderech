@@ -17,6 +17,15 @@ export async function getFilteredFallen(query) {
           $elemMatch: { name: { $regex: query, $options: "i" } },
         },
       },
+      {
+        $expr: {
+          $regexMatch: {
+            input: { $concat: ["$firstName", " ", "$lastName"] },
+            regex: query,
+            options: "i",
+          },
+        },
+      },
     ],
   });
 }
