@@ -1,5 +1,6 @@
 import Image from "next/image";
 import styles from "./style.module.scss";
+import { extractYearFromLongDate } from "@/lib/dateFormatter";
 
 export default function ProfileCard({ fallen }) {
   return (
@@ -16,7 +17,8 @@ export default function ProfileCard({ fallen }) {
           className={styles.name}
         >{`${fallen.firstName} ${fallen.lastName}`}</h3>
         <p className={styles.years}>
-          {fallen.birthYear} - {fallen.deathYear}
+          {extractYearFromLongDate(fallen.birthDate)} -{" "}
+          {extractYearFromLongDate(fallen.deathDate)}
         </p>
       </div>
     </div>
