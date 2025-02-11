@@ -4,22 +4,20 @@ import ProfileCard from "../ProfileCard";
 import StatusMessage from "@/app/components/StatusMessage";
 
 function FallenList({ fallen }) {
+  const approvedFallen = fallen.filter((f) => f.status === "approved");
+
   return (
     <>
-      {fallen.length > 0 ? (
-        fallen.map((fallen) =>
-          fallen.status === "approved" ? (
-            <Link
-              key={fallen._id}
-              className={styles.cardBackground}
-              href={`/all-fallen/${String(fallen._id)}`}
-            >
-              <ProfileCard fallen={fallen} />
-            </Link>
-          ) : (
-            <></>
-          )
-        )
+      {approvedFallen.length > 0 ? (
+        approvedFallen.map((fallen) => (
+          <Link
+            key={fallen._id}
+            className={styles.cardBackground}
+            href={`/all-fallen/${String(fallen._id)}`}
+          >
+            <ProfileCard fallen={fallen} />
+          </Link>
+        ))
       ) : (
         <StatusMessage
           message="לא נמצאו נופלים התואמים את החיפוש"
