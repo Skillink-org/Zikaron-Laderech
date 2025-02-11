@@ -1,5 +1,4 @@
 import styles from "./style.module.scss";
-import { colorGenerator, toGrayscale } from "@/lib/colors";
 
 const pastelColors = [
   "#FFF8F8", // Very Light Pink
@@ -13,28 +12,40 @@ const pastelColors = [
   "#FFF9E6", // Creamy Light Yellow
 ];
 
-export default function DynamicBackground({
-  children,
-  rand,
-  active = true,
-  className = "",
-}) {
+
+const colorGenrator = (color, percent, type = "light") => {
+  const factor = type === "light" ? [1, 1] : [-1, 0];
+  const num = parseInt(color.replace("#", ""), 16);
+  const amt = Math.round(2.55 * percent);
+  const R = (num >> 16) + factor[0] * amt;
+  const G = ((num >> 8) & 0x00ff) + factor[0] * amt;
+  const B = (num & 0x0000ff) + factor[0] * amt;
+
+  return (
+    "#" +
+    (
+      0x1000000 +
+      (R < 255 ? (R < factor[1] ? 0 : R) : 255) * 0x10000 +
+      (G < 255 ? (G < factor[1] ? 0 : G) : 255) * 0x100 +
+      (B < 255 ? (B < factor[1] ? 0 : B) : 255)
+    )
+      .toString(16)
+      .slice(1)
+  );
+};
+
+export default function DynamicBackground({ children, rand, className = "" }) {
   const randomColor = pastelColors[Math.floor(rand * pastelColors.length)];
-  const baseColor = active ? randomColor : toGrayscale(randomColor);
-  const lighterColor = active
-    ? colorGenerator(randomColor, 50, "light")
-    : toGrayscale(colorGenerator(randomColor, 50, "light"));
-  const darkerBorderColor = active
-    ? colorGenerator(randomColor, 10, "dark")
-    : toGrayscale(colorGenerator(randomColor, 10, "dark"));
+  const lighterColor = colorGenrator(randomColor, 50, "light");
+  const darkerBorderColor = colorGenrator(randomColor, 10, "dark");
 
   return (
     <div
       className={`${styles.dynamicBackground} ${className}`}
       style={{
-        "--baseColor": baseColor,
+        "--baseColor": randomColor,
         "--lighterColor": lighterColor,
-        "--borderColor": baseColor,
+        "--borderColor": randomColor,
         "--darkerBorderColor": darkerBorderColor,
       }}
     >

@@ -19,6 +19,15 @@
     &:hover {
         cursor: pointer;
     }
+
+    .checkContainer {
+        position: absolute;
+        right: 5;
+        top: 5;
+        background-color: $primary;
+        border-radius: 100%;
+        padding: 4px;
+    }
 }
 
 .dynamicBackground {
