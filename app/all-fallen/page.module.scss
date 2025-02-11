@@ -15,24 +15,6 @@
         font-weight: bold;
         font-size: $text-lg;
     }
-
-    .searchContainer {
-        display: flex;
-        gap: 10px;
-        align-items: center;
-    }
-}
-
-
-
-.itemsContainerHobby{
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-    width: 100%;
-    flex-grow: 1;
-
 }
 
 .itemsContainer {
@@ -41,23 +23,9 @@
     gap: 20px;
     justify-content: center;
     width: 100%;
-
-    .cardBackground {
-        background-color: $elementGradient;
-        border-bottom: 1px solid $lightblueBorder;
-        border-left: 1px solid $lightblueBorder;
-        border-right: 1px solid $lightblueBorder;
-        border-radius: 0px 0px 15px 15px;
-        padding: 10px;
-        width: 250px;
-
-        &:hover {
-            cursor: pointer;
-        }
-    }
 }
 
-@media (max-width: 992px) {
+@media (max-width: $breakpoint-lg) {
     .header {
         text-align: center;
     }
@@ -65,16 +33,6 @@
     .customBubble {
         flex-direction: column !important;
 
-    }
-
-    .searchContainer {
-        width: 100%;
-        flex-direction: column;
-    }
-
-    .searchInput,
-    .searchButton {
-        width: 100%;
     }
 
     .itemsContainer {

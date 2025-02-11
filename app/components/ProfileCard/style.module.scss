@@ -15,22 +15,12 @@
     display: flex;
   }
 
-.profileImage {
+  .profileImage {
     position: relative;
-    border-radius: 100px;
-    aspect-ratio: 3/4;
-    width: 100%;
-    height: auto;
-    padding: 10px;
+    border-radius: 50px;
+    overflow: hidden;
     object-fit: cover;
-    object-position: center;
-    filter: saturate(20%);
-
-    &:hover {
-      filter: saturate(100%);
-      transition: all 0.3s ease-in-out;
-
-    }
+    max-width: 100%;
   }
 
   .years {
