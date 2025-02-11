@@ -1,9 +1,9 @@
 "use client";
 
-import Button from "../Button";
-import styles from "./style.module.scss";
-import SearchInput from "../SearchInput";
+import styles from "./page.module.scss";
+import Button from "../components/Button";
 import { useRouter, useSearchParams } from "next/navigation";
+import SearchInput from "../components/SearchInput";
 
 const SearchForm = ({ query }) => {
   const router = useRouter();

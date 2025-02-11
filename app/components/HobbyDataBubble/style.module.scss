@@ -8,9 +8,11 @@
 
 .hobbyDataBubble {
     display: flex;
-    flex-direction: column;
-    // justify-content: center;
-    align-items: start;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    // align-items: start;
+    gap: 20px;
     padding: 10px;
     aspect-ratio: 3;
     font-size: $text-md;
