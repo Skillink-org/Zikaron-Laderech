@@ -23,16 +23,16 @@
         .hobbies {
             display: flex;
             flex-direction: row;
-            justify-content: space-between;
+            justify-content: center;
             flex-wrap: wrap;
-            padding: 5px 0;
-
+            gap: 10px;
             .hobby {
-                width: 49%;
-                display: flex;
-                flex-direction: column;
-                justify-content: end;
-                margin-bottom: 2%;
+                // width: 100%;
+                // display: flex;
+                // flex-direction: column;
+                // justify-content: end;
+                // margin-bottom: 2%;
+                flex-grow: 1;
 
                 cursor: pointer;
             }

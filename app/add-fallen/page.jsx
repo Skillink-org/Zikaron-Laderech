@@ -165,6 +165,15 @@ export default function AddFallenPage() {
     }
   };
 
+
+  const handleRemoveImage = () => {
+    setFormData(prev => ({
+      ...prev,
+      image: null,
+      imageFile: null
+    }));
+  };
+
   //validation function
   const validateForm = () => {
     if (!formData.firstName) {
@@ -322,6 +331,7 @@ export default function AddFallenPage() {
             />
 
             <label className={styles.customFileUpload}>
+              <img src={"/upload.svg"} width={26} height={26} alt="Upload icon" />
               העלאת תמונה
               <input
                 type="file"
@@ -331,13 +341,21 @@ export default function AddFallenPage() {
                 className={styles.hiddenInput}
               />
               {formData.image && (
-                <img
-                  src={formData.image}
-                  alt="תצוגה מקדימה"
-                  className={styles.imagePreview}
-                  style={{ maxWidth: '100px', marginTop: '10px' }}
-                />
-              )}
+  <div className={styles.imageContainer}>
+    <img
+      src={formData.image}
+      alt="תצוגה מקדימה"
+      className={styles.imagePreview}
+    />
+    <button 
+      type="button"
+      onClick={handleRemoveImage}
+      className={styles.removeImage}
+    >
+      ✕
+    </button>
+  </div>
+)}
             </label>
 
             <div className={styles.line1}>
