@@ -74,16 +74,21 @@
   }
 }
 
-.toggleButton {
-  width: 100%;
-  text-align: left;
-  margin-top: 10px;
+.toggleContainer {
   display: flex;
-  justify-content: start;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  width: 100%;
 }
 
-.toggleButton small {
+.toggleButton {
   cursor: pointer;
+}
+
+.forgotPassword {
+  cursor: pointer;
+  color: inherit;
 }
 
 .googleButton {
@@ -107,7 +112,7 @@
 .errorMessage {
   background-color: #f8d7da;
   color: #721c24;
-  padding: 10px 20px;
+  padding: 10px 10px;
   border-radius: 5px;
   margin-top: 10px;
   font-size: $text-md;

@@ -17,6 +17,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       },
       async authorize(credentials) {
         const user = await getUserByEmail(credentials.email);
+        console.log("user auth: "+JSON.stringify(user))
         if (!user) {
           throw new Error("User Not Found");
         }

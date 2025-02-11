@@ -6,11 +6,12 @@ import styles from "./style.module.scss";
 import { signIn } from "next-auth/react";
 import { useEffect, useState } from "react";
 import GenericInput from "../GenericInput/index";
-import { loginFields, signupFields } from "@/lib/FormFields";
-import { createUserAction } from '@/server/actions/user.action';
+import { resetPasswordFields, loginFields, signupFields } from "@/lib/FormFields";
+import { createUserAction, sendLinkForResetToken } from '@/server/actions/user.action';
+import { generateResetToken, sendTokenToEmail, getUserByEmail } from "@/server/service/user.service";
 
 export default function AuthPopup({ onClose }) {
-  const [isLogin, setIsLogin] = useState(true);
+  const [authState, setAuthState] = useState("signIn");
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
@@ -30,7 +31,7 @@ export default function AuthPopup({ onClose }) {
   };
 
   const toggleForm = () => {
-    setIsLogin(!isLogin);
+    setAuthState(authState != "signIn" ? "signIn" : "signUp")
     setErrorMessage("");
     setSuccessMessage("");
   };
@@ -40,18 +41,28 @@ export default function AuthPopup({ onClose }) {
     setLoading(true);
     setErrorMessage("");
 
-    if (isLogin) {
-      try {
-        await handleEmailSignin();
-      } catch (error) {
-        setErrorMessage(error.message);
-      }
-    } else {
-      try {
-        await handleSignUp();
-      } catch (error) {
-        setErrorMessage(error.message);
-      }
+    switch (authState) {
+      case "signIn":
+        try {
+          await handleEmailSignin();
+        } catch (error) {
+          setErrorMessage(error.message);
+        }
+        break;
+      case "signUp":
+        try {
+          await handleSignUp();
+        } catch (error) {
+          setErrorMessage(error.message);
+        }
+        break;
+      case "resetPassword":
+        try {
+          await handlePasswordReset();
+        } catch (error) {
+          setErrorMessage(error.message);
+        }
+        break;
     }
 
     setLoading(false);
@@ -73,10 +84,10 @@ export default function AuthPopup({ onClose }) {
         return;
       }
       else {
-        throw new Error("התחברות נכשלה. בדוק את הפרטים ונסה שוב.");
+        throw new Error("התחברות נכשלה. אמת את הפרטים ונסה שוב.");
       }
     } catch (error) {
-      throw new Error("התחברות נכשלה. בדוק את הפרטים ונסה שוב.");
+      throw new Error("התחברות נכשלה. אמת את הפרטים ונסה שוב.");
     }
   };
 
@@ -97,6 +108,23 @@ export default function AuthPopup({ onClose }) {
     }
   };
 
+  const handlePasswordReset = async () => {
+    if (!formData.email) {
+      setErrorMessage("נא להזין כתובת אימייל.");
+      return;
+    }
+    setLoading(true);
+    setErrorMessage("");
+    setSuccessMessage("");
+    try {
+      await sendLinkForResetToken(formData.email);
+    } catch (error) {
+      setErrorMessage(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
 
   // Close popup on escape key press
   useEffect(() => {
@@ -112,7 +140,7 @@ export default function AuthPopup({ onClose }) {
     };
   }, [onClose]);
 
-  const currentFields = isLogin ? loginFields : signupFields;
+  const currentFields = authState == "signIn" ? loginFields : authState == "signUp" ? signupFields : resetPasswordFields;
 
   return (
     <div className={styles.overlay}>
@@ -120,7 +148,7 @@ export default function AuthPopup({ onClose }) {
         <button className={styles.closeButton} onClick={onClose}>
           ✖
         </button>
-        <h2 className={styles.title}>{isLogin ? "התחברות" : "הרשמה"}</h2>
+        <h2 className={styles.title}>{authState == "signIn" ? "התחברות" : authState == "signUp" ? "הרשמה" : "איפוס סיסמא"}</h2>
         <form className={styles.form} onSubmit={handleSubmit}>
           {currentFields.map(({ type, placeholder, stateKey, autoComplete }) => (
             <GenericInput
@@ -134,39 +162,36 @@ export default function AuthPopup({ onClose }) {
               onChange={handleChange(stateKey)}
             />
           ))}
-          <Button
-            type="submit"
-            className={styles.submitButton}
-            disabled={loading}>
-            {loading ? <div className={styles.loader}></div> : (isLogin ? "התחברות" : "הרשמה")}
+          <Button type="submit" className={styles.submitButton} disabled={loading}>
+            {loading ? <div className={styles.loader}></div> :
+              (authState == "signIn" ? "התחברות" : authState == "signUp" ? "הרשמה" : "שלח קישור לאיפוס")}
           </Button>
 
-          <Button
-            onClick={() => {
-              signIn("google");
-            }}
-            className={styles.googleButton}
-          >
-            <Image
-              src="/google-icon.svg"
-              width={18}
-              height={18}
-              alt="google icon"
-              unoptimized
-            />
-
-            <p className={styles.googleText}>כניסה עם גוגל</p>
-          </Button>
+          {authState != "resetPassword" && (
+            <Button onClick={() => signIn("google")} className={styles.googleButton}>
+              <Image
+                src="/google-icon.svg"
+                width={18}
+                height={18}
+                alt="google icon"
+                unoptimized />
+              <p className={styles.googleText}>כניסה עם גוגל</p>
+            </Button>
+          )}
 
           {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
           {successMessage && <p className={styles.successMessage}>{successMessage}</p>}
 
-          <div className={styles.toggleButton} onClick={toggleForm}>
-            <small>
-              {isLogin
-                ? "אין לך חשבון? לחץ כאן להרשמה"
-                : "נרשמת בעבר? לחץ כאן להתחברות"}
+          <div className={styles.toggleContainer}>
+            <small className={styles.toggleButton} onClick={toggleForm}>
+              {authState == "signIn" ? "אין לך חשבון? לחץ כאן להרשמה" :
+                authState == "signUp" ? "נרשמת בעבר? לחץ כאן להתחברות" : "חזרה להתחברות"}
             </small>
+            {authState == "signIn" && (
+              <small className={styles.forgotPassword} onClick={() => setAuthState("resetPassword")}>
+                שכחתי סיסמא
+              </small>
+            )}
           </div>
         </form>
       </div>
