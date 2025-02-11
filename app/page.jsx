@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import styles from "./page.module.scss";
-import FallenPage from "./components/FallenPage";
+// import FallenPage from "./components/FallenPage";
 import Button from "./components/Button";
 import HobbyList from "./HomePage/HobbyList";
 
@@ -11,7 +11,7 @@ const HomePage = () => {
   return (
     <div className={styles.page}>
       <main className={styles.main}>
-        <FallenPage />
+        {/* <FallenPage /> */}
         <div className={styles["header-image"]}>
           <Image
             src="/Home-Page.png"
