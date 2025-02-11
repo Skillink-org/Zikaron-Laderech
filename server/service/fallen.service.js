@@ -1,8 +1,10 @@
-
+import { transporter } from "@/lib/email";
+import { getBaseUrl } from "@/lib/baseUrl";
+import { serializer } from "@/lib/serializer";
 import Fallen from "@/server/models/fallen.model";
 
 export async function getAllFallen() {
-  return await Fallen.find({});
+  return serializer(await Fallen.find({}));
 }
 
 export async function getFilteredFallen(query) {
@@ -13,6 +15,15 @@ export async function getFilteredFallen(query) {
       {
         hobbies: {
           $elemMatch: { name: { $regex: query, $options: "i" } },
+        },
+      },
+      {
+        $expr: {
+          $regexMatch: {
+            input: { $concat: ["$firstName", " ", "$lastName"] },
+            regex: query,
+            options: "i",
+          },
         },
       },
     ],
@@ -39,11 +50,13 @@ export async function getFallen(filter) {
 //   return await Fallen.create(fallen);
 // }
 
-export async function updateFallen(filter, update) {
+export async function updateFallenById(fallen) {
+  return await Fallen.findByIdAndUpdate(fallen._id, fallen, { new: true });
+}
 
+export async function updateFallen(filter, update) {
   try {
     return await Fallen.updateOne(filter, update);
-
   } catch (error) {
     console.log(error);
   }
@@ -73,12 +86,66 @@ export async function addFallen(fallenData) {
       ...fallenData,
       birthDate,
       deathDate,
-      status: "pending"
+      status: "pending",
     });
 
     return fallen;
   } catch (error) {
     console.error("Error in addFallen:", error);
+    throw error;
+  }
+}
+
+export async function approveFallen(id) {
+  try {
+    const fallen = await Fallen.findByIdAndUpdate(
+      id,
+      { status: "approved" },
+      { new: true }
+    );
+
+    if (!fallen) throw new Error("Fallen not found");
+    if (!fallen.email) throw new Error("No email found for this record");
+
+    const mailOptions = {
+      from: process.env.GMAIL_ADDRESS,
+      to: fallen.email,
+      subject: "Profile Approved",
+      text: `The profile has been approved.\n\nView it here: ${getBaseUrl()}/all-fallen/${id}`,
+    };
+
+    await transporter.sendMail(mailOptions);
+
+    return fallen;
+  } catch (error) {
+    console.error("Error in approveFallen:", error);
+    throw error;
+  }
+}
+
+export async function rejectFallen(id, note) {
+  try {
+    const fallen = await Fallen.findByIdAndUpdate(
+      id,
+      { status: "rejected" },
+      { new: true }
+    );
+
+    if (!fallen) throw new Error("Fallen not found");
+    if (!fallen.email) throw new Error("No email found for this record");
+
+    const mailOptions = {
+      from: process.env.GMAIL_ADDRESS,
+      to: fallen.email,
+      subject: "Profile Rejected",
+      text: `Your profile has been rejected.\n\nReason: ${note}\n\nIf you believe this is a mistake, please contact us.`,
+    };
+
+    await transporter.sendMail(mailOptions);
+
+    return fallen;
+  } catch (error) {
+    console.error("Error in rejectFallen:", error);
     throw error;
   }
 }

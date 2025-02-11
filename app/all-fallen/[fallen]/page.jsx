@@ -53,6 +53,12 @@ export default async function FallenPage({ params }) {
             dividerClassName={styles.sctionsDivider}
           />
           <p className={styles.paragraph}>{fallenDetails.familyWords}</p>
+        
+          <TitleDivider
+            title={"ציטוט"}
+            dividerClassName={styles.sctionsDivider}
+          />
+          <p className={styles.paragraph}>{fallenDetails.quote}</p>
         </div>
         {/* left */}
         <div className={`${styles.leftCol} ${styles.col}`}>

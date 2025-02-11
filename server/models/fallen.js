@@ -11,8 +11,11 @@ const fallenSchema = new mongoose.Schema({
     }],
     about: { type: String },
     familyWords: { type: String },
+    quote: { type: String },
     imageUrl: { type: String },
-    status: { type: String, enum: ["pending", "approved", "rejected"], default: "pending", },
+    status: { type: String, enum: ["pending", "approved", "rejected"], default: "pending", required: true },
+    email: { type: String, required: true },
+    phone: { type: String }
 });
 
 const Fallen = mongoose.models.Fallen || mongoose.model('Fallen', fallenSchema);

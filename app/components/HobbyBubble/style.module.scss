@@ -12,6 +12,8 @@
   aspect-ratio: 3/2;
   font-size: 18px;
   color: $bubbleTextColor;
+  width: 100%;
+  min-width: 100px;
 
   .title {
     font-size: $text-base;

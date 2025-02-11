@@ -9,26 +9,28 @@ import { uploadImage } from "@/server/actions/uploadImage.action";
 import { addFallen } from "@/server/actions/addFallen.action";
 import { fallenSchema } from "@/lib/zod/fallenSchema";
 
-
 export default function AddFallenPage() {
-  const cloudName = process.env.CLOUDINARY_NAME;
   const currentYear = new Date().getFullYear();
   const todayDate = new Date().toISOString().split("T")[0];
   const minDeathDate = "2023-10-07";
 
   const [formData, setFormData] = useState({
-    fullName: "",
+    firstName: "",
+    lastName: "",
     birthYear: "",
     deathDate: "",
     hobbies: "",
     about: "",
     familyMessage: "",
+    quote: "",
     image: null,
-    imageFile: null
+    imageFile: null,
+    email: "",
+    phone: ""
   });
 
   const [statusMessage, setStatusMessage] = useState("");
-  const [statusType, setStatusType] = useState(""); // 'success' or 'error'
+  const [statusType, setStatusType] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -38,95 +40,95 @@ export default function AddFallenPage() {
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      if (!file.type.startsWith('image/')) {
-        setStatusMessage('נא להעלות קובץ תמונה בלבד');
-        setStatusType('error');
+      if (!file.type.startsWith("image/")) {
+        setStatusMessage("נא להעלות קובץ תמונה בלבד");
+        setStatusType("error");
         return;
       }
 
       if (file.size > 5 * 1024 * 1024) {
-        setStatusMessage('התמונה גדולה מדי. נא להעלות תמונה עד 5MB');
-        setStatusType('error');
+        setStatusMessage("התמונה גדולה מדי. נא להעלות תמונה עד 5MB");
+        setStatusType("error");
         return;
       }
 
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
         imageFile: file,
-        image: URL.createObjectURL(file) 
+        image: URL.createObjectURL(file),
       }));
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     const parsed = fallenSchema.safeParse(formData);
     if (!parsed.success) {
-      const errorMessages = parsed.error.errors.map(err => err.message).join("\n");
+      const errorMessages = parsed.error.errors.map((err) => err.message).join("\n");
       setStatusMessage(errorMessages);
       setStatusType("error");
       return;
     }
-  
+
     try {
       setStatusMessage("מעלה תמונה...");
       setStatusType("loading");
-  
+
       const formDataToSend = new FormData();
       formDataToSend.append("image", formData.imageFile);
       const imageUrl = await uploadImage(formDataToSend);
-  
-      const [firstName, ...lastNameParts] = formData.fullName.trim().split(" ");
-      const lastName = lastNameParts.join(" ");
-  
-      const hobbies = formData.hobbies
-        .split(',')
-        .map(hobby => hobby.trim())
-        .filter(hobby => hobby)
-        .map(name => ({
-          name,
-          continueCount: 0
-        }));
+
       const response = await addFallen({
-        fullName: formData.fullName,
+        firstName: formData.firstName,
+        lastName: formData.lastName,
         birthYear: formData.birthYear,
         deathDate: formData.deathDate,
         hobbies: formData.hobbies,
         about: formData.about,
         familyMessage: formData.familyMessage,
-        imageFile: formData.imageFile,
-        highlightQuote: formData.highlightQuote,
+        quote: formData.quote,
+        imageUrl,
+        email: formData.email,
+        phone: formData.phone,
       });
-  
-      const result = await response.json();
-  
+
       if (!response.ok) {
-        throw new Error(result.error || 'שגיאה בשמירת הנתונים');
+        throw new Error(response.error || "שגיאה בשמירת הנתונים");
       }
-  
-      setStatusMessage(`הנתונים נשמרו בהצלחה! ${result.data.firstName} ${result.data.lastName} נוסף למאגר.`);
+
+      setStatusMessage("הנתונים נשמרו בהצלחה!");
       setStatusType("success");
-  
+
       setTimeout(() => {
         setFormData({
-          fullName: "",
+          firstName: "",
+          lastName: "",
           birthYear: "",
           deathDate: "",
           hobbies: "",
           about: "",
           familyMessage: "",
+          quote: "",
           image: null,
-          imageFile: null
+          imageFile: null,
+          email: "",
+          phone: "",
         });
       }, 3000);
-  
     } catch (error) {
       setStatusMessage(error.message || "אירעה שגיאה. נא לנסות שוב.");
       setStatusType("error");
     }
   };
-  
+
+  const handleRemoveImage = () => {
+    setFormData((prev) => ({
+      ...prev,
+      image: null,
+      imageFile: null,
+    }));
+  };
 
   return (
     <>
@@ -135,7 +137,7 @@ export default function AddFallenPage() {
           imageUrl={"/profileImage.webp"}
           title={"הוספת נופל למיזם"}
           subtitle={
-            "הוסיפו את יקירכם למאגר של המיזם. נא למלא מידע ככל האפשר על הנופל והקשר שלו לתחביב. אנו נעבור על המידע ונפרסם אותו. במידה שנפלה טעות, נעדכן אתכם"
+            "הוסיפו את יקירכם למאגר של המיזם. נא למלא מידע ככל האפשר על הנופל והקשר שלו לתחביב. אנו נעבור על המידע ונפרסם אותו. במידה שנפלה טעות, נעדכן אתכם."
           }
           style={{ height: "300px" }}
         />
@@ -147,13 +149,24 @@ export default function AddFallenPage() {
             <div className={styles.line1}>
               <input
                 type="text"
-                name="fullName"
-                value={formData.fullName}
+                name="firstName"
+                value={formData.firstName}
                 onChange={handleChange}
                 required
                 className={styles.name}
-                placeholder="שם מלא"
+                placeholder="שם פרטי"
               />
+              <input
+                type="text"
+                name="lastName"
+                value={formData.lastName}
+                onChange={handleChange}
+                required
+                className={styles.name}
+                placeholder="שם משפחה"
+              />
+            </div>
+            <div className={styles.line1}>
               <input
                 type="number"
                 name="birthYear"
@@ -166,17 +179,12 @@ export default function AddFallenPage() {
                 max={currentYear}
               />
               <input
-                type="text"
+                type="date"
                 name="deathDate"
                 value={formData.deathDate}
                 onChange={handleChange}
-                onFocus={(e) => (e.target.type = "date")}
-                onBlur={(e) => {
-                  if (!e.target.value) e.target.type = "text";
-                }}
                 required
                 className={styles.date}
-                placeholder="תאריך פטירה"
                 min={minDeathDate}
                 max={todayDate}
               />
@@ -206,21 +214,22 @@ export default function AddFallenPage() {
               value={formData.familyMessage}
               onChange={handleChange}
               className={styles.familyMessage}
-              placeholder="דברים שתרצו לשתף"
               required
+              placeholder="דברים שתרצו לשתף"
             />
 
             <input
               type="text"
-              name="highlightQuote"
-              value={formData.highlightQuote}
+              name="quote"
+              value={formData.quote}
               onChange={handleChange}
-              className={styles.highlightQuote}
-              placeholder="ציטוט או משפט חשוב מהנופל"
+              className={styles.quote}
               required
+              placeholder="ציטוט או משפט חשוב מהנופל"
             />
 
             <label className={styles.customFileUpload}>
+              <img src={"/upload.svg"} width={26} height={26} alt="Upload icon" />
               העלאת תמונה
               <input
                 type="file"
@@ -230,20 +239,46 @@ export default function AddFallenPage() {
                 className={styles.hiddenInput}
               />
               {formData.image && (
-                <img
-                  src={formData.image}
-                  alt="תצוגה מקדימה"
-                  className={styles.imagePreview}
-                  style={{ maxWidth: '100px', marginTop: '10px' }}
-                />
+                <div className={styles.imageContainer}>
+                  <img
+                    src={formData.image}
+                    alt="תצוגה מקדימה"
+                    className={styles.imagePreview}
+                  />
+                  <button
+                    type="button"
+                    onClick={handleRemoveImage}
+                    className={styles.removeImage}
+                  >
+                    ✕
+                  </button>
+                </div>
               )}
             </label>
 
-            <Button
-              type="submit"
-              className={styles.submitButton}
-              children={"שליחה"}
-            />
+            <div className={styles.line1}>
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                className={styles.email}
+                required
+                placeholder="אימייל ליצירת קשר"
+              />
+              <input
+                type="number"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+                className={styles.phone}
+                placeholder="מספר פלאפון ליצירת קשר"
+              />
+            </div>
+
+            <Button type="submit" className={styles.submitButton}>
+              שליחה
+            </Button>
           </div>
         </form>
       </CustomBubble>
