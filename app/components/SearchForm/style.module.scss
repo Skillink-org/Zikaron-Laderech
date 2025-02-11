@@ -1,0 +1,19 @@
+@use '@/styles/_vars.scss' as *;
+
+.searchContainer {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+@media (max-width: $breakpoint-lg) {
+    .searchContainer {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .searchInput,
+    .searchButton {
+        width: 100%;
+    }
+}

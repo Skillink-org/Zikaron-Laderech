@@ -1,6 +1,6 @@
 import Link from "next/link";
-import styles from "./page.module.scss";
-import ProfileCard from "../components/ProfileCard";
+import styles from "./style.module.scss";
+import ProfileCard from "../ProfileCard";
 import StatusMessage from "@/app/components/StatusMessage";
 
 function FallenList({ fallen }) {

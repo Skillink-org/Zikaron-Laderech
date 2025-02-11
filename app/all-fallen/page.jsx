@@ -1,12 +1,12 @@
 import { Suspense } from "react";
-import SearchForm from "./SearchForm";
-import FallenList from "./FallenList";
 import styles from "./page.module.scss";
 import HobbyTag from "../components/HobbyTag";
 import { connectToDB } from "@/server/connect";
 import CustomBubble from "../components/CustomBubble";
 import TitleDivider from "../components/TitleDivider";
 import { metadata as layoutMetadata } from "../layout";
+import SearchForm from "../components/SearchForm/SearchForm";
+import FallenList from "../components/FallenList/FallenList";
 import {
   getAllFallen,
   getFilteredFallen,
@@ -32,7 +32,7 @@ export default async function AllFallenPage({ searchParams }) {
   const q = (await searchParams).q || "";
   const fallen = q ? await getFilteredFallen(q) : await getAllFallen();
 
-  // TODO: Replace dummy data in real hobbies from API
+  // TODO: Replace dummy data in real popular hobbies from API
   const hobbies = ["טניס", "שירה", "ריצה", "אפיה", "סריגה", "שחיה"];
 
   return (
