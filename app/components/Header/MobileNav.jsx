@@ -8,6 +8,7 @@ import NavList from "./NavList";
 export default function MobileNav() {
   const [isOpen, setIsOpen] = useState(false);
   const toggleNav = () => setIsOpen(!isOpen);
+  const closeNav = () => setIsOpen(false);
 
   return (
     <div
@@ -21,7 +22,7 @@ export default function MobileNav() {
         alt="Mobile nav icon"
         onClick={toggleNav}
       />
-      <NavList />
+      <NavList closeNav={closeNav} />
     </div>
   );
 }
