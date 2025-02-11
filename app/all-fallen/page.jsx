@@ -45,7 +45,7 @@ export default async function AllFallenPage({ searchParams }) {
       <TitleDivider title={"סינון לפי תחביבים נפוצים"} />
 
       {/* Hobbies filter section */}
-      <div className={styles.itemsContainer}>
+      <div className={styles.itemsContainerHobby}>
         {hobbies.map((hobby, index) => (
           <HobbyTag hobby={hobby} key={index} />
         ))}

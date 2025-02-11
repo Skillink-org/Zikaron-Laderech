@@ -10,8 +10,8 @@
     justify-content: center;
     padding: 10px;
     border-radius: $border-radius-md;
-    width: 150px;
-    height: 40px;
+    width: 100%;
+    min-width: 150px;
     gap: 10px;
     font-size: 18px;
     color: $bubbleTextColor;
@@ -19,6 +19,12 @@
     &:hover {
         cursor: pointer;
     }
+}
+
+.dynamicBackground {
+    width: 100%;
+    flex: 1;
+    max-width: 200px;
 }
 
 @media (max-width: $breakpoint-md) {
