@@ -29,12 +29,19 @@ export async function generateResetToken(userId) {
     return token;
 }
 
-export async function sendTokenToEmail(token, email) {
+export async function sendLinkToEmail(link, email) {
     const mailOptions = {
         from: process.env.GMAIL_ADDRESS,
         to: email,
         subject: "איפוס סיסמא- עבור כניסה לזיכרון לדרך",
-        text: `אפס את סיסמתך בקישור הבא ${token}`
+        html: `
+        <div dir="rtl" style="text-align: right; font-family: Arial, sans-serif;">
+            <p>שלום,</p>
+            <p>לחץ על הקישור הבא כדי לאפס את הסיסמה שלך:</p>
+            <p><a href="${link}" target="_blank">${link}</a></p>
+            <p>אם לא ביקשת לאפס את הסיסמה, ניתן להתעלם מההודעה.</p>
+        </div>
+    `
     };
 
     await transporter.sendMail(mailOptions);

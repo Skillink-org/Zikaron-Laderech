@@ -7,8 +7,8 @@ import { signIn } from "next-auth/react";
 import { useEffect, useState } from "react";
 import GenericInput from "../GenericInput/index";
 import { resetPasswordFields, loginFields, signupFields } from "@/lib/FormFields";
-import { createUserAction, sendLinkForResetToken } from '@/server/actions/user.action';
-import { generateResetToken, sendTokenToEmail, getUserByEmail } from "@/server/service/user.service";
+import { createUserAction, resetPasswordAction } from '@/server/actions/user.action';
+import { generateResetToken, sendLinkToEmail, getUserByEmail } from "@/server/service/user.service";
 
 export default function AuthPopup({ onClose }) {
   const [authState, setAuthState] = useState("signIn");
@@ -117,7 +117,8 @@ export default function AuthPopup({ onClose }) {
     setErrorMessage("");
     setSuccessMessage("");
     try {
-      await sendLinkForResetToken(formData.email);
+      await resetPasswordAction(formData.email);
+      setSuccessMessage("הקישור נשלח בהצלחה. בדוק את תיבת המייל שלך.")
     } catch (error) {
       setErrorMessage(error.message);
     } finally {

@@ -1,4 +1,5 @@
 'use server'
+import { getBaseUrl } from '@/lib/baseUrl';
 import * as service from '../service/user.service';
 
 export async function createUserAction(user) {
@@ -13,13 +14,14 @@ export async function createUserAction(user) {
     return { newUser: plainUser };
 };
 
-export async function sendLinkForResetToken(email) {
+export async function resetPasswordAction(email) {
     const user = await service.getUserByEmail(email);
     const plainUser = {
         email: user.email,
         id: user._id
     };
-
     const token = await service.generateResetToken(plainUser.id);
-    await service.sendTokenToEmail(token, email);
+    const baseUrl = getBaseUrl();
+    const resetLink = `${baseUrl}/reset-password/${token}`;
+    await service.sendLinkToEmail(resetLink, email);
 };

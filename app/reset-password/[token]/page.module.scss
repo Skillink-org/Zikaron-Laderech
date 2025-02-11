@@ -1,0 +1,61 @@
+@use "@/styles/_vars.scss" as *;
+
+.resetContainer {
+    text-align: center; /* ממקם את הטקסט במרכז */
+    direction: rtl; /* כיוון עברי */
+    font-family: Arial, sans-serif;
+    max-width: 400px;
+    margin: 50px auto; /* ממקם את הריבוע במרכז העמוד */
+    min-height: 50vh; /* גובה מינימלי לריבוע */
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column; /* ממקם את האלמנטים בשורות נפרדות */
+    justify-content: center; /* ממקם את התוכן במרכז */
+    align-items: center; /* ממקם את האלמנטים במרכז */
+}
+
+.h2 {
+    color: #333;
+    margin-bottom: 20px; /* רווח בין הכותרת לשדות הקלט */
+}
+
+.error {
+    color: red;
+}
+
+.success {
+    color: green;
+}
+
+.form {
+    width: 100%;
+    display: flex;
+    flex-direction: column; /* שדות קלט וכפתור בשורות נפרדות */
+    gap: 20px; /* רווח בין כל שדה קלט לכפתור */
+}
+
+// .input {
+//     margin-bottom: 10px;
+//     padding: 8px;
+//     font-size: 16px;
+//     border: 1px solid #ccc;
+//     border-radius: 4px;
+// }
+
+.button {
+    width: 100%; /* הכפתור ברוחב שווה לשדות הקלט */
+    padding: 10px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #0056b3;
+}
