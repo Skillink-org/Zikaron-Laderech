@@ -1,16 +1,16 @@
 @use '@/styles/_vars.scss' as *;
-// קובץ SCSS לעיצוב דף הקשר
+
 
 
 
 .contact-container {
   display: flex;
   flex-direction: column;
-  align-items: center; // ממרכז הכל
+  align-items: center; 
   justify-content: center;
   max-width: 1200px;
   width: 100%;
-  margin: 0 auto; // מבטיח שהתוכן יהיה ממורכז
+  margin: 0 auto; 
   padding: 20px;
 }
 
@@ -18,14 +18,14 @@
 
 .header-image {
   width: 100%;
-  max-width: 1000px; // שליטה על הרוחב של התמונה
+  max-width: 1000px; 
   height: auto;
   border-radius: 10px;
   overflow: hidden;
   display: flex;
-  justify-content: center; // ממרכז את התמונה
+  justify-content: center; 
   align-items: center;
-  margin: 0 auto; // ממרכז את הקונטיינר של התמונה
+  margin: 0 auto; 
 }
 
 
@@ -62,22 +62,15 @@
   border-radius: 5px;
   padding: 10px 20px;
   transition: background 0.3s ease-in-out, transform 0.2s ease-in-out;
-  
-
-  width: 320px; /* ניתן לשנות לפי הצורך */
-  height: 50px; /* ניתן לשנות לפי הצורך */
+  width: 320px; 
+  height: 50px; 
   text-align: center;
-  font-size: 16px; /* להבטיח טקסט אחיד */
-  
-  white-space: nowrap; /* למנוע ירידת טקסט לשורה שנייה */
-
-
+  font-size: 16px; 
+  white-space: nowrap; 
   cursor: pointer;
 
   &:hover {
     background: #f9f9f9;
     transform: scale(1.05);
   }
-
-
 }

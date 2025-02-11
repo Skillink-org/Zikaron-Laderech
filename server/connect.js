@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 export const connectToMongo = async () => {
   try {
@@ -9,4 +9,4 @@ export const connectToMongo = async () => {
   } catch (error) {
     console.log("Connection error:", error);
   }
-}
+} 
