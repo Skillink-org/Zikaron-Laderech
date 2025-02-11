@@ -1,23 +1,15 @@
 "use client";
 
+import { useState } from "react";
 import styles from "./style.module.scss";
-import { useEffect, useState } from "react";
+import GenericInput from "../GenericInput";
 import { useDebouncedCallback } from "use-debounce";
 import { useRouter, useSearchParams } from "next/navigation";
 
-const SearchInput = ({
-  className = "",
-  width = "100%",
-  initialValue = "",
-  ...props
-}) => {
+const SearchInput = ({ className = "", initialValue = "", ...props }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [query, setQuery] = useState(initialValue);
-
-  useEffect(() => {
-    setQuery(initialValue);
-  }, [initialValue]);
 
   const handleChange = (e) => {
     setQuery(e.target.value);
@@ -32,18 +24,15 @@ const SearchInput = ({
   }, 300);
 
   return (
-    <form className={styles.formContainer} onSubmit={(e) => e.preventDefault()}>
-      <input
-        type="search"
-        name="searchQuery"
-        defaultValue={query}
-        className={`${styles.searchInput} ${className}`}
-        style={{ width }}
-        placeholder="חיפוש תחביב או שם"
-        onChange={handleChange}
-        {...props}
-      />
-    </form>
+    <GenericInput
+      type="search"
+      name="searchQuery"
+      defaultValue={initialValue}
+      className={`${styles.searchInput} ${className}`}
+      placeholder="חיפוש תחביב או שם"
+      onChange={handleChange}
+      {...props}
+    />
   );
 };
 

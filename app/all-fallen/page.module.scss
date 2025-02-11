@@ -2,7 +2,7 @@
 
 .customBubble {
     display: flex;
-    justify-content: center !important;
+    justify-content: space-around !important;
     align-items: center;
     width: 100%;
     gap: 40px;
@@ -23,12 +23,25 @@
     }
 }
 
+
+
+.itemsContainerHobby{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    width: 100%;
+    flex-grow: 1;
+
+}
+
 .itemsContainer {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
     justify-content: center;
     width: 100%;
+
     .cardBackground {
         background-color: $elementGradient;
         border-bottom: 1px solid $lightblueBorder;
@@ -37,16 +50,21 @@
         border-radius: 0px 0px 15px 15px;
         padding: 10px;
         width: 250px;
+
         &:hover {
             cursor: pointer;
         }
     }
 }
 
-@media (max-width: $breakpoint-md) {
+@media (max-width: 992px) {
+    .header {
+        text-align: center;
+    }
+
     .customBubble {
         flex-direction: column !important;
-     
+
     }
 
     .searchContainer {
