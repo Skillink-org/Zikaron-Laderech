@@ -1,12 +1,27 @@
 import mongoose from 'mongoose';
 
-export const connectToMongo = async () => {
+/**
+ * Connect app to MongoDB database using Mongoose
+ * @returns {Promise<void>}
+ */
+export const connectToDB = async () => {
   try {
+    // If already connected, return
     if (mongoose.connection.readyState === 1) return;
-    
-    await mongoose.connect(process.env.MONGO_URI);
-    console.log("Connected to MongoDB (Mongoose)");
-  } catch (error) {
-    console.log("Connection error:", error);
+
+    // Construct the database link
+    let url = process.env.DB_LINK;
+
+    // Connect to the database
+    console.log({ status: 'info', message: `Connecting to MongoDB at ${url}` });
+    await mongoose.connect(url);
+
+    // Log the connection details
+    console.log(
+      `Successfully connected to MongoDB at ${mongoose.connection.host}:${mongoose.connection.port}`
+    );
+  } catch (err) {
+    // Handle connection errors
+    console.log({ status: 'error', message: err.message });
   }
-} 
+};

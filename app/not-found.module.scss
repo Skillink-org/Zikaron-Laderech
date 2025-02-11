@@ -1,0 +1,18 @@
+@use '@/styles/_vars.scss' as *;
+
+.notFoundContainer {
+    .header {
+        font-size: $text-xl;
+    }
+
+    .subheader {
+        font-size: $text-lg;
+    }
+
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: space-evenly;
+    align-items: center;
+}

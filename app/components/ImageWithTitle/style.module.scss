@@ -1,0 +1,70 @@
+@use '@/styles/_vars.scss' as *;
+
+.imageWithTitle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-size: cover;
+  background-position: center;
+  filter: grayscale(100%);
+    // height: 499.51px;
+  // position: absolute;
+  // top: 139.86px;
+  // left: 50%;
+  // transform: translateX(-50%);
+  border-radius: 0 0 10px 10px;
+  border: solid;
+  border-width: 0 1px 1px 1px;
+  border-color: #F2EDEB;
+  color: white;
+  text-align: center;
+  overflow: hidden;
+  padding: 20px;
+  position: relative;
+
+  .content {
+    position: relative;
+    z-index: 2;
+    padding: 20px;
+    
+    h1 {
+      font-size: $text-xxl;
+      margin-bottom: 1rem;
+    }
+    
+    p {
+      font-size: 1.2rem;
+    }
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+    border-radius: 0 0 10px 10px;
+  }
+}
+
+@media (max-width: $breakpoint-md) {
+  .imageWithTitle {
+    padding: 0.5rem;
+  }
+  
+  .imageWithTitle .content {
+    padding: 0.5rem;
+    
+    h1 {
+      font-size: 2.5rem;
+    }
+    
+    p {
+      font-size: 1rem;
+    }
+  }
+}
