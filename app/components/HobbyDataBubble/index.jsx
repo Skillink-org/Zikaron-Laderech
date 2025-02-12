@@ -33,7 +33,6 @@ export default function HobbyDataBubble({
         <div className={styles.hobbyContinuers}>
           {sumMode ? hobbyContinuersSum : hobbyContinuers}
         </div>
-        {/* TODO: Add support for both feminine and masculine forms */}
         <div className={styles.hobbyText}>
           {sumMode
             ? ` ממשיכים בדרך של ${fallenName}`
