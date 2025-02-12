@@ -1,8 +1,7 @@
-// Imports
 import mongoose from 'mongoose';
 
 /**
- * Connet app to MongoDB database using Mongoose
+ * Connect app to MongoDB database using Mongoose
  * @returns {Promise<void>}
  */
 export const connectToDB = async () => {
@@ -12,9 +11,6 @@ export const connectToDB = async () => {
 
     // Construct the database link
     let url = process.env.DB_LINK;
-    // url = url
-      // .replace('<DB_PASS>', process.env.DB_PASS)
-      // .replace('<DB_USER>', process.env.DB_USER);
 
     // Connect to the database
     console.log({ status: 'info', message: `Connecting to MongoDB at ${url}` });
@@ -24,9 +20,8 @@ export const connectToDB = async () => {
     console.log(
       `Successfully connected to MongoDB at ${mongoose.connection.host}:${mongoose.connection.port}`
     );
-
-    // Handle connection errors
   } catch (err) {
+    // Handle connection errors
     console.log({ status: 'error', message: err.message });
   }
 };
