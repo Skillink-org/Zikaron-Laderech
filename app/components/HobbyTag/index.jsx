@@ -14,6 +14,16 @@ export default function HobbyTag({ hobby, className = "", onClick, ...props }) {
     return new URLSearchParams(params);
   };
 
+  const getChosenHobby = () => {
+    const params = getParams(searchParams);
+
+    return params.get("q");
+  };
+
+  const isChosenHobby = () => {
+    return getChosenHobby() === hobby;
+  };
+
   onClick = () => {
     const params = getParams(searchParams);
     params.set("q", hobby);
@@ -21,23 +31,20 @@ export default function HobbyTag({ hobby, className = "", onClick, ...props }) {
     router.push(`?${params.toString()}`, { scroll: false });
   };
 
-  const isChosenHobby = () => {
-    const params = getParams(searchParams);
-
-    return params.get("q") === hobby;
-  };
-
   return (
     <>
       {rand ? (
-        <DynamicBackground rand={rand} className={styles.dynamicBackground}>
+        <DynamicBackground
+          rand={rand}
+          active={getChosenHobby() ? isChosenHobby() : true}
+          className={styles.dynamicBackground}
+        >
           <div
             className={`${styles.hobbyTag} ${className}`}
             onClick={onClick}
             {...props}
           >
             {hobby}
-            {isChosenHobby() && <div className={styles.checkContainer}></div>}
           </div>
         </DynamicBackground>
       ) : (

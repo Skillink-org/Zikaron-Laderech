@@ -8,7 +8,6 @@ import styles from './style.module.scss'
 import Image from "next/image"
 
 import FallenForm from "../FallenForm";
-import StatusMessage from "../StatusMessage";
 
 // TODO-YOSEF: talk with Refael about popup system - with zustand
 
@@ -73,9 +72,6 @@ export default function FallenTable({ fallenData }) {
         }
     };
 
-    const [statusMessage, setStatusMessage] = useState("");
-    const [statusType, setStatusType] = useState("");
-
     const approveFallen = async (id) => {
         try {
             const response = await fetch('/api/approve-fallen', {
@@ -93,22 +89,12 @@ export default function FallenTable({ fallenData }) {
                 setFilteredFallenData(prevData => prevData.map(fallen =>
                     fallen._id === id ? result.data : fallen
                 ));
-                setStatusMessage("הפרופיל אושר בהצלחה");
-                setStatusType("success");
             } else {
                 console.error("Approval failed:", result.error);
-                setStatusMessage("אישור הפרופיל נכשל");
-                setStatusType("error");
             }
         } catch (error) {
             console.error("Error occurred:", error);
-            setStatusMessage("אישור הפרופיל נכשל");
-            setStatusType("error");
         }
-        setTimeout(() => {
-            setStatusMessage("");
-            setStatusType("");
-        }, 10000);
     };
 
     const [isRejectFallenModalOpen, setIsRejectFallenModalOpen] = useState(false);
@@ -142,26 +128,17 @@ export default function FallenTable({ fallenData }) {
                 setFilteredFallenData(prevData => prevData.map(fallen =>
                     fallen._id === id ? result.data : fallen
                 ));
-                setStatusMessage("הפרופיל נדחה בהצלחה");
-                setStatusType("success");
             } else {
                 console.error('Error rejecting fallen:', data.error);
-                setStatusMessage("דחיית הפרופיל נכשלה");
-                setStatusType("error");
             }
+
         } catch (error) {
             console.error('Error:', error);
-            setStatusMessage("דחיית הפרופיל נכשלה");
-            setStatusType("error");
         }
 
         setSelectedProfileId('');
         setNote('');
         closeRejectFallenModal();
-        setTimeout(() => {
-            setStatusMessage("");
-            setStatusType("");
-        }, 10000);
     }
 
     const [selectedProfile, setSelectedProfile] = useState({});
@@ -335,12 +312,6 @@ export default function FallenTable({ fallenData }) {
                     ))}
                 </tbody>
             </table>
-
-            {statusMessage && (
-                <div className={styles.statusMessage}>
-                    <StatusMessage message={statusMessage} type={statusType} />
-                </div>
-            )}
 
             <Modal
                 isOpen={isRejectFallenModalOpen}
