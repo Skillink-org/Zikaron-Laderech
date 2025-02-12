@@ -1,82 +1,95 @@
 "use client";
 
 import { React, useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import styles from './page.module.scss'
 import GenericInput from "@/app/components/GenericInput";
 import Button from "@/app/components/Button";
+import { isValidTokenAction, updateUserPasswordAction } from '@/server/actions/user.action';
 
-export default function ResetPasswordPage({ params }) {
-    const router = useRouter();
-    const token = router.quary;
+export default function ResetPasswordPage() {
+    const params = useParams();
+    const token = params.token;
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
-    const [error, setError] = useState("");
-    const [success, setSuccess] = useState(false);
+    const [isTokenValid, setIsTokenValid] = useState(false);
+    const [userId, setUserId] = useState(null);
+    const [errorMessage, setErrorMessage] = useState("");
+    const [successMessage, setSuccessMessage] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        // fetch(`/api/reset-password?token=${token}`)
-        //     .then(res => res.json())
-        //     .then(data => {
-        //         if (!data.valid) setError("פג תוקף הקישור, אנא בקש קישור חדש.");
-        //     })
-        //     .catch(() => setError("שגיאה בבדיקת הקישור."));
+        const checkTokenValidity = async () => {
+            const response = await isValidTokenAction(token);
+            console.log(response)
+            if (!response.isValid) {
+                setErrorMessage("פג תוקף הקישור, אנא בקש קישור חדש");
+                setIsTokenValid(false);
+            } else {
+                setIsTokenValid(true);
+                setUserId(response.userId);
+            }
+        };
+        checkTokenValidity();
     }, [token]);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setError("");
-
+        setErrorMessage("");
+        setSuccessMessage("");
+        setLoading(true);
         if (password !== confirmPassword) {
-            setError("הסיסמאות אינן תואמות.");
+            setErrorMessage("הסיסמאות אינן תואמות");
             return;
         }
-
-        const res = await fetch("/api/reset-password", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ token, password }),
-        });
-
-        const data = await res.json();
-        if (data.success) {
-            setSuccess(true);
-            setTimeout(() => router.push("/login"), 3000);
-        } else {
-            setError(data.message || "שגיאה באיפוס הסיסמה.");
+        if (!userId) {
+            setErrorMessage("שגיאה בזיהוי המשתמש");
+            return;
         }
+        const updateUser = await updateUserPasswordAction(userId, password);
+        if (updateUser) {
+            setSuccessMessage("הסיסמא שונתה בהצלחה");
+        } else {
+            setErrorMessage(updateUser.message || "שגיאה באיפוס הסיסמה.");
+        }
+        // setLoading(false);
     };
 
-    return (
-        <div className={styles.resetContainer}>
-            <h2>איפוס סיסמה</h2>
-            {error && <p className={styles.error}>{error}</p>}
-            {success ? (
-                <p className={styles.success}>הסיסמה אופסה בהצלחה! מועבר לדף התחברות...</p>
-            ) : (
-                <form onSubmit={handleSubmit}>
-                    <GenericInput
-                        type="password"
-                        placeholder="בחר סיסמא חדשה"
-                        name="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required={true}
-                    />
-                    <GenericInput
-                        type="password"
-                        placeholder="אמת את הסיסמא"
-                        autoComplete="current-password"
-                        name="confirm-password"
-                        value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-                        required={true}
-                    />
-                    {/* <button type="submit">אפס סיסמה</button> */}
-                    <Button type="submit">
-                        איפוס סיסמא
-                    </Button>
-                </form>
-            )}
+    return (<>
+        {!isTokenValid && (<div className={styles.expiredTokenMessage}>{errorMessage}</div>)}
+
+        {isTokenValid && (<div className={styles.resetContainer}>
+            <h2 className={styles.title}>איפוס סיסמה</h2>
+            <form onSubmit={handleSubmit}>
+                <GenericInput
+                    type="password"
+                    placeholder="בחר סיסמא חדשה"
+                    name="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required={true}
+                    className={styles.input}
+                />
+                <GenericInput
+                    type="password"
+                    placeholder="אמת את הסיסמא"
+                    autoComplete="current-password"
+                    name="confirm-password"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    required={true}
+                    className={styles.input}
+                />
+                <Button type="submit" className={styles.resetButton}>
+                    {loading ? <div className={styles.loader}></div> :
+                        "איפוס סיסמא"
+                    }
+                </Button>
+                {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
+                {successMessage && <p className={styles.successMessage}>{successMessage}</p>}
+            </form>
         </div>
+        )}
+    </>
     );
 }
