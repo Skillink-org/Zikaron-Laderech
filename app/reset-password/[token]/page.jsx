@@ -69,7 +69,6 @@ export default function ResetPasswordPage() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required={true}
-                    icon={<img src="/eye.svg" alt="Eye Icon" />}
                 />
                 <GenericInput
                     type="password"

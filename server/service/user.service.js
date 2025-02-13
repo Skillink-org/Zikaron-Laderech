@@ -24,7 +24,7 @@ export async function sendWelcomeEmail(email, name, link) {
         to: email,
         subject: "נרשמת בהצלחה!",
         html: `
-        <div dir="rtl" style="text-align: right; font-family: Arial, sans-serif;">
+        <div dir="rtl" style="text-align: center; color: #3f484c;">
             <p>שלום ${name},</p>
             <p>נרשמת בהצלחה לאתר "זיכרון לדרך"</p>
             <p>אנחנו מזמינים אותך לבקר באתר שלנו</p>
@@ -56,11 +56,13 @@ export async function sendLinkToEmail(link, email) {
         to: email,
         subject: "איפוס סיסמא- עבור כניסה לזיכרון לדרך",
         html: `
-        <div dir="rtl" style="text-align: right; font-family: Arial, sans-serif;">
+        <div dir="rtl" style="text-align: center; color: #3f484c;">
             <p>שלום,</p>
             <p>לחץ על הקישור הבא כדי לאפס את הסיסמה שלך:</p>
             <p><a href="${link}" target="_blank">${link}</a></p>
+            <p>הקישור תקף ל-10 דקות בלבד.</p>
             <p>אם לא ביקשת לאפס את הסיסמה, ניתן להתעלם מההודעה.</p>
+            <p>בברכה, צוות זיכרון לדרך</p>
         </div>`
     };
     await transporter.sendMail(mailOptions);

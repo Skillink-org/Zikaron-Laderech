@@ -185,10 +185,15 @@ export default function AuthPopup({ onClose }) {
 
           <div className={styles.toggleContainer}>
             <small className={styles.toggleButton} onClick={toggleForm}>
-              {authState == "signIn" ? "אין לך חשבון? לחץ כאן להרשמה" :
-                authState == "signUp" ? "נרשמת בעבר? לחץ כאן להתחברות" : "חזרה להתחברות"}
+              {authState === "signIn" ? (
+                <span className={styles.span}>אין לך חשבון? לחץ כאן להרשמה</span>
+              ) : authState === "signUp" ? (
+                <span className={styles.span}>נרשמת בעבר? לחץ כאן להתחברות</span>
+              ) : (
+                <span className={styles.span}>חזרה להתחברות</span>
+              )}
             </small>
-            {authState == "signIn" && (
+            {authState === "signIn" && (
               <small className={styles.forgotPassword} onClick={() => setAuthState("resetPassword")}>
                 שכחתי סיסמא
               </small>

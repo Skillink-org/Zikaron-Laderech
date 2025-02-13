@@ -9,8 +9,7 @@ export async function createUserAction(user) {
         lastName: newUser.lastName,
         email: newUser.email,
     };
-    const baseUrl = getBaseUrl();
-    await service.sendWelcomeEmail(newUser.email, `${newUser.firstName}`, baseUrl);
+    await service.sendWelcomeEmail(newUser.email, `${newUser.firstName}`, getBaseUrl());
     return { newUser: plainUser };
 };
 
@@ -25,8 +24,7 @@ export async function resetPasswordAction(email) {
         if (!token) {
             throw new Error("Failed to generate reset token");
         }
-        const baseUrl = getBaseUrl();
-        const resetLink = `${baseUrl}/reset-password/${token}`;
+        const resetLink = `${getBaseUrl()}/reset-password/${token}`;
         await service.sendLinkToEmail(resetLink, email);
     } catch (error) {
         console.error("Error in resetPasswordAction:", error.message);
@@ -36,7 +34,6 @@ export async function resetPasswordAction(email) {
 
 export async function isValidTokenAction(token) {
     const response = await service.isTokenValid(token);
-    console.log("isValid in action: " + response)
     return response;
 }
 

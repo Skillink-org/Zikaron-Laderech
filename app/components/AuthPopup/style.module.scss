@@ -70,6 +70,10 @@
   width: 100%;
 }
 
+.span{
+  font-size: $text-base;
+}
+
 .toggleButton {
   cursor: pointer;
 }
@@ -77,6 +81,7 @@
 .forgotPassword {
   cursor: pointer;
   color: inherit;
+  font-size: $text-base;
 }
 
 .googleButton {
