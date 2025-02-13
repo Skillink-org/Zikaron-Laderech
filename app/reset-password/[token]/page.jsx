@@ -16,7 +16,7 @@ export default function ResetPasswordPage() {
     const [userId, setUserId] = useState(null);
     const [errorMessage, setErrorMessage] = useState("");
     const [successMessage, setSuccessMessage] = useState(false);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const checkTokenValidity = async () => {
@@ -29,6 +29,7 @@ export default function ResetPasswordPage() {
                 setIsTokenValid(true);
                 setUserId(response.userId);
             }
+            setLoading(false);
         };
         checkTokenValidity();
     }, [token]);
@@ -52,15 +53,15 @@ export default function ResetPasswordPage() {
         } else {
             setErrorMessage(updateUser.message || "שגיאה באיפוס הסיסמה.");
         }
-        // setLoading(false);
+        setLoading(false);
     };
 
     return (<>
-        {!isTokenValid && (<div className={styles.expiredTokenMessage}>{errorMessage}</div>)}
+        {!isTokenValid && !loading && (<div className={styles.expiredTokenMessage}>{errorMessage}</div>)}
 
         {isTokenValid && (<div className={styles.resetContainer}>
-            <h2 className={styles.title}>איפוס סיסמה</h2>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className={styles.form}>
+                <h2 className={styles.title}>איפוס סיסמה</h2>
                 <GenericInput
                     type="password"
                     placeholder="בחר סיסמא חדשה"
@@ -68,7 +69,7 @@ export default function ResetPasswordPage() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required={true}
-                    className={styles.input}
+                    icon={<img src="/eye.svg" alt="Eye Icon" />}
                 />
                 <GenericInput
                     type="password"
@@ -78,7 +79,6 @@ export default function ResetPasswordPage() {
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     required={true}
-                    className={styles.input}
                 />
                 <Button type="submit" className={styles.resetButton}>
                     {loading ? <div className={styles.loader}></div> :

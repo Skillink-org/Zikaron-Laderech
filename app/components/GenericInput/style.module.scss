@@ -1,3 +1,5 @@
+@use '@/styles/_vars.scss' as *;
+
 .input {
     margin-bottom: 1rem;
     padding: 0.8rem 1rem;
@@ -17,4 +19,3 @@
       color: var(--placeHolderColor); 
     }
   }
-  

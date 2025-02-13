@@ -34,7 +34,7 @@
 }
 
 .title {
-  font-size: $text-md;
+  font-size: $text-lg;
   margin-bottom: 1rem;
   text-align: center;
   color: $primary;
@@ -43,18 +43,6 @@
 .form {
   display: flex;
   flex-direction: column;
-}
-
-.input {
-  margin-bottom: 1rem;
-  padding: 0.5rem;
-  border: 1px solid $lightblueBorder;
-  border-radius: 4px;
-  font-size: $text-sm;
-
-  &::placeholder {
-    color: $placeHolderColor;
-  }
 }
 
 .submitButton {
