@@ -1,6 +1,7 @@
 import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
-import { getUserByEmail, createUser } from "./server/service/user.service";
+import { getUserByEmail } from "./server/service/user.service";
+import { createUserAction } from "./server/actions/user.action";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
@@ -39,7 +40,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       if (account.provider === "google") {
         let existingUser = await getUserByEmail(user.email);
         if (!existingUser) {
-          existingUser = await createUser({
+          existingUser = await createUserAction({
             email: user.email,
             firstName: user.name.split(" ")[0],
             lastName: user.name.split(" ")[1] || "",

@@ -11,14 +11,14 @@ export default function GenericInput({
   ...props
 }) {
   return (
-    <input
-      type={type}
-      placeholder={placeholder}
-      value={value}
-      onChange={onChange}
-      className={`${styles.input} ${className}`}
-      autoComplete={autoComplete}
-      {...props}
-    />
+      <input
+        type={type}
+        placeholder={placeholder}
+        value={value}
+        onChange={onChange}
+        className={styles.input}
+        autoComplete={autoComplete}
+        {...props}
+      />
   );
 }
