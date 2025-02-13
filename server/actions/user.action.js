@@ -9,6 +9,8 @@ export async function createUserAction(user) {
         lastName: newUser.lastName,
         email: newUser.email,
     };
+    const baseUrl = getBaseUrl();
+    await service.sendWelcomeEmail(newUser.email, `${newUser.firstName}`, baseUrl);
     return { newUser: plainUser };
 };
 
