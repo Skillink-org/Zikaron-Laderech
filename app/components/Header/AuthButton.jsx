@@ -17,7 +17,8 @@ export default function AuthButton() {
 
     return (
         <div>
-            <Button onClick={openAuthPopup}>
+            <Button onClick={openAuthPopup} className={styles.authButton}
+            >
                 התחברות
             </Button>
             {isAuthPopupOpen && <AuthPopup onClose={closeAuthPopup} />}

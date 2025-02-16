@@ -38,9 +38,9 @@ export default async function AllFallenPage({ searchParams }) {
   return (
     <>
       {/* Search section */}
-      <CustomBubble className={styles.customBubble}>
-        <p className={styles.header}>מצאו נופל לפי שם או תחביב</p>
-        <SearchForm query={q} />
+      <CustomBubble className={styles.hero}>
+        <p className={styles.title}>מצאו נופל לפי שם או תחביב</p>
+        <SearchForm className={styles.searchFormContainer} query={q} />
       </CustomBubble>
       <TitleDivider title={"סינון לפי תחביבים נפוצים"} />
 

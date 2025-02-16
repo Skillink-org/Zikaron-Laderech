@@ -4,6 +4,9 @@
     display: flex;
     gap: 10px;
     align-items: center;
+    flex-grow: 1;
+    max-width: 400px;
+    width: 100%;
 }
 
 @media (max-width: $breakpoint-lg) {
@@ -11,7 +14,6 @@
         width: 100%;
         flex-direction: column;
     }
-
     .searchInput,
     .searchButton {
         width: 100%;

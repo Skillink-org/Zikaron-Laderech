@@ -1,8 +1,9 @@
 @use '@/styles/_vars.scss' as *;
+@use "@/styles/_mixins.scss" as *;
 
-.customBubble {
+.hero {
     display: flex;
-    justify-content: space-around !important;
+    justify-content: center;
     align-items: center;
     width: 100%;
     gap: 40px;
@@ -10,10 +11,11 @@
     height: min-content;
     flex-direction: row !important;
 
-    .header {
-        color: $primary;
-        font-weight: bold;
-        font-size: $text-lg;
+    .title {
+        @include title;
+        align-content: center;
+        text-align: center;
+
     }
 }
 
@@ -26,11 +28,11 @@
 }
 
 @media (max-width: $breakpoint-lg) {
-    .header {
+    .title {
         text-align: center;
     }
 
-    .customBubble {
+    .hero {
         flex-direction: column !important;
 
     }
@@ -38,6 +40,13 @@
     .itemsContainer {
         justify-content: space-evenly;
     }
+}
+
+@media (max-width: $breakpoint-lg) {
+    .hero {
+        gap: $spacing-lg;
+    }
+
 }
 
 @media (min-width: 1300px) {

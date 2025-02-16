@@ -1,18 +1,17 @@
 @use '@/styles/_vars.scss' as *;
 
 .input {
-  margin-bottom: 1rem;
-  padding: 0.8rem 1rem;
+  padding:  $spacing-xs $spacing-sm;
   border: 1px solid $lightblueBorder;
   border-radius: 10px;
-  font-size: $text-md;
+  font-size: $text-base;
   font-family: $font-family;
+  font-weight: 500;
   transition: all 0.3s ease;
-
+  width: 100%;
   &:focus {
-    border-color: var(--blue);
+    border: 1px solid $textColor;
     outline: none;
-    box-shadow: 0 0 5px rgba(39, 44, 85, 0.5);
   }
 
   &::placeholder {

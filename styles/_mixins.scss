@@ -13,3 +13,27 @@
         padding-right: 20px;
     }
 }
+
+
+
+@mixin header-layout($padding:200px) {
+    padding-inline: 20px;
+    
+    @media (min-width: $breakpoint-xxl) {
+        padding-inline: $padding;
+    }
+}
+
+//used for main title style
+@mixin title{
+    color: $primary;
+    font-weight: 600;
+    font-size: $text-mid-xl;
+}
+
+//used for large title style
+@mixin largeTitle{
+    color: $primary;
+    font-weight: 600;
+    font-size: $text-xl;
+}
