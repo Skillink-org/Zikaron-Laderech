@@ -1,0 +1,19 @@
+.hobbies {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 10px;
+
+    .hobby {
+        flex-grow: 1;
+        flex: 0 0 auto;
+        cursor: pointer;
+    }
+}
+
+@media (max-width: 930px) {
+    .hobbyBubble {
+        aspect-ratio: 0 / 0 !important;
+    }
+}
