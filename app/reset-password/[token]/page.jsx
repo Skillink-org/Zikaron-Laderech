@@ -41,10 +41,12 @@ export default function ResetPasswordPage() {
         setLoading(true);
         if (password !== confirmPassword) {
             setErrorMessage("הסיסמאות אינן תואמות");
+            setLoading(false);
             return;
         }
         if (!userId) {
             setErrorMessage("שגיאה בזיהוי המשתמש");
+            setLoading(false);
             return;
         }
         const updateUser = await updateUserPasswordAction(userId, password);

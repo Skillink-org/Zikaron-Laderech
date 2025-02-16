@@ -32,7 +32,7 @@ export async function getFilteredFallen(query) {
 
 export async function getFallenById(id) {
   try {
-    return await Fallen.findById(id);
+    return await Fallen.findById(id).then((doc) => serializer(doc));
   } catch (error) {
     console.log(error);
   }
@@ -40,7 +40,7 @@ export async function getFallenById(id) {
 
 export async function getFallen(filter) {
   try {
-    return await Fallen.findOne(filter);
+    return await Fallen.findOne(filter).then((doc) => serializer(doc));
   } catch (error) {
     console.log(error);
   }

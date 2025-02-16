@@ -1,0 +1,14 @@
+@use '@/styles/_vars.scss'as *;
+
+.hobbiesWithData {
+    gap: $spacing-md;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 930px) {
+    .hobbiesWithData {
+        flex-direction: column;
+    }
+}
