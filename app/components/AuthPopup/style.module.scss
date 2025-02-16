@@ -15,7 +15,7 @@
 
 .popup {
   background: $grayBackground;
-  padding: 2rem;
+  padding: $spacing-lg;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
   width: 400px;

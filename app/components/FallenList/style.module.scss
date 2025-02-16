@@ -1,7 +1,7 @@
 @use '@/styles/_vars.scss' as *;
 
 .cardBackground {
-    background-color: $elementGradient;
+    background: $elementGradient;
     border-bottom: 1px solid $lightblueBorder;
     border-left: 1px solid $lightblueBorder;
     border-right: 1px solid $lightblueBorder;

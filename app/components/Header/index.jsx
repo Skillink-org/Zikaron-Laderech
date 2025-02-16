@@ -17,7 +17,7 @@ export default function Header() {
             <MobileNav />
             <div className={styles.logo}><span>זיכרון </span>לדרך</div>
             <NavList />
-            <Search />
+            {/* <Search /> */}
             {isLoggedIn ? <UserProfile
                 firstName={session?.user?.firstName}
                 lastName={session?.user?.lastName}

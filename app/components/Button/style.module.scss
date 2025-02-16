@@ -3,8 +3,8 @@
 .button {
     color: white;
     background-color: $buttonColor;
-    padding: 10px 20px;
-    border-radius: $border-radius-md;
+    padding: $spacing-xs $spacing-sm;
+    border-radius: $border-radius;
     font-size: $text-base;
     font-family: $font-family;
     border: none;
@@ -12,11 +12,11 @@
     transition: all 0.3s;
 
     &:hover {
-        opacity: 0.9;
+        background-color: $titleColor;
     }
 
     &:disabled {
-        opacity: 0.8;
+        opacity: 0.6;
         cursor: auto;
     }
 }
