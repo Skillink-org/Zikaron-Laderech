@@ -32,6 +32,7 @@ export async function getFilteredFallen(query) {
 
 export async function getPopularHobbies() {
   const result = await Fallen.aggregate([
+    { $match: { status: "approved" } },
     { $unwind: "$hobbies" },
     {
       $group: {
