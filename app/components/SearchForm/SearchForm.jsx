@@ -25,10 +25,21 @@ const SearchForm = ({ query, searchTrigger }) => {
     router.push(window.location.pathname);
   };
 
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      handleClick();
+    }
+  };
+
   return (
     <CustomBubble className={styles.customBubble}>
       <p className={styles.header}>מצאו נופל לפי שם או תחביב</p>
-      <form className={styles.searchContainer} onReset={handleReset}>
+      <form
+        className={styles.searchContainer}
+        onReset={handleReset}
+        onKeyDown={handleKeyDown}
+      >
         <SearchInput
           className={styles.searchInput}
           initialValue={query}
