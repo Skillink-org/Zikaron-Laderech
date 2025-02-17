@@ -6,26 +6,41 @@ import SearchInput from "../SearchInput";
 import CustomBubble from "../CustomBubble";
 import { useRouter, useSearchParams } from "next/navigation";
 
-const SearchForm = ({ query }) => {
+const SearchForm = ({ query, searchTrigger }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
   const hasNoParams = new URLSearchParams(searchParams).size === 0;
+  const buttonType = searchTrigger === "change" ? "reset" : "button";
+  const buttonText = searchTrigger === "change" ? "איפוס" : "חיפוש";
+
+  const handleClick = () => {
+    const params = new URLSearchParams(searchParams);
+    const fallen = params.get("q");
+
+    router.push(`/all-fallen?q=${fallen.toString()}`, { scroll: false });
+  };
+
+  const handleReset = () => {
+    router.push(window.location.pathname);
+  };
 
   return (
     <CustomBubble className={styles.customBubble}>
       <p className={styles.header}>מצאו נופל לפי שם או תחביב</p>
-      <form
-        className={styles.searchContainer}
-        onReset={() => router.push(window.location.pathname)}
-      >
-        <SearchInput className={styles.searchInput} initialValue={query} />
+      <form className={styles.searchContainer} onReset={handleReset}>
+        <SearchInput
+          className={styles.searchInput}
+          initialValue={query}
+          searchTrigger={searchTrigger}
+        />
         <Button
           className={styles.searchButton}
-          type="reset"
+          type={buttonType}
+          onClick={handleClick}
           disabled={hasNoParams}
         >
-          איפוס
+          {buttonText}
         </Button>
       </form>
     </CustomBubble>

@@ -14,7 +14,6 @@ const HomePage = () => {
       />
 
       {/* Search section */}
-      {/* TODO: change search from onchange to onclick with search button instead of reset */}
       <SearchForm />
 
       {/* Popular hobbies section */}

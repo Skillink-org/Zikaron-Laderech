@@ -37,7 +37,7 @@ export default async function AllFallenPage({ searchParams }) {
   return (
     <>
       {/* Search section */}
-      <SearchForm query={q} />
+      <SearchForm query={q} searchTrigger="change" />
 
       <TitleDivider title={"סינון לפי תחביבים נפוצים"} />
 
