@@ -31,19 +31,17 @@ export async function getFilteredFallen(query) {
 }
 
 export async function getPopularHobbies() {
-  const result = serializer(
-    await Fallen.aggregate([
-      { $unwind: "$hobbies" },
-      {
-        $group: {
-          _id: "$hobbies.name",
-          fallenCount: { $sum: 1 },
-        },
+  const result = await Fallen.aggregate([
+    { $unwind: "$hobbies" },
+    {
+      $group: {
+        _id: "$hobbies.name",
+        fallenCount: { $sum: 1 },
       },
-      { $sort: { fallenCount: -1 } },
-      { $limit: 10 },
-    ])
-  );
+    },
+    { $sort: { fallenCount: -1, _id: 1 } },
+    { $limit: 10 },
+  ]);
 
   return result;
 }
