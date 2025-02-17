@@ -53,7 +53,7 @@
     }
 
     .profilePicture:hover {
-        box-shadow: 0 0 15px rgba(64, 64, 64, 0.6);
+        box-shadow: 0 0 10px rgba(33, 33, 33, 0.6);
     }
 
     .initials {
@@ -69,6 +69,10 @@
         color: white;
     }
 
+    .initials:hover {
+        box-shadow: 0 0 10px rgba(33, 33, 33, 0.6);
+    }
+
     .profileContainer {
         display: flex;
         align-items: center;
@@ -77,10 +81,9 @@
 
 .menu {
     position: absolute;
-    top: calc(100% + 5px);
-
-    left: 0;
-    z-index: 10;
+    top: calc(100% + 2px);
+    left: 50%;
+    transform: translateX(-50%);
     justify-content: center;
 
     button {

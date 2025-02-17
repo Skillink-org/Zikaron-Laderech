@@ -30,9 +30,26 @@ export async function getFilteredFallen(query) {
   });
 }
 
+export async function getPopularHobbies() {
+  const result = await Fallen.aggregate([
+    { $match: { status: "approved" } },
+    { $unwind: "$hobbies" },
+    {
+      $group: {
+        _id: "$hobbies.name",
+        fallenCount: { $sum: 1 },
+      },
+    },
+    { $sort: { fallenCount: -1, _id: 1 } },
+    { $limit: 10 },
+  ]);
+
+  return result;
+}
+
 export async function getFallenById(id) {
   try {
-    return await Fallen.findById(id);
+    return await Fallen.findById(id).then((doc) => serializer(doc));
   } catch (error) {
     console.log(error);
   }
@@ -40,7 +57,7 @@ export async function getFallenById(id) {
 
 export async function getFallen(filter) {
   try {
-    return await Fallen.findOne(filter);
+    return await Fallen.findOne(filter).then((doc) => serializer(doc));
   } catch (error) {
     console.log(error);
   }

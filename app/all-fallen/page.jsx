@@ -1,16 +1,10 @@
 import { Suspense } from "react";
-import SearchForm from "./SearchForm";
-import FallenList from "./FallenList";
 import styles from "./page.module.scss";
-import HobbyTag from "../components/HobbyTag";
-import { connectToDB } from "@/server/connect";
-import CustomBubble from "../components/CustomBubble";
+import FallenList from "../components/FallenList";
 import TitleDivider from "../components/TitleDivider";
 import { metadata as layoutMetadata } from "../layout";
-import {
-  getAllFallen,
-  getFilteredFallen,
-} from "@/server/service/fallen.service";
+import SearchForm from "../components/SearchForm/SearchForm";
+import PopularHobbies from "../components/PopularHobbies/PopularHobbies";
 
 export const metadata = {
   title: "כל הנופלים",
@@ -27,34 +21,22 @@ export const metadata = {
 };
 
 export default async function AllFallenPage({ searchParams }) {
-  await connectToDB();
-
-  const q = (await searchParams).q || "";
-  const fallen = q ? await getFilteredFallen(q) : await getAllFallen();
-
-  // TODO: Replace dummy data in real hobbies from API
-  const hobbies = ["טניס", "שירה", "ריצה", "אפיה", "סריגה", "שחיה"];
+  const query = (await searchParams).q || "";
 
   return (
     <>
       {/* Search section */}
-      <CustomBubble className={styles.customBubble}>
-        <p className={styles.header}>מצאו נופל לפי שם או תחביב</p>
-        <SearchForm query={q} />
-      </CustomBubble>
+      <SearchForm query={query} searchTrigger="change" />
+
       <TitleDivider title={"סינון לפי תחביבים נפוצים"} />
 
       {/* Hobbies filter section */}
-      <div className={styles.itemsContainerHobby}>
-        {hobbies.map((hobby, index) => (
-          <HobbyTag hobby={hobby} key={index} />
-        ))}
-      </div>
+      <PopularHobbies containerType="tag" />
 
       {/* Fallen list section */}
       <div className={styles.itemsContainer}>
         <Suspense fallback={<p>טוען...</p>}>
-          <FallenList fallen={fallen} />
+          <FallenList query={query} />
         </Suspense>
       </div>
     </>

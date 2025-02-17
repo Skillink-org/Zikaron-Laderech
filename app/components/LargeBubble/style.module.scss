@@ -1,45 +1,33 @@
 @use '@/styles/_vars.scss' as *;
 
 .largeBubble {
-  background: $elementGradient;
-  border-radius: 30px;
-  padding: 2rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  background: $darkElementGradient;
+  border-radius: $border-radius-md;
   text-align: center;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  max-width: 600px;
-  margin: auto;
+  padding: $spacing-lg 0;
+  width: 100%;
   font-family: $font-family;
 
   .content {
-    color: $textColor;
-  }
-
-  .title {
-    font-size: $text-xxl;
+    display: flex;
+    flex-direction: column;
+    color: white;
     font-weight: bold;
-    color: $titleColor;
-    margin-bottom: 1rem;
-  }
+    gap: $spacing-lg;
 
-  .subtitle {
-    font-size: $text-lg;
-    margin-bottom: 1.5rem;
-    color: $textColor;
-  }
+    .title {
+      font-size: $text-xxl;
+    }
 
-  .button {
-    background-color: $buttonColor;
-    color: $grayBackground;
-    padding: 0.8rem 2rem;
-    font-size: $text-md;
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+    .subtitle {
+      font-size: $text-md;
+    }
 
-   
+    .button {
+      width: fit-content;
+      align-self: center;
+      color: $primary;
+      background-color: $grayBackground;
+    }
   }
 }

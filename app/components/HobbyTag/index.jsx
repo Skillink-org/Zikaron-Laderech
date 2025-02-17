@@ -5,7 +5,7 @@ import styles from "./style.module.scss";
 import DynamicBackground from "../DynamicBackground";
 import { useRouter, useSearchParams } from "next/navigation";
 
-export default function HobbyTag({ hobby, className = "", onClick, ...props }) {
+export default function HobbyTag({ hobby, className = "", ...props }) {
   const rand = useRand();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -14,30 +14,37 @@ export default function HobbyTag({ hobby, className = "", onClick, ...props }) {
     return new URLSearchParams(params);
   };
 
-  onClick = () => {
+  const getChosenHobby = () => {
+    const params = getParams(searchParams);
+
+    return params.get("q");
+  };
+
+  const isChosenHobby = () => {
+    return getChosenHobby() === hobby;
+  };
+
+  const handleClick = () => {
     const params = getParams(searchParams);
     params.set("q", hobby);
 
     router.push(`?${params.toString()}`, { scroll: false });
   };
 
-  const isChosenHobby = () => {
-    const params = getParams(searchParams);
-
-    return params.get("q") === hobby;
-  };
-
   return (
     <>
       {rand ? (
-        <DynamicBackground rand={rand} className={styles.dynamicBackground}>
+        <DynamicBackground
+          rand={rand}
+          active={getChosenHobby() ? isChosenHobby() : true}
+          className={styles.dynamicBackground}
+        >
           <div
             className={`${styles.hobbyTag} ${className}`}
-            onClick={onClick}
+            onClick={handleClick}
             {...props}
           >
             {hobby}
-            {isChosenHobby() && <div className={styles.checkContainer}></div>}
           </div>
         </DynamicBackground>
       ) : (

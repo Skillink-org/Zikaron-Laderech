@@ -1,13 +1,23 @@
 import Link from "next/link";
-import styles from "./page.module.scss";
-import ProfileCard from "../components/ProfileCard";
+import styles from "./style.module.scss";
+import ProfileCard from "../ProfileCard";
+import { connectToDB } from "@/server/connect";
 import StatusMessage from "@/app/components/StatusMessage";
+import {
+  getAllFallen,
+  getFilteredFallen,
+} from "@/server/service/fallen.service";
 
-function FallenList({ fallen }) {
+async function FallenList({ query }) {
+  await connectToDB();
+
+  const fallen = query ? await getFilteredFallen(query) : await getAllFallen();
+  const approvedFallen = fallen.filter((f) => f.status === "approved");
+
   return (
     <>
-      {fallen.length > 0 ? (
-        fallen.map((fallen) => (
+      {approvedFallen.length > 0 ? (
+        approvedFallen.map((fallen) => (
           <Link
             key={fallen._id}
             className={styles.cardBackground}

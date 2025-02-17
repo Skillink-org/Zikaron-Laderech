@@ -1,6 +1,6 @@
 "use server";
 
-import { connectToMongo } from '@/server/connect';///את זה סידרתי 
+import { connect, connectToDBToDB } from '@/server/connect';///את זה סידרתי 
 import ContactForm from "@/server/models/contact.model";
 import nodemailer from "nodemailer";
 
@@ -41,7 +41,7 @@ export async function submitContactForm(formData) {
   }
 
   try {
-    await connectToMongo();
+    await connectToDB();
     const newContact = await ContactForm.create(data);
     
     // שליחת מייל אישור
