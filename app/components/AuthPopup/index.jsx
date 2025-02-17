@@ -6,8 +6,15 @@ import styles from "./style.module.scss";
 import { signIn } from "next-auth/react";
 import { useEffect, useState } from "react";
 import GenericInput from "../GenericInput/index";
-import { resetPasswordFields, loginFields, signupFields } from "@/lib/FormFields";
-import { createUserAction, resetPasswordAction } from '@/server/actions/user.action';
+import {
+  resetPasswordFields,
+  loginFields,
+  signupFields,
+} from "@/lib/FormFields";
+import {
+  createUserAction,
+  resetPasswordAction,
+} from "@/server/actions/user.action";
 
 export default function AuthPopup({ onClose }) {
   const [authState, setAuthState] = useState("signIn");
@@ -30,7 +37,7 @@ export default function AuthPopup({ onClose }) {
   };
 
   const toggleForm = () => {
-    setAuthState(authState != "signIn" ? "signIn" : "signUp")
+    setAuthState(authState != "signIn" ? "signIn" : "signUp");
     setErrorMessage("");
     setSuccessMessage("");
   };
@@ -39,7 +46,7 @@ export default function AuthPopup({ onClose }) {
     e.preventDefault();
     setLoading(true);
     setErrorMessage("");
-    setSuccessMessage("")
+    setSuccessMessage("");
 
     switch (authState) {
       case "signIn":
@@ -68,7 +75,6 @@ export default function AuthPopup({ onClose }) {
     setLoading(false);
   };
 
-
   const handleEmailSignin = async () => {
     try {
       const response = await signIn("credentials", {
@@ -82,15 +88,13 @@ export default function AuthPopup({ onClose }) {
           onClose();
         }, 2000);
         return;
-      }
-      else {
+      } else {
         throw new Error("התחברות נכשלה. אמת את הפרטים ונסה שוב.");
       }
     } catch (error) {
       throw new Error("התחברות נכשלה. אמת את הפרטים ונסה שוב.");
     }
   };
-
 
   const handleSignUp = async () => {
     try {
@@ -99,8 +103,7 @@ export default function AuthPopup({ onClose }) {
         setSuccessMessage("ההרשמה הצליחה. נא התחבר למערכת.");
         setErrorMessage("");
         return;
-      }
-      else {
+      } else {
         throw new Error("שגיאה בהרשמה, נסה שוב.");
       }
     } catch (error) {
@@ -118,14 +121,13 @@ export default function AuthPopup({ onClose }) {
     setSuccessMessage("");
     try {
       await resetPasswordAction(formData.email);
-      setSuccessMessage("הקישור נשלח בהצלחה. בדוק את תיבת המייל שלך.")
+      setSuccessMessage("הקישור נשלח בהצלחה. בדוק את תיבת המייל שלך.");
     } catch (error) {
       setErrorMessage(error.message);
     } finally {
       setLoading(false);
     }
   };
-
 
   // Close popup on escape key press
   useEffect(() => {
@@ -141,7 +143,12 @@ export default function AuthPopup({ onClose }) {
     };
   }, [onClose]);
 
-  const currentFields = authState == "signIn" ? loginFields : authState == "signUp" ? signupFields : resetPasswordFields;
+  const currentFields =
+    authState == "signIn"
+      ? loginFields
+      : authState == "signUp"
+      ? signupFields
+      : resetPasswordFields;
 
   return (
     <div className={styles.overlay}>
@@ -149,52 +156,88 @@ export default function AuthPopup({ onClose }) {
         <button className={styles.closeButton} onClick={onClose}>
           ✖
         </button>
-        <h2 className={styles.title}>{authState == "signIn" ? "התחברות" : authState == "signUp" ? "הרשמה" : "איפוס סיסמא"}</h2>
+        <h2 className={styles.title}>
+          {authState == "signIn"
+            ? "התחברות"
+            : authState == "signUp"
+            ? "הרשמה"
+            : "איפוס סיסמא"}
+        </h2>
         <form className={styles.form} onSubmit={handleSubmit}>
-          {currentFields.map(({ type, placeholder, stateKey, autoComplete }) => (
-            <GenericInput
-              key={stateKey}
-              type={type}
-              name={type}
-              placeholder={placeholder}
-              value={formData[stateKey]}
-              required={true}
-              autoComplete={autoComplete}
-              onChange={handleChange(stateKey)}
-            />
-          ))}
-          <Button type="submit" className={styles.submitButton} disabled={loading}>
-            {loading ? <div className={styles.loader}></div> :
-              (authState == "signIn" ? "התחברות" : authState == "signUp" ? "הרשמה" : "שלח קישור לאיפוס")}
+          <div className={styles.textsContainer}>
+            {currentFields.map(
+              ({ type, placeholder, stateKey, autoComplete }) => (
+                <GenericInput
+                  key={stateKey}
+                  type={type}
+                  name={type}
+                  placeholder={placeholder}
+                  value={formData[stateKey]}
+                  required={true}
+                  autoComplete={autoComplete}
+                  onChange={handleChange(stateKey)}
+                />
+              )
+            )}
+          </div>
+          <Button
+            type="submit"
+            className={styles.submitButton}
+            disabled={loading}
+          >
+            {loading ? (
+              <div className={styles.loader}></div>
+            ) : authState == "signIn" ? (
+              "התחברות"
+            ) : authState == "signUp" ? (
+              "הרשמה"
+            ) : (
+              "שלח קישור לאיפוס"
+            )}
           </Button>
 
           {authState != "resetPassword" && (
-            <Button onClick={() => signIn("google")} className={styles.googleButton}>
+            <Button
+              onClick={() => signIn("google")}
+              className={styles.googleButton}
+            >
               <Image
                 src="/google-icon.svg"
                 width={18}
                 height={18}
                 alt="google icon"
-                unoptimized />
+                unoptimized
+              />
               <p className={styles.googleText}>כניסה עם גוגל</p>
             </Button>
           )}
 
-          {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
-          {successMessage && <p className={styles.successMessage}>{successMessage}</p>}
+          {errorMessage && (
+            <p className={styles.errorMessage}>{errorMessage}</p>
+          )}
+          {successMessage && (
+            <p className={styles.successMessage}>{successMessage}</p>
+          )}
 
           <div className={styles.toggleContainer}>
             <small className={styles.toggleButton} onClick={toggleForm}>
               {authState === "signIn" ? (
-                <span className={styles.span}>אין לך חשבון? לחץ כאן להרשמה</span>
+                <span className={styles.span}>
+                  אין לך חשבון? לחץ כאן להרשמה
+                </span>
               ) : authState === "signUp" ? (
-                <span className={styles.span}>נרשמת בעבר? לחץ כאן להתחברות</span>
+                <span className={styles.span}>
+                  נרשמת בעבר? לחץ כאן להתחברות
+                </span>
               ) : (
                 <span className={styles.span}>חזרה להתחברות</span>
               )}
             </small>
             {authState === "signIn" && (
-              <small className={styles.forgotPassword} onClick={() => setAuthState("resetPassword")}>
+              <small
+                className={styles.forgotPassword}
+                onClick={() => setAuthState("resetPassword")}
+              >
                 שכחתי סיסמא
               </small>
             )}

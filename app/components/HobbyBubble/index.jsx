@@ -11,6 +11,7 @@ export default function HobbyBubble({
   children = "טניס",
   plusMode = true,
   onClick,
+  ...props
 }) {
   const rand = useRand();
 
@@ -21,6 +22,7 @@ export default function HobbyBubble({
           <div
             className={`${styles.hobbyBubble} ${className}`}
             onClick={onClick}
+            {...props}
           >
             <span className={styles.title}>{children}</span>
             {plusMode ? (

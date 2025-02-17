@@ -1,22 +1,5 @@
 @use '@/styles/_vars.scss' as *;
 
-.customBubble {
-    display: flex;
-    justify-content: space-around !important;
-    align-items: center;
-    width: 100%;
-    gap: 40px;
-    padding: 10px 0;
-    height: min-content;
-    flex-direction: row !important;
-
-    .header {
-        color: $primary;
-        font-weight: bold;
-        font-size: $text-lg;
-    }
-}
-
 .itemsContainer {
     display: flex;
     flex-wrap: wrap;
@@ -26,15 +9,6 @@
 }
 
 @media (max-width: $breakpoint-lg) {
-    .header {
-        text-align: center;
-    }
-
-    .customBubble {
-        flex-direction: column !important;
-
-    }
-
     .itemsContainer {
         justify-content: space-evenly;
     }
