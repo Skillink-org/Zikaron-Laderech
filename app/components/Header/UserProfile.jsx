@@ -4,7 +4,9 @@ import Image from 'next/image';
 import { signOut } from 'next-auth/react';
 import Button from '../Button';
 
-export default function UserProfile({ firstName, lastName, imageSrc }) {
+import { redirect } from "next/navigation";
+
+export default function UserProfile({ firstName, lastName, imageSrc, role }) {
     const [menuOpen, setMenuOpen] = useState(false);
     const menuRef = useRef(null);
     const profileContainerRef = useRef(null);
@@ -56,6 +58,29 @@ export default function UserProfile({ firstName, lastName, imageSrc }) {
 
             {menuOpen && (
                 <div className={styles.menu} ref={menuRef}>
+                    {role === "admin" ?
+                        (<>
+                            <Button
+                                onClick={() => {
+                                    setMenuOpen(false);
+                                    redirect("/admin");
+                                }}
+                            >
+                                ניהול נופלים
+                            </Button>
+                            <Button
+                                onClick={() => {
+                                    setMenuOpen(false);
+                                    redirect("/manage-users");
+                                }}
+                            >
+                                ניהול משתמשים
+                            </Button>
+                        </>)
+                        :
+                        ("")
+                    }
+
                     <Button
                         onClick={() => signOut()}
                     >
