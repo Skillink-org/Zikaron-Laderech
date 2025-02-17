@@ -1,25 +1,26 @@
-"use client";
-
 import Link from "next/link";
-import Image from "next/image";
 import styles from "./page.module.scss";
 import Button from "./components/Button";
-import HobbyList from "./HomePage/HobbyList";
+import ImageWithTitle from "./components/ImageWithTitle";
+import SearchForm from "./components/SearchForm/SearchForm";
+import PopularHobbies from "./components/PopularHobbies/PopularHobbies";
 
 const HomePage = () => {
   return (
-    <div className={styles["Home-container"]}>
-      <div className={styles["header-image"]}>
-        <Image
-          src="/Home-Page.png"
-          alt="דף הבית"
-          width={1400}
-          height={100}
-          className={styles["Home-image"]}
-        />
-      </div>
-      <div className={styles["search-border"]}></div>
-      <HobbyList />
+    <>
+      {/* Header image section */}
+      <ImageWithTitle
+        imageUrl={"/profileImage.webp"}
+        title="לכל תחביב יש שם"
+        subtitle="פלטפורמה המאפשרת להכיר את התחביבים שהיו חשובים לנופלי ה-7/10 והמלחמה ולהמשיך אותם לזכרם. דרך סיפורים אישיים, תמונות ותחביבים, כל אחד יכול לקחת חלק בהנצחה פעילה."
+      />
+
+      {/* Search section */}
+      {/* TODO: change search from onchange to onclick with search button instead of reset */}
+      <SearchForm />
+
+      {/* Popular hobbies section */}
+      <PopularHobbies />
 
       {/* קטע ההצטרפות לעמוד הנופלים */}
       <div className={styles.memorySection}>
@@ -31,7 +32,7 @@ const HomePage = () => {
           <Link href="/all-fallen">לעמוד הנופלים</Link>
         </Button>
       </div>
-    </div>
+    </>
   );
 };
 export default HomePage;

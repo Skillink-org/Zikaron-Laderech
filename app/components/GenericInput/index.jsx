@@ -20,7 +20,7 @@ export default function GenericInput({
   const isPasswordType = type === "password";
 
   return (
-    <div className={styles.inputContainer}>
+    <div className={`${styles.inputContainer} ${className}`}>
       <input
         type={isPasswordType && showPassword ? "text" : type}
         placeholder={placeholder}
@@ -39,8 +39,8 @@ export default function GenericInput({
           <Image
             src={showPassword ? "/eye.svg" : "/eye-off.svg"}
             alt={showPassword ? "Hide password" : "Show password"}
-            width={20} 
-            height={20} 
+            width={20}
+            height={20}
             className={styles.img}
           />
         </button>

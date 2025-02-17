@@ -1,0 +1,14 @@
+@use '@/styles/_vars.scss' as *;
+
+.hobbyContainer {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: $spacing-md;
+}
+
+@media (max-width: $breakpoint-md) {
+    .bubble {
+        aspect-ratio: 0 / 0 !important;
+    }
+}

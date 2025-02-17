@@ -3,7 +3,6 @@ import styles from "./page.module.scss";
 import HobbyTag from "../components/HobbyTag";
 import { connectToDB } from "@/server/connect";
 import FallenList from "../components/FallenList";
-import CustomBubble from "../components/CustomBubble";
 import TitleDivider from "../components/TitleDivider";
 import { metadata as layoutMetadata } from "../layout";
 import SearchForm from "../components/SearchForm/SearchForm";
@@ -38,10 +37,8 @@ export default async function AllFallenPage({ searchParams }) {
   return (
     <>
       {/* Search section */}
-      <CustomBubble className={styles.customBubble}>
-        <p className={styles.header}>מצאו נופל לפי שם או תחביב</p>
-        <SearchForm query={q} />
-      </CustomBubble>
+      <SearchForm query={q} />
+
       <TitleDivider title={"סינון לפי תחביבים נפוצים"} />
 
       {/* Hobbies filter section */}
