@@ -8,12 +8,10 @@
 
 .input {
   flex: 1;
-  margin-bottom: 1rem;
-  padding: 0.8rem 1rem;
-  padding-left: 2.5rem;
+  padding: 10px 20px;
   border: 1px solid $lightblueBorder;
-  border-radius: 10px;
-  font-size: $text-md;
+  border-radius: $border-radius-md;
+  font-size: $text-base;
   font-family: $font-family;
   transition: all 0.3s ease;
 
