@@ -30,6 +30,24 @@ export async function getFilteredFallen(query) {
   });
 }
 
+export async function getPopularHobbies() {
+  const result = serializer(
+    await Fallen.aggregate([
+      { $unwind: "$hobbies" },
+      {
+        $group: {
+          _id: "$hobbies.name",
+          fallenCount: { $sum: 1 },
+        },
+      },
+      { $sort: { fallenCount: -1 } },
+      { $limit: 10 },
+    ])
+  );
+
+  return result;
+}
+
 export async function getFallenById(id) {
   try {
     return await Fallen.findById(id).then((doc) => serializer(doc));
