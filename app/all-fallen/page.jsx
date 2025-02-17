@@ -1,15 +1,10 @@
 import { Suspense } from "react";
 import styles from "./page.module.scss";
-import { connectToDB } from "@/server/connect";
 import FallenList from "../components/FallenList";
 import TitleDivider from "../components/TitleDivider";
 import { metadata as layoutMetadata } from "../layout";
 import SearchForm from "../components/SearchForm/SearchForm";
 import PopularHobbies from "../components/PopularHobbies/PopularHobbies";
-import {
-  getAllFallen,
-  getFilteredFallen,
-} from "@/server/service/fallen.service";
 
 export const metadata = {
   title: "כל הנופלים",
@@ -26,15 +21,12 @@ export const metadata = {
 };
 
 export default async function AllFallenPage({ searchParams }) {
-  await connectToDB();
-
-  const q = (await searchParams).q || "";
-  const fallen = q ? await getFilteredFallen(q) : await getAllFallen();
+  const query = (await searchParams).q || "";
 
   return (
     <>
       {/* Search section */}
-      <SearchForm query={q} searchTrigger="change" />
+      <SearchForm query={query} searchTrigger="change" />
 
       <TitleDivider title={"סינון לפי תחביבים נפוצים"} />
 
@@ -44,7 +36,7 @@ export default async function AllFallenPage({ searchParams }) {
       {/* Fallen list section */}
       <div className={styles.itemsContainer}>
         <Suspense fallback={<p>טוען...</p>}>
-          <FallenList fallen={fallen} />
+          <FallenList query={query} />
         </Suspense>
       </div>
     </>
