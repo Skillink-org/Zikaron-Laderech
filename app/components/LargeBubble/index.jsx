@@ -12,7 +12,7 @@ export default function LargeBubble({
       <div className={styles.content}>
         <h1 className={styles.title}>{title}</h1>
         <p className={styles.subtitle}>{subtitle}</p>
-        <Button children={buttonText} onClick={onButtonClick} />
+        <Button className={styles.button} onClick={onButtonClick}>{buttonText}</Button>
       </div>
     </div>
   );
