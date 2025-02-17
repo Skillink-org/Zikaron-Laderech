@@ -17,7 +17,7 @@ const HomePage = () => {
       <SearchForm />
 
       {/* Popular hobbies section */}
-      <PopularHobbies />
+      <PopularHobbies containerType="bubble" />
 
       {/* Invitation bubble section */}
       <InvitationBubble />

@@ -1,11 +1,11 @@
 import { Suspense } from "react";
 import styles from "./page.module.scss";
-import HobbyTag from "../components/HobbyTag";
 import { connectToDB } from "@/server/connect";
 import FallenList from "../components/FallenList";
 import TitleDivider from "../components/TitleDivider";
 import { metadata as layoutMetadata } from "../layout";
 import SearchForm from "../components/SearchForm/SearchForm";
+import PopularHobbies from "../components/PopularHobbies/PopularHobbies";
 import {
   getAllFallen,
   getFilteredFallen,
@@ -31,9 +31,6 @@ export default async function AllFallenPage({ searchParams }) {
   const q = (await searchParams).q || "";
   const fallen = q ? await getFilteredFallen(q) : await getAllFallen();
 
-  // TODO: Replace dummy data in real popular hobbies from API
-  const hobbies = ["טניס", "שירה", "ריצה", "אפיה", "סריגה", "שחיה"];
-
   return (
     <>
       {/* Search section */}
@@ -41,13 +38,8 @@ export default async function AllFallenPage({ searchParams }) {
 
       <TitleDivider title={"סינון לפי תחביבים נפוצים"} />
 
-      {/* TODO: IMPORT POPULAR HOBBIES */}
       {/* Hobbies filter section */}
-      <div className={styles.itemsContainer}>
-        {hobbies.map((hobby, index) => (
-          <HobbyTag hobby={hobby} key={index} />
-        ))}
-      </div>
+      <PopularHobbies containerType="tag" />
 
       {/* Fallen list section */}
       <div className={styles.itemsContainer}>
