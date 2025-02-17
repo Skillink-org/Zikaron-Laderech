@@ -14,7 +14,12 @@ export default async function PopularHobbies({ containerType = "tag" }) {
     return (
       <div className={styles.hobbyBubblesContainer}>
         {hobbies.map((hobby, index) => (
-          <HobbyBubble key={index} plusMode={false} className={styles.bubble}>
+          <HobbyBubble
+            key={index}
+            plusMode={false}
+            className={styles.bubble}
+            title={`${hobby.fallenCount} נופלים`}
+          >
             {hobby._id}
           </HobbyBubble>
         ))}
@@ -24,7 +29,11 @@ export default async function PopularHobbies({ containerType = "tag" }) {
     return (
       <div className={styles.hobbyTagsContainer}>
         {hobbies.map((hobby, index) => (
-          <HobbyTag hobby={hobby._id} key={index} />
+          <HobbyTag
+            hobby={hobby._id}
+            key={index}
+            title={`${hobby.fallenCount} נופלים`}
+          />
         ))}
       </div>
     );
