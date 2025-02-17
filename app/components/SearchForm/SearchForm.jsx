@@ -15,14 +15,11 @@ const SearchForm = ({ query, searchTrigger }) => {
   const buttonText = searchTrigger === "change" ? "איפוס" : "חיפוש";
 
   const handleClick = () => {
-    const params = new URLSearchParams(searchParams);
-    const fallen = params.get("q");
-
-    router.push(`/all-fallen?q=${fallen.toString()}`, { scroll: false });
+    navigate(`/all-fallen?q=${getFallenFromQuery()}`);
   };
 
   const handleReset = () => {
-    router.push(window.location.pathname);
+    navigate(window.location.pathname);
   };
 
   const handleKeyDown = (event) => {
@@ -30,6 +27,16 @@ const SearchForm = ({ query, searchTrigger }) => {
       event.preventDefault();
       handleClick();
     }
+  };
+
+  const navigate = (url) => {
+    if (hasNoParams) return;
+
+    router.push(url, { scroll: false });
+  };
+
+  const getFallenFromQuery = () => {
+    return new URLSearchParams(searchParams).get("q") || "";
   };
 
   return (
@@ -42,7 +49,7 @@ const SearchForm = ({ query, searchTrigger }) => {
       >
         <SearchInput
           className={styles.searchInput}
-          initialValue={query}
+          initialValue={query || getFallenFromQuery()}
           searchTrigger={searchTrigger}
         />
         <Button
