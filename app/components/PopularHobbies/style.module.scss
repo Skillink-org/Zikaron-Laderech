@@ -1,10 +1,11 @@
 @use '@/styles/_vars.scss' as *;
 
-.hobbyContainer {
+.hobbiesContainer {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
     gap: $spacing-md;
+    padding: $spacing-sm 0;
 }
 
 @media (max-width: $breakpoint-md) {

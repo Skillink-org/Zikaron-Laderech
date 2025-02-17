@@ -2,6 +2,21 @@ import styles from "./page.module.scss";
 import CustomBubble from "../components/CustomBubble";
 import ImageWithTitle from "../components/ImageWithTitle";
 import InvitationBubble from "../components/InvitationBubble/InvitationBubble";
+import { metadata as layoutMetadata } from "../layout";
+
+export const metadata = {
+  title: "אודות",
+  description:
+    "למדו על מטרת הפרויקט 'כל הנופלים' וכיצד הוא נועד להנציח את הגיבורים שנפלו בהתקפת הטרור ב-7 באוקטובר 2023. גלו את הרקע, החזון והדרכים בהן תוכלו לתרום ולשמר את זכרם.",
+  keywords: [
+    ...layoutMetadata.keywords,
+    "About",
+    "Project Information",
+    "אודות",
+    "מידע על הפרויקט",
+  ],
+  authors: [{ name: "Yakov Vazan", url: "https://github.com/YakovVazan" }],
+};
 
 export default function AboutPage() {
   return (

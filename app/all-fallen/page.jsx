@@ -41,6 +41,7 @@ export default async function AllFallenPage({ searchParams }) {
 
       <TitleDivider title={"סינון לפי תחביבים נפוצים"} />
 
+      {/* TODO: IMPORT POPULAR HOBBIES */}
       {/* Hobbies filter section */}
       <div className={styles.itemsContainer}>
         {hobbies.map((hobby, index) => (
