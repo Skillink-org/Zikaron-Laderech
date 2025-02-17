@@ -1,5 +1,4 @@
 import styles from "./page.module.scss";
-import LargeBubble from "../components/LargeBubble";
 import CustomBubble from "../components/CustomBubble";
 import ImageWithTitle from "../components/ImageWithTitle";
 import InvitationBubble from "../components/InvitationBubble/InvitationBubble";
