@@ -40,7 +40,7 @@ const Pagination = ({ currentPage, totalPages }) => {
         <span className={styles.paginationText}>עמוד</span>
         <span> {currentPage} </span>
         <span className={styles.paginationText}>מתוך</span>
-        <span className={styles.paginationSlash}> / </span>
+        <pre className={styles.paginationSlash}> / </pre>
         <span> {totalPages}</span>
       </div>
 
