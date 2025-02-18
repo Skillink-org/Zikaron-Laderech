@@ -9,17 +9,19 @@ export default function HobbyDataList({ fallenName }) {
   const continuedHobbies = hobbies.filter(hobby => hobby.continueCount > 0);
 
   return (
-    <div className={styles.hobbiesWithData}>
-      {continuedHobbies.map((hobby, index) => (
-        <HobbyDataBubble
-          hobbyName={hobby.name}
-          sumMode={false}
-          key={index}
-          fallenName={fallenName}
-          hobbyContinuers={hobby.continueCount}
-        />
-      ))}
+    <>
+      <div className={styles.hobbiesWithData}>
+        {continuedHobbies.map((hobby, index) => (
+          <HobbyDataBubble
+            hobbyName={hobby.name}
+            sumMode={false}
+            key={index}
+            fallenName={fallenName}
+            hobbyContinuers={hobby.continueCount}
+          />
+        ))}
 
+      </div>
       <TitleDivider
         title={'סה"כ'}
       />
@@ -28,6 +30,6 @@ export default function HobbyDataList({ fallenName }) {
         sumMode={true}
         hobbyContinuersSum={totalContinuers}
       />
-    </div>
+    </>
   );
 }

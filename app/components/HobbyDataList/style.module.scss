@@ -1,10 +1,11 @@
 @use '@/styles/_vars.scss'as *;
+@use '@/styles/_mixins.scss'as *;
 
 .hobbiesWithData {
     gap: $spacing-md;
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
+    @include custom-scrollbar;
 }
 
 @media (max-width: 930px) {

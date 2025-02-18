@@ -29,26 +29,28 @@ export default async function FallenPage({ params }) {
             title={"התחביבים שלי"}
             containerClassName={styles.hobbiesDivider}
           />
-          <HobbyList styles={styles} hobbies={fallenDetails.hobbies.map((hobby) => hobby.name)} fallenName={fallenDetails.firstName} fallenId={fallenId} />
+          <HobbyList hobbies={fallenDetails.hobbies.map((hobby) => hobby.name)} fallenName={fallenDetails.firstName} fallenId={fallenId} />
         </div>
         {/* middle */}
         <div className={`${styles.middleCol} ${styles.col}`}>
-          <h1 className={styles.mainTitle}>{fallenDetails.quote}</h1>
-          <TitleDivider
-            title={"אודות"}
-            dividerClassName={styles.sctionsDivider}
-          />
-          <p className={styles.paragraph}>{fallenDetails.about}</p>
-          <TitleDivider
-            title={"קצת עליי"}
-            dividerClassName={styles.sctionsDivider}
-          />
-          <p className={styles.paragraph}>{fallenDetails.familyWords}</p>
+          <div className={styles.middleColText}>
+            <h1 className={styles.mainTitle}>{fallenDetails.quote}</h1>
+            <TitleDivider
+              title={"אודות"}
+              dividerClassName={styles.sctionsDivider}
+            />
+            <p className={styles.paragraph}>{fallenDetails.about}</p>
+            <TitleDivider
+              title={"קצת עליי"}
+              dividerClassName={styles.sctionsDivider}
+            />
+            <p className={styles.paragraph}>{fallenDetails.familyWords}</p>
+          </div>
         </div>
         {/* left */}
         <div className={`${styles.leftCol} ${styles.col}`}>
-          <HobbyDataList styles={styles} fallenName={fallenDetails.firstName} />
-          <ShareButton styles={styles}/>
+          <HobbyDataList fallenName={fallenDetails.firstName} />
+          <ShareButton />
         </div>
       </div>
     </FallenProvider>
