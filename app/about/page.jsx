@@ -3,6 +3,11 @@ import CustomBubble from "../components/CustomBubble";
 import ImageWithTitle from "../components/ImageWithTitle";
 import InvitationBubble from "../components/InvitationBubble/InvitationBubble";
 import { metadata as layoutMetadata } from "../layout";
+import {
+  getContinuersCount,
+  getFallenCount,
+  getHobbiesCount,
+} from "@/server/service/fallen.service";
 
 export const metadata = {
   title: "אודות",
@@ -18,7 +23,11 @@ export const metadata = {
   authors: [{ name: "Yakov Vazan", url: "https://github.com/YakovVazan" }],
 };
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const fallenCount = await getFallenCount();
+  const hobbiesCount = await getHobbiesCount();
+  const continuersCount = await getContinuersCount();
+
   return (
     <>
       {/* Header image section */}
@@ -51,19 +60,18 @@ export default function AboutPage() {
         </p>
       </CustomBubble>
 
-      {/* TODO: Replace with real data */}
       {/* Data bubbles section */}
       <div className={styles.dataBubbles}>
         <CustomBubble className={styles.dataBubble}>
-          <p className={styles.dataNumber}>40</p>
+          <p className={styles.dataNumber}>{fallenCount}</p>
           <p className={styles.dataText}>נופלים ונופלות מונצחים</p>
         </CustomBubble>
         <CustomBubble className={styles.dataBubble}>
-          <p className={styles.dataNumber}>120</p>
+          <p className={styles.dataNumber}>{hobbiesCount}</p>
           <p className={styles.dataText}>תחביבים מתועדים</p>
         </CustomBubble>
         <CustomBubble className={styles.dataBubble}>
-          <p className={styles.dataNumber}>2,300</p>
+          <p className={styles.dataNumber}>{continuersCount}</p>
           <p className={styles.dataText}>מנציחים ממשיכים בדרכם</p>
         </CustomBubble>
       </div>

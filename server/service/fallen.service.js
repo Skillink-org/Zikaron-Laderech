@@ -73,7 +73,7 @@ export async function getFilteredFallen(query, limit = 0, skip = 0) {
 }
 
 export async function getPopularHobbies() {
-  const result = await Fallen.aggregate([
+  return await Fallen.aggregate([
     { $match: { status: "approved" } },
     { $unwind: "$hobbies" },
     {
@@ -85,8 +85,33 @@ export async function getPopularHobbies() {
     { $sort: { fallenCount: -1, _id: 1 } },
     { $limit: 10 },
   ]);
+}
 
-  return result;
+export async function getFallenCount() {
+  return await Fallen.countDocuments({ status: "approved" });
+}
+
+export async function getHobbiesCount() {
+  const result = await Fallen.aggregate([
+    { $match: { status: "approved" } },
+    { $unwind: "$hobbies" },
+    { $group: { _id: "$hobbies.name" } },
+    { $count: "count" },
+  ]);
+
+  return result[0]?.count || 0;
+}
+
+export async function getContinuersCount() {
+  const result = await Fallen.aggregate([
+    { $match: { status: "approved" } },
+    { $unwind: "$hobbies" },
+    { $unwind: "$hobbies.continuers" },
+    { $group: { _id: "$hobbies.continuers" } },
+    { $count: "count" },
+  ]);
+
+  return result[0]?.count || 0;
 }
 
 export async function getFallenById(id) {
