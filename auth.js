@@ -74,3 +74,6 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
     },
   },
 });
+
+// TODO
+// Error: no matching decryption secret
