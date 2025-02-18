@@ -6,6 +6,7 @@ import styles from "./style.module.scss";
 import { signIn } from "next-auth/react";
 import { useEffect, useState } from "react";
 import GenericInput from "../GenericInput/index";
+import SpinningCircle from "../Spinners/SpinningCircle/SpinningCircle";
 import {
   resetPasswordFields,
   loginFields,
@@ -186,7 +187,7 @@ export default function AuthPopup({ onClose }) {
             disabled={loading}
           >
             {loading ? (
-              <div className={styles.loader}></div>
+              <SpinningCircle />
             ) : authState == "signIn" ? (
               "התחברות"
             ) : authState == "signUp" ? (

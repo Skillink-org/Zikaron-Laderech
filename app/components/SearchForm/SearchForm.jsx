@@ -1,28 +1,29 @@
 "use client";
 
 import Button from "../Button";
+import { useState } from "react";
 import styles from "./style.module.scss";
 import SearchInput from "../SearchInput";
 import CustomBubble from "../CustomBubble";
 import { useRouter, useSearchParams } from "next/navigation";
+import SpinningCircle from "../Spinners/SpinningCircle/SpinningCircle";
 
 const SearchForm = ({ query, searchTrigger }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const [buttonText, setButtonText] = useState(
+    searchTrigger === "change" ? "איפוס" : "חיפוש"
+  );
 
   const hasNoParams = new URLSearchParams(searchParams).size === 0;
   const buttonType = searchTrigger === "change" ? "reset" : "button";
-  const buttonText = searchTrigger === "change" ? "איפוס" : "חיפוש";
 
   const handleClick = () => {
-    const params = new URLSearchParams(searchParams);
-    const fallen = params.get("q");
-
-    router.push(`/all-fallen?q=${fallen.toString()}`, { scroll: false });
+    navigate(`/all-fallen?q=${getFallenFromQuery()}`);
   };
 
   const handleReset = () => {
-    router.push(window.location.pathname);
+    navigate(window.location.pathname);
   };
 
   // TODO 2 - form default
@@ -32,6 +33,18 @@ const SearchForm = ({ query, searchTrigger }) => {
       event.preventDefault();
       handleClick();
     }
+  };
+
+  const navigate = (url) => {
+    if (hasNoParams) return;
+
+    buttonText === "חיפוש" && setButtonText(<SpinningCircle />);
+
+    router.push(url, { scroll: false });
+  };
+
+  const getFallenFromQuery = () => {
+    return new URLSearchParams(searchParams).get("q") || "";
   };
 
   return (
@@ -47,7 +60,7 @@ const SearchForm = ({ query, searchTrigger }) => {
       >
         <SearchInput
           className={styles.searchInput}
-          initialValue={query}
+          initialValue={query || getFallenFromQuery()}
           searchTrigger={searchTrigger}
         />
         <Button
