@@ -151,7 +151,7 @@
     }
 }
 
-.fallenTable {
+.usersTable {
     width: 90%;
     max-width: 1200px;
     border-collapse: collapse;
@@ -182,32 +182,25 @@
         font-size: $text-sm;
     }
 
-    .date {
-        color: $textColor;
-    }
 
-    .status {
+    .role {
         border-radius: 16px;
         padding: 2px 5px;
         font-weight: 500;
     }
 
-    .status.pending {
-        background-color: #FFF9C4;
-        color: #854D0E;
-    }
 
-    .status.approved {
+    .role.user {
         background-color: #C8E6C9;
         color: #2E7D32;
     }
 
-    .status.rejected {
-        background-color: #FFCDD2;
-        color: #C62828;
+    .role.admin {
+        background-color: #BBDEFB;
+        color: #1565C0;
     }
 
-    .actions button {
+    .action button {
         background-color: transparent;
         padding: 5px;
         border: none;

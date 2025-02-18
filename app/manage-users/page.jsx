@@ -1,22 +1,22 @@
 import { connectToDB } from "@/server/connect";
-import { getAllFallen } from "@/server/service/fallen.service";
+import { getAllUsers } from "@/server/service/user.service";
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 
-import FallenTable from "../components/FallenTable";
+import UsersTable from "../components/UsersTable";
 
-export default async function AdminPage() {
+export default async function ManageUsersPage() {
     const session = await auth();
     if (!session || session.user.role !== "admin") {
         redirect("/");
     }
 
     await connectToDB();
-    const fallenData = await getAllFallen();
+    const usersData = await getAllUsers();
 
     return (
         <>
-            <FallenTable fallenData={fallenData} />
+            <UsersTable usersData={usersData} />
         </>
     )
 }

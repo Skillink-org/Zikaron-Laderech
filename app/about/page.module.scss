@@ -1,0 +1,38 @@
+@use '@/styles/_vars.scss' as *;
+
+.paragraphsContainer {
+    gap: $spacing-md;
+
+    .paragraph {
+        font-size: $text-md;
+        color: $textColor;
+    }
+}
+
+.dataBubbles {
+    display: flex;
+    justify-content: space-between;
+    gap: $spacing-md;
+
+    .dataBubble {
+        display: flex;
+        align-items: start;
+        padding: 0px 10px 0px 0px;
+        flex: 1;
+
+        .dataNumber {
+            font-weight: bolder;
+        }
+
+        .dataText {
+            font-size: $text-base;
+        }
+    }
+
+}
+
+@media (max-width: $breakpoint-md) {
+    .dataBubbles {
+        flex-direction: column;
+    }
+}
