@@ -35,8 +35,8 @@ const SearchForm = ({ query, searchTrigger }) => {
 
   const navigate = (url) => {
     if (hasNoParams) return;
-    
-    setButtonText(<SpinningCircle />);
+
+    buttonText === "חיפוש" && setButtonText(<SpinningCircle />);
 
     router.push(url, { scroll: false });
   };
