@@ -290,7 +290,7 @@ export default function FallenTable({ fallenData }) {
 
                             <td>
                                 <span className={`${styles.status} ${getStatusClass(item.status)}`}>
-                                    {item.status}
+                                    {item.status === "pending" ? "ממתין לאישור" : item.status === "approved" ? "מאושר" : "נדחה"}
                                 </span>
                             </td>
 
