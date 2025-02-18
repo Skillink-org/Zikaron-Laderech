@@ -1,5 +1,5 @@
-import Spinner from "../components/Spinner/Spinner";
+import BouncyLine from "../components/Spinners/BouncyLine/BouncyLine";
 
 export default function Loading() {
-  return <Spinner />;
+  return <BouncyLine />;
 }
