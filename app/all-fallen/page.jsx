@@ -1,10 +1,16 @@
 import { Suspense } from "react";
 import styles from "./page.module.scss";
+import { connectToDB } from "@/server/connect";
 import FallenList from "../components/FallenList";
 import TitleDivider from "../components/TitleDivider";
 import { metadata as layoutMetadata } from "../layout";
 import SearchForm from "../components/SearchForm/SearchForm";
+import Pagination from "../components/Pagination/Pagination";
 import PopularHobbies from "../components/PopularHobbies/PopularHobbies";
+import {
+  getAllFallen,
+  getFilteredFallen,
+} from "@/server/service/fallen.service";
 
 export const metadata = {
   title: "כל הנופלים",
@@ -21,7 +27,24 @@ export const metadata = {
 };
 
 export default async function AllFallenPage({ searchParams }) {
-  const query = (await searchParams).q || "";
+  await connectToDB();
+
+  // Get params
+  const params = await searchParams;
+  const query = params.q || "";
+  const currentPage = Number(params.page) || 1;
+
+  // Configure pagination settings
+  const limit = 10;
+  const skip = (currentPage - 1) * limit;
+
+  // Fetch fallen data based on query and pagination settings
+  const { data, total } = query
+    ? await getFilteredFallen(query, limit, skip)
+    : await getAllFallen(limit, skip);
+
+  // Calculate total pages based on the total number of fallen and the limit per page
+  const totalPages = Math.ceil(total / limit);
 
   return (
     <>
@@ -36,9 +59,11 @@ export default async function AllFallenPage({ searchParams }) {
       {/* Fallen list section */}
       <div className={styles.itemsContainer}>
         <Suspense fallback={<p>טוען...</p>}>
-          <FallenList query={query} />
+          <FallenList fallen={data} />
         </Suspense>
       </div>
+
+      <Pagination currentPage={currentPage} totalPages={totalPages} />
     </>
   );
 }

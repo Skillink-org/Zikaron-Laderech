@@ -3,31 +3,73 @@ import { getBaseUrl } from "@/lib/baseUrl";
 import { serializer } from "@/lib/serializer";
 import Fallen from "@/server/models/fallen.model";
 
-export async function getAllFallen() {
-  return serializer(await Fallen.find({}));
+export async function getAllFallen(limit = 0, skip = 0, status = "approved") {
+  const matchStage = status === "all" ? {} : { status: "approved" }; 
+  const pipeline = [
+    { $match: matchStage },
+    {
+      $facet: {
+        total: [{ $count: "count" }],
+        data: [{ $skip: skip }],
+      },
+    },
+  ];
+
+  if (limit > 0) {
+    pipeline[1].$facet.data.push({ $limit: limit });
+  }
+
+  const result = await Fallen.aggregate(pipeline);
+
+  return {
+    total: result[0].total[0]?.count || 0,
+    data: serializer(result[0].data),
+  };
 }
 
-export async function getFilteredFallen(query) {
-  return await Fallen.find({
-    $or: [
-      { firstName: { $regex: query, $options: "i" } },
-      { lastName: { $regex: query, $options: "i" } },
-      {
-        hobbies: {
-          $elemMatch: { name: { $regex: query, $options: "i" } },
-        },
-      },
-      {
-        $expr: {
-          $regexMatch: {
-            input: { $concat: ["$firstName", " ", "$lastName"] },
-            regex: query,
-            options: "i",
+export async function getFilteredFallen(query, limit = 0, skip = 0) {
+  const pipeline = [
+    {
+      $match: {
+        status: "approved",
+        $or: [
+          { firstName: { $regex: query, $options: "i" } },
+          { lastName: { $regex: query, $options: "i" } },
+          {
+            hobbies: {
+              $elemMatch: { name: { $regex: query, $options: "i" } },
+            },
           },
-        },
+          {
+            $expr: {
+              $regexMatch: {
+                input: { $concat: ["$firstName", " ", "$lastName"] },
+                regex: query,
+                options: "i",
+              },
+            },
+          },
+        ],
       },
-    ],
-  });
+    },
+    {
+      $facet: {
+        total: [{ $count: "count" }],
+        data: [{ $skip: skip }],
+      },
+    },
+  ];
+
+  if (limit > 0) {
+    pipeline[1].$facet.data.push({ $limit: limit });
+  }
+
+  const result = await Fallen.aggregate(pipeline);
+
+  return {
+    total: result[0].total[0]?.count || 0,
+    data: serializer(result[0].data),
+  };
 }
 
 export async function getPopularHobbies() {
