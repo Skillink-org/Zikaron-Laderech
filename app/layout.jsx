@@ -32,6 +32,7 @@ export const metadata = {
 
 export default async function RootLayout({ children }) {
   // TODO - YOSEF: remove this i think - check documentation
+  // https://authjs.dev/getting-started/session-management/get-session?framework=next-js-client
   const session = await auth();
 
   return (

@@ -25,6 +25,8 @@ const SearchForm = ({ query, searchTrigger }) => {
     router.push(window.location.pathname);
   };
 
+  // TODO 2 - form default
+  // if not 1 then use button submit and onSubmit instead of catch Enter
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
       event.preventDefault();
@@ -35,6 +37,9 @@ const SearchForm = ({ query, searchTrigger }) => {
   return (
     <CustomBubble className={styles.customBubble}>
       <p className={styles.header}>מצאו נופל לפי שם או תחביב</p>
+      {/* 1 Form action=/ */}
+      {/* condsider using this: https://nextjs.org/docs/app/api-reference/components/form */}
+
       <form
         className={styles.searchContainer}
         onReset={handleReset}
