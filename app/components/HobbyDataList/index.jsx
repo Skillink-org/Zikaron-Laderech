@@ -20,7 +20,6 @@ export default function HobbyDataList({ fallenName }) {
             hobbyContinuers={hobby.continueCount}
           />
         ))}
-
       </div>
       <TitleDivider
         title={'סה"כ'}
