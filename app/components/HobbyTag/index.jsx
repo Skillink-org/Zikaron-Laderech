@@ -10,22 +10,15 @@ export default function HobbyTag({ hobby, className = "", ...props }) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const getParams = (params) => {
-    return new URLSearchParams(params);
-  };
+  const getParams = () => new URLSearchParams(searchParams);
 
-  const getChosenHobby = () => {
-    const params = getParams(searchParams);
+  const getChosenHobby = () => getParams().get("q");
 
-    return params.get("q");
-  };
-
-  const isChosenHobby = () => {
-    return getChosenHobby() === hobby;
-  };
+  const isChosenHobby = () => getChosenHobby() === hobby;
 
   const handleClick = () => {
-    const params = getParams(searchParams);
+    const params = getParams();
+    params.delete("page");
     params.set("q", hobby);
 
     router.push(`?${params.toString()}`, { scroll: false });
