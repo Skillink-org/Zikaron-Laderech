@@ -1,7 +1,7 @@
+import SearchForm from "./components/SearchForm";
 import ImageWithTitle from "./components/ImageWithTitle";
-import SearchForm from "./components/SearchForm/SearchForm";
-import PopularHobbies from "./components/PopularHobbies/PopularHobbies";
-import InvitationBubble from "./components/InvitationBubble/InvitationBubble";
+import PopularHobbies from "./components/PopularHobbies";
+import InvitationBubble from "./components/InvitationBubble";
 
 const HomePage = () => {
   return (
@@ -14,7 +14,7 @@ const HomePage = () => {
       />
 
       {/* Search section */}
-      <SearchForm />
+      <SearchForm query="" searchTrigger="click" />
 
       {/* Popular hobbies section */}
       <PopularHobbies containerType="bubble" />

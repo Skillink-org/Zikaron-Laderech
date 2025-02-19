@@ -2,11 +2,11 @@ import { Suspense } from "react";
 import styles from "./page.module.scss";
 import { connectToDB } from "@/server/connect";
 import FallenList from "../components/FallenList";
+import SearchForm from "../components/SearchForm";
+import Pagination from "../components/Pagination";
 import TitleDivider from "../components/TitleDivider";
 import { metadata as layoutMetadata } from "../layout";
-import SearchForm from "../components/SearchForm/SearchForm";
-import Pagination from "../components/Pagination/Pagination";
-import PopularHobbies from "../components/PopularHobbies/PopularHobbies";
+import PopularHobbies from "../components/PopularHobbies";
 import {
   getAllFallen,
   getFilteredFallen,
@@ -63,7 +63,10 @@ export default async function AllFallenPage({ searchParams }) {
         </Suspense>
       </div>
 
-      <Pagination currentPage={currentPage} totalPages={totalPages} />
+      <Pagination
+        currentPage={total === 0 ? total : currentPage}
+        totalPages={totalPages}
+      />
     </>
   );
 }
