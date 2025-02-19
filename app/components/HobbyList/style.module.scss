@@ -1,9 +1,12 @@
+@use '@/styles/_mixins.scss'as *;
+
 .hobbies {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     flex-wrap: wrap;
     gap: 10px;
+    @include custom-scrollbar;
 
     .hobby {
         flex-grow: 1;
