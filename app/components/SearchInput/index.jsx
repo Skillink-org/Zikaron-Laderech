@@ -1,49 +1,46 @@
 "use client";
 
 import styles from "./style.module.scss";
-import { useEffect, useState } from "react";
+import GenericInput from "../GenericInput";
 import { useDebouncedCallback } from "use-debounce";
 import { useRouter, useSearchParams } from "next/navigation";
 
 const SearchInput = ({
   className = "",
-  width = "100%",
   initialValue = "",
+  searchTrigger,
   ...props
 }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [query, setQuery] = useState(initialValue);
-
-  useEffect(() => {
-    setQuery(initialValue);
-  }, [initialValue]);
 
   const handleChange = (e) => {
-    setQuery(e.target.value);
-    handleSearch();
+    const params = new URLSearchParams(searchParams);
+    e.target.value ? params.set("q", e.target.value) : params.delete("q");
+
+    searchTrigger === "change"
+      ? handleDebouncing(params)
+      : handleRouting(params);
   };
 
-  const handleSearch = useDebouncedCallback(() => {
-    const params = new URLSearchParams(searchParams);
-    query ? params.set("q", query) : params.delete("q");
-
-    router.push(`?${params.toString()}`, { scroll: false });
+  const handleDebouncing = useDebouncedCallback((params) => {
+    handleRouting(params);
   }, 300);
 
+  const handleRouting = (params) => {
+    router.push(`?${params.toString()}`, { scroll: false });
+  };
+
   return (
-    <form className={styles.formContainer} onSubmit={(e) => e.preventDefault()}>
-      <input
-        type="search"
-        name="searchQuery"
-        defaultValue={query}
-        className={`${styles.searchInput} ${className}`}
-        style={{ width }}
-        placeholder="חיפוש תחביב או שם"
-        onChange={handleChange}
-        {...props}
-      />
-    </form>
+    <GenericInput
+      type="search"
+      name="searchQuery"
+      defaultValue={initialValue}
+      className={`${styles.searchInput} ${className}`}
+      placeholder="חיפוש תחביב או שם"
+      onChange={handleChange}
+      {...props}
+    />
   );
 };
 

@@ -6,12 +6,11 @@
 
 .searchInput {
     color: $textColor;
-    border: 0.5px solid $lightblueBorder;
-    border-radius: 15px;
-    padding: 10px;
-    font-weight: 600;
-    font-size: $text-sm;
-    font-family: $font-family;
+    font-weight: 400;
+    font-size: $text-sm !important;
+    font-family: $font-family !important;
+    width: 100%;
+    margin-bottom: 0 !important;
 
     &::placeholder {
         color: $placeHolderColor;

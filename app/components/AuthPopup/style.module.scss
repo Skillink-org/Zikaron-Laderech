@@ -34,7 +34,7 @@
 }
 
 .title {
-  font-size: $text-md;
+  font-size: $text-lg;
   margin-bottom: 1rem;
   text-align: center;
   color: $primary;
@@ -43,28 +43,24 @@
 .form {
   display: flex;
   flex-direction: column;
-  // gap:5px
-}
 
-.input {
-  margin-bottom: 1rem;
-  padding: 0.5rem;
-  border: 1px solid $lightblueBorder;
-  border-radius: 4px;
-  font-size: $text-sm;
-
-  &::placeholder {
-    color: $placeHolderColor;
+  .textsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+    padding-bottom: $spacing-sm;
   }
 }
 
 .submitButton {
-  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: $buttonColor;
   color: $grayBackground;
-  border: none;
-  border-radius: 4px;
   font-size: $text-md;
+  min-width: 120px;
+  height: 40px;
   cursor: pointer;
   transition: background 0.3s;
 
@@ -73,18 +69,66 @@
   }
 }
 
-.toggleButton {
-  width: 100%;
-  text-align: left;
+.toggleContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-top: 10px;
+  width: 100%;
 }
 
-.toggleButton small {
+.span {
+  font-size: $text-base;
+}
+
+.toggleButton {
   cursor: pointer;
 }
 
-.googleLoginWrapper {
+.forgotPassword {
+  cursor: pointer;
+  color: inherit;
+  font-size: $text-base;
+}
+
+.googleButton {
   margin-top: 10px;
-  display: block;
-  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.googleText {
+  margin-right: 10px;
+  font-size: $text-md !important;
+}
+
+.progressCircle {
+  width: 16px !important;
+  height: 16px !important;
+  color: inherit !important;
+}
+
+.errorMessage {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 10px 10px;
+  border-radius: 5px;
+  margin-top: 10px;
+  font-size: $text-md;
+  text-align: center;
+  border: 1px solid #f5c6cb;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.successMessage {
+  background-color: #dcf2c4;
+  color: #156f44;
+  padding: 10px 20px;
+  border-radius: 5px;
+  margin-top: 10px;
+  font-size: $text-md;
+  text-align: center;
+  border: 1px solid #91f397;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }

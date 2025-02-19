@@ -1,16 +1,12 @@
 @use '@/styles/_vars.scss' as *;
 
 .footer {
-    height: 80px;
-    padding-block: 34px;
-    padding-block: 28px;
-    margin-inline: auto;
+    height: $headerHeight;
     display: flex;
+    gap: 20px;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    gap: 16px;
-
     border-top: 1px solid $lightblueBorder;
     font-family: $font-family;
 }
@@ -36,12 +32,10 @@
     font-size: 16px;
 }
 
-@media (min-width: 768px) {
+@media (min-width: $breakpoint-md) {
     .footer {
-        height: 150px;
-        padding-block: 34px;
+        padding-bottom: $spacing-md;
     }
-
 
     .nav {
         display: flex;

@@ -1,0 +1,36 @@
+@use '@/styles/_vars.scss' as *;
+
+.spinnerContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+
+    .spinnerBackground {
+        width: 200px;
+        height: 10px;
+        border-radius: $border-radius-md;
+        position: relative;
+    }
+
+    .bouncingLine {
+        width: 25%;
+        height: 100%;
+        background-color: darkslategray;
+        border-radius: $border-radius-md;
+        position: absolute;
+        left: 0;
+        animation: bounce 0.8s infinite ease-in-out alternate;
+    }
+}
+
+@keyframes bounce {
+    0% {
+        left: 0;
+    }
+
+    100% {
+        left: 100%;
+        transform: translateX(-100%);
+    }
+}

@@ -4,8 +4,8 @@
   box-sizing: border-box;
   border: 0.5px solid $textColor;
   border-radius: 15px;
-  width: 1400px;
-  height: 100px;
+  height: 80px;
+  width: 100%;
   display: flex;
   justify-content: center; 
   align-items: center; 
@@ -22,7 +22,7 @@
   font-family: $font-family;
   font-style: normal;
   font-weight: 600;
-  font-size: $text-lg;
+  font-size: $text-md;
   line-height: 33px;
   text-align: center;
   color: $textColor;

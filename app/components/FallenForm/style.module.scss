@@ -1,0 +1,170 @@
+@use '@/styles/_vars.scss' as *;
+
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modalEditFallen {
+    background-color: white;
+    padding: 10px;
+    border-radius: 15px;
+    position: relative;
+    text-align: center;
+    min-height: 150px;
+    min-width: 300px;
+    overflow: auto;
+    max-height: 90vh;
+
+
+    .closeButtonEditFallenModal {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        background-color: transparent;
+        border: none;
+        font-size: 18px;
+        cursor: pointer;
+        color: var(--lightGray);
+    }
+
+    .profileForm {
+        display: flex;
+        flex-direction: column;
+        width: 90%;
+        margin: 0 auto;
+        padding: 15px;
+        gap: 16px;
+        align-items: center;
+        text-align: right;
+
+        label {
+            display: flex;
+            flex-direction: column;
+            font-weight: bold;
+            gap: 8px;
+        }
+
+        input,
+        textarea {
+            padding: 8px;
+            border: 0.5px solid $lightblueBorder;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        h2 {
+            color: $titleColor;
+            margin-bottom: 15px;
+            font-size: $text-lg;
+        }
+
+        .oneLine {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            width: 100%;
+            gap: 16px;
+        }
+
+        .topSection {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            width: 100%;
+            gap: 10px;
+
+            .imageContainer {
+                width: 200px;
+                height: 200px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                overflow: hidden;
+                background-color: var(--lightGray);
+                border-radius: 8px;
+                margin-left: auto;
+
+                .imagePreview {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+
+                .imagePlaceholder {
+                    background-color: var(--lightGray);
+                }
+            }
+
+            .fileLabel input {
+                border: none;
+            }
+        }
+
+        .nameInputs,
+        .dateInputs,
+        .contactInputs {
+            display: flex;
+            flex: 1;
+            justify-content: space-between;
+            gap: 16px;
+
+            label {
+                flex: 1;
+            }
+        }
+
+        .fullWidthLabel {
+            width: 100%;
+        }
+
+        h3 {
+            margin-left: auto;
+        }
+
+        .formButtons {
+            display: flex;
+            justify-content: left;
+            gap: 16px;
+            width: 100%;
+
+            button {
+                color: white;
+                background-color: $buttonColor;
+                width: auto;
+                padding: 8px 20px;
+                gap: 5px;
+                border-radius: 10px;
+                font-size: $text-md;
+                font-family: $font-family;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: auto;
+                transition: all 0.3s;
+
+                &:hover {
+                    color: $buttonColor;
+                    background-color: white;
+                }
+            }
+        }
+
+        .statusMessage {
+            width: 100%;
+        }
+    }
+}

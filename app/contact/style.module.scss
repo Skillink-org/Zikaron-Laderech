@@ -1,0 +1,76 @@
+@use '@/styles/_vars.scss' as *;
+
+
+
+
+.contact-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  justify-content: center;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto; 
+  padding: 20px;
+}
+
+
+
+.header-image {
+  width: 100%;
+  max-width: 1000px; 
+  height: auto;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+  margin: 0 auto; 
+}
+
+
+
+.social-title{
+  font-weight: bold;
+}
+
+.contact-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  display: block;
+  margin: 0 auto;
+}
+
+
+.social-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.social-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  background: linear-gradient(to bottom, #f9f9f9, #e0e0e0);
+
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px 20px;
+  transition: background 0.3s ease-in-out, transform 0.2s ease-in-out;
+  width: 320px; 
+  height: 50px; 
+  text-align: center;
+  font-size: 16px; 
+  white-space: nowrap; 
+  cursor: pointer;
+
+  &:hover {
+    background: #f9f9f9;
+    transform: scale(1.05);
+  }
+}

@@ -1,20 +1,50 @@
+@use '@/styles/_vars.scss' as *;
+
+.inputContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
 .input {
-    margin-bottom: 1rem;
-    padding: 0.8rem 1rem;
-    border: 1px solid var(--lightblue); 
-    border-radius: 10px;
-    font-size: var(--text-md); 
-    font-family: var(--font-family); 
-    transition: all 0.3s ease;
-  
-    &:focus {
-      border-color: var(--blue); 
-      outline: none;
-      box-shadow: 0 0 5px rgba(39, 44, 85, 0.5); 
-    }
-  
-    &::placeholder {
-      color: var(--placeHolderColor); 
+  flex: 1;
+  padding: 10px 20px;
+  border: 1px solid $lightblueBorder;
+  border-radius: $border-radius-md;
+  font-size: $text-base;
+  font-family: $font-family;
+  transition: all 0.3s ease;
+
+  &:focus {
+    border-color: var(--blue);
+    outline: none;
+    box-shadow: 0 0 5px rgba(39, 44, 85, 0.5);
+  }
+
+  &::placeholder {
+    color: $placeHolderColor;
+  }
+}
+
+.eyeIcon {
+  position: absolute;
+  left: 10px;
+  top: 18px;
+  transform: translateY(-40%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+
+  .img {
+    opacity: 0.6;
+    transition: opacity 0.2s ease;
+
+    &:hover {
+      opacity: 1;
     }
   }
-  
+}
