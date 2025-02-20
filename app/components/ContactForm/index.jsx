@@ -7,7 +7,7 @@ import GenericInput from "@/app/components/GenericInput"; // ייבוא הקומ
 const ContactForm = () => {
   const [formData, setFormData] = useState({
     fullName: "",
-    email: "",
+    email: "",g
     phone: "",
     subject: "",
     message: "",
