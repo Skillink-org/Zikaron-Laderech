@@ -3,12 +3,15 @@ import Image from "next/image";
 import styles from "./style.module.scss";
 
 export default function GenericInput({
+  label,
   type,
+  name,
   placeholder,
   value,
-  onChange,
+  onChange  = () => {},
   className = "",
   autoComplete = "on",
+  required = false,
   ...props
 }) {
   const [showPassword, setShowPassword] = useState(false);
@@ -21,13 +24,17 @@ export default function GenericInput({
 
   return (
     <div className={styles.inputContainer}>
+      {label && <label htmlFor={name}>{label}</label>}
       <input
+       id={name}
         type={isPasswordType && showPassword ? "text" : type}
+        name={name} 
         placeholder={placeholder}
         value={value}
         onChange={onChange}
         className={styles.input}
         autoComplete={autoComplete}
+        required={required}
         {...props}
       />
       {isPasswordType && (

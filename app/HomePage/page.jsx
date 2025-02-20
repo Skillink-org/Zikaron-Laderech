@@ -2,6 +2,9 @@
 import styles from './style.module.scss';
 import Image from 'next/image';
 import HobbyList from './HobbyList';
+import SearchForm from '../components/SearchForm/SearchForm';
+import CustomBubble from "../components/CustomBubble";
+import TitleDivider from "../components/TitleDivider";
 
 // TODO-YOSEF: dont make it use client - the client part move outside the component
 // TODO-YOSEF: button should be a Link
@@ -19,9 +22,15 @@ const HomePage = () => {
       className={styles["Home-image"]}
     />
   </div>
-  <div className={styles["search-border"]}>
-   
-  </div>
+  
+ {/* Search section */}
+  
+  <CustomBubble className={styles.customBubble}>
+        <p className={styles.header}>מצאו נופל לפי שם או תחביב</p>
+        <SearchForm query={q} />
+      </CustomBubble>
+      <TitleDivider title={"סינון לפי תחביבים נפוצים"}/>
+  
   <HobbyList/>
 
       {/* קטע ההצטרפות לעמוד הנופלים */}
