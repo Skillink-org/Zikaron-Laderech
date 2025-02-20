@@ -78,6 +78,7 @@ export default function FallenTable({ fallenData }) {
 
     const approveFallen = async (id) => {
         try {
+            // TODO - use action instead of fetch
             const response = await fetch('/api/approve-fallen', {
                 method: 'POST',
                 headers: {
@@ -127,6 +128,7 @@ export default function FallenTable({ fallenData }) {
 
     const rejectFallen = async (id) => {
         try {
+            // TODO - use action instead of fetch
             const response = await fetch('/api/reject-fallen', {
                 method: 'POST',
                 headers: {
@@ -177,6 +179,7 @@ export default function FallenTable({ fallenData }) {
 
     const editFallenProfile = async (formData) => {
         try {
+            // TODO - use action instead of fetch
             const response = await fetch("/api/update-fallen", {
                 method: "POST",
                 body: formData,
