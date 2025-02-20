@@ -1,8 +1,8 @@
 import styles from "./page.module.scss";
 import CustomBubble from "../components/CustomBubble";
-import ImageWithTitle from "../components/ImageWithTitle";
-import InvitationBubble from "../components/InvitationBubble/InvitationBubble";
 import { metadata as layoutMetadata } from "../layout";
+import ImageWithTitle from "../components/ImageWithTitle";
+import InvitationBubble from "../components/InvitationBubble";
 import {
   getContinuersCount,
   getFallenCount,

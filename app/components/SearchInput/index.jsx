@@ -34,7 +34,7 @@ const SearchInput = ({
   return (
     <GenericInput
       type="search"
-      name="searchQuery"
+      name="q"
       defaultValue={initialValue}
       className={`${styles.searchInput} ${className}`}
       placeholder="חיפוש תחביב או שם"

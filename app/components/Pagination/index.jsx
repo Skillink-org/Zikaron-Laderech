@@ -23,7 +23,7 @@ const Pagination = ({ currentPage, totalPages }) => {
       <Button
         className={styles.paginationButton}
         onClick={() => handleClick(currentPage - 1)}
-        disabled={currentPage === 1}
+        disabled={currentPage <= 1}
         title="הדף הקודם"
       >
         <Image
