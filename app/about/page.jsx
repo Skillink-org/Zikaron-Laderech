@@ -24,9 +24,11 @@ export const metadata = {
 };
 
 export default async function AboutPage() {
-  const fallenCount = await getFallenCount();
-  const hobbiesCount = await getHobbiesCount();
-  const continuersCount = await getContinuersCount();
+  const [fallenCount, hobbiesCount, continuersCount] = await Promise.all([
+    getFallenCount(),
+    getHobbiesCount(),
+    getContinuersCount(),
+  ]);
 
   return (
     <>
