@@ -1,12 +1,12 @@
 import { Suspense } from "react";
 import styles from "./page.module.scss";
-import HobbyTag from "../components/HobbyTag";
 import { connectToDB } from "@/server/connect";
 import FallenList from "../components/FallenList";
-import CustomBubble from "../components/CustomBubble";
+import SearchForm from "../components/SearchForm";
+import Pagination from "../components/Pagination";
 import TitleDivider from "../components/TitleDivider";
 import { metadata as layoutMetadata } from "../layout";
-import SearchForm from "../components/SearchForm/SearchForm";
+import PopularHobbies from "../components/PopularHobbies";
 import {
   getAllFallen,
   getFilteredFallen,
@@ -29,34 +29,44 @@ export const metadata = {
 export default async function AllFallenPage({ searchParams }) {
   await connectToDB();
 
-  const q = (await searchParams).q || "";
-  const fallen = q ? await getFilteredFallen(q) : await getAllFallen();
+  // Get params
+  const params = await searchParams;
+  const query = params.q || "";
+  const currentPage = Number(params.page) || 1;
 
-  // TODO: Replace dummy data in real popular hobbies from API
-  const hobbies = ["טניס", "שירה", "ריצה", "אפיה", "סריגה", "שחיה"];
+  // Configure pagination settings
+  const limit = 10;
+  const skip = (currentPage - 1) * limit;
+
+  // Fetch fallen data based on query and pagination settings
+  const { data, total } = query
+    ? await getFilteredFallen(query, limit, skip)
+    : await getAllFallen(limit, skip);
+
+  // Calculate total pages based on the total number of fallen and the limit per page
+  const totalPages = Math.ceil(total / limit);
 
   return (
     <>
       {/* Search section */}
-      <CustomBubble className={styles.customBubble}>
-        <p className={styles.header}>מצאו נופל לפי שם או תחביב</p>
-        <SearchForm query={q} />
-      </CustomBubble>
+      <SearchForm query={query} searchTrigger="change" />
+
       <TitleDivider title={"סינון לפי תחביבים נפוצים"} />
 
       {/* Hobbies filter section */}
-      <div className={styles.itemsContainer}>
-        {hobbies.map((hobby, index) => (
-          <HobbyTag hobby={hobby} key={index} />
-        ))}
-      </div>
+      <PopularHobbies containerType="tag" />
 
       {/* Fallen list section */}
       <div className={styles.itemsContainer}>
         <Suspense fallback={<p>טוען...</p>}>
-          <FallenList fallen={fallen} />
+          <FallenList fallen={data} />
         </Suspense>
       </div>
+
+      <Pagination
+        currentPage={total === 0 ? total : currentPage}
+        totalPages={totalPages}
+      />
     </>
   );
 }

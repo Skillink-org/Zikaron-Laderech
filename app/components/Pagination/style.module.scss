@@ -1,0 +1,43 @@
+@use '@/styles/_vars.scss' as *;
+
+.paginationContainer {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: $spacing-sm;
+    margin-top: $spacing-md;
+
+    .paginationButton {
+        display: flex;
+        color: $textColor;
+        padding: $spacing-sm;
+
+        .paginationButtonImage {
+            filter: invert(1);
+        }
+    }
+
+    .paginationTextContainer {
+        color: $textColor;
+    }
+}
+
+@media (min-width: $breakpoint-xs) {
+    .paginationSlash {
+        display: none;
+    }
+}
+
+@media (max-width: $breakpoint-xs) {
+    .paginationTextContainer {
+        display: flex;
+
+        .paginationText {
+            display: none;
+        }
+
+        .paginationSlash {
+            display: block;
+        }
+    }
+}

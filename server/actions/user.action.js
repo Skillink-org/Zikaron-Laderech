@@ -1,6 +1,6 @@
 'use server'
 import { getBaseUrl } from '@/lib/baseUrl';
-import * as service from '../service/user.service';
+import * as service from "@/server/service/user.service.js";
 
 export async function createUserAction(user) {
     const newUser = await service.createUser(user);
@@ -12,6 +12,14 @@ export async function createUserAction(user) {
     await service.sendWelcomeEmail(newUser.email, `${newUser.firstName}`, getBaseUrl());
     return { newUser: plainUser };
 };
+
+export async function getAllUsers() {
+    return await service.getAllUsers();
+}
+
+export async function changRole(id) {
+    return await service.changRole(id);
+}
 
 export async function resetPasswordAction(email) {
     try {
@@ -30,7 +38,6 @@ export async function resetPasswordAction(email) {
         console.error("Error in resetPasswordAction:", error.message);
     }
 }
-
 
 export async function isValidTokenAction(token) {
     const response = await service.isTokenValid(token);

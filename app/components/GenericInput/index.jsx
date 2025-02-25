@@ -24,7 +24,6 @@ export default function GenericInput({
 
   return (
     <div className={styles.inputContainer}>
-      {label && <label htmlFor={name}>{label}</label>}
       <input
        id={name}
         type={isPasswordType && showPassword ? "text" : type}
@@ -46,8 +45,8 @@ export default function GenericInput({
           <Image
             src={showPassword ? "/eye.svg" : "/eye-off.svg"}
             alt={showPassword ? "Hide password" : "Show password"}
-            width={20} 
-            height={20} 
+            width={20}
+            height={20}
             className={styles.img}
           />
         </button>

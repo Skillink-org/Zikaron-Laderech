@@ -1,0 +1,35 @@
+@use '@/styles/_vars.scss' as *;
+
+.hobbyBubblesContainer {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: $spacing-md;
+    padding: $spacing-sm 0;
+}
+
+.hobbyTagsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    width: 100%;
+}
+
+@media (max-width: $breakpoint-lg) {
+    .hobbyTagsContainer {
+        justify-content: space-evenly;
+    }
+}
+
+@media (min-width: 1300px) {
+    .hobbyTagsContainer {
+        justify-content: center;
+    }
+}
+
+@media (max-width: $breakpoint-md) {
+    .bubble {
+        aspect-ratio: 0 / 0 !important;
+    }
+}
