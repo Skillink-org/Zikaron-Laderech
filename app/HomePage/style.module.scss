@@ -1,0 +1,139 @@
+@use '@/styles/_vars.scss' as *;
+@use 'sass:color';
+
+.Home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  justify-content: center;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto; 
+  padding: 20px;
+}
+.header-image {
+  width: 100%;
+  max-width: 1000px; 
+  height: auto;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+  margin: 0 auto;
+}
+
+
+.Home-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  display: block;
+  margin: 0 auto;
+}
+
+.search-border{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(to bottom, #f9f9f9, #e0e0e0);
+  padding: 60px;
+  margin-top: 20px;
+  width: 100%;
+  max-width: 1000px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+.input-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+}
+
+
+.hobbyContainer {
+  width: 100%;
+  max-width: 1000px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  margin-top: 25px;
+  display: flex;
+  justify-content: center;
+  gap: 45px;
+  flex-wrap: wrap;
+  padding: 20px;
+}
+
+.hobbyBubble {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  border: 1px solid var(--darkerBorderColor);
+  border-radius: 10px;
+  width: 100px;
+  aspect-ratio: 3/2;
+  font-size: 18px;
+  color: black;
+  text-align: center;
+  background: linear-gradient(-45deg, var(--baseColor) 10%, var(--lighterColor) 100%);
+}
+
+
+
+.memorySection {
+  width: 100%;
+  max-width: 1000px;
+  margin: 20px auto;
+  padding: 30px;
+  text-align: center;
+  border-radius: 15px;
+  background: linear-gradient(to bottom, #5a6a74, #2c3e50);
+  color: white;
+}
+
+.memoryTitle {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.memoryText {
+  font-size: 16px;
+  margin-bottom: 15px;
+}
+
+.memoryButton {
+  padding: 10px 20px;
+  font-size: 16px;
+  color: black;
+  background: white;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.memoryButton:hover {
+  background: #e0e0e0;
+}
+
+.customBubble {
+  display: flex;
+  justify-content: space-around !important;
+  align-items: center;
+  width: 100%;
+  gap: 40px;
+  padding: 10px 0;
+  height: min-content;
+  flex-direction: row !important;
+
+  .header {
+      color: $primary;
+      font-weight: bold;
+      font-size: $text-lg;
+  }
+}

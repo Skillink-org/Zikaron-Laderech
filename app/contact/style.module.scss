@@ -42,12 +42,21 @@
   margin: 0 auto;
 }
 
-
 .social-buttons {
   display: flex;
   justify-content: center;
   gap: 20px;
   margin-top: 20px;
+  width: 100%;
+  max-width: 1000px; // מוודא שהכפתורים לא רחבים יותר מהטופס
+  margin-left: auto;
+  margin-right: auto;
+
+  @media (max-width: 767px) {
+    flex-direction: column; // מסדר את הכפתורים אחד מתחת לשני במובייל
+    align-items: center;
+    gap: 10px;
+  }
 }
 
 .social-button {
@@ -57,7 +66,6 @@
   justify-content: center;
   text-decoration: none;
   background: linear-gradient(to bottom, #f9f9f9, #e0e0e0);
-
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 10px 20px;
@@ -72,5 +80,10 @@
   &:hover {
     background: #f9f9f9;
     transform: scale(1.05);
+  }
+
+  @media (max-width: 767px) {
+    width: 80%; // הכפתורים יתאימו לרוחב של הטופס במובייל
+    max-width: 320px; // אבל לא יהיו רחבים מדי
   }
 }
