@@ -4,7 +4,7 @@ import useRand from "@/hooks/useRand";
 import styles from "./style.module.scss";
 import DynamicBackground from "../DynamicBackground";
 import { useRouter, useSearchParams } from "next/navigation";
-import HobbyTagSkeleton from '../skeletons/HobbyTagSkeleton';
+import HobbyTagSkeleton from '../Skeletons/HobbyTagSkeleton';
 
 export default function HobbyTag({ hobby, className = "", ...props }) {
   const rand = useRand();

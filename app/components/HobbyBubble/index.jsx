@@ -4,7 +4,7 @@ import Image from "next/image";
 import useRand from "@/hooks/useRand";
 import styles from "./style.module.scss";
 import DynamicBackground from "../DynamicBackground";
-import HobbyBubbleSkeleton from "../skeletons/HobbyBubbleSkeleton";
+import HobbyBubbleSkeleton from "../Skeletons/HobbyBubbleSkeleton";
 
 export default function HobbyBubble({
   dynamicBackgroundClassName = "",
