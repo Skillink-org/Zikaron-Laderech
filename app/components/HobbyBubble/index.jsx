@@ -4,6 +4,7 @@ import Image from "next/image";
 import useRand from "@/hooks/useRand";
 import styles from "./style.module.scss";
 import DynamicBackground from "../DynamicBackground";
+import HobbyBubbleSkeleton from "../skeletons/HobbyBubbleSkeleton";
 
 export default function HobbyBubble({
   dynamicBackgroundClassName = "",
@@ -39,8 +40,7 @@ export default function HobbyBubble({
           </div>
         </DynamicBackground>
       ) : (
-        // TODO: Add a loading indicator here
-        <></>
+        <HobbyBubbleSkeleton />
       )}
     </>
   );
