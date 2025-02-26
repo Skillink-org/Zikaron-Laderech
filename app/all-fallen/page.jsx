@@ -7,7 +7,7 @@ import Pagination from "../components/Pagination";
 import TitleDivider from "../components/TitleDivider";
 import { metadata as layoutMetadata } from "../layout";
 import PopularHobbies from "../components/PopularHobbies";
-import FallenListSkeleton from "../components/Skeletons/FallenListSkeleton/FallenListSkeleton";
+import FallenListSkeleton from "../components/Skeletons/FallenListSkeleton";
 import {
   getAllFallen,
   getFilteredFallen,
