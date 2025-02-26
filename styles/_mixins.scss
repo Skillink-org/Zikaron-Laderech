@@ -38,7 +38,7 @@
   }
 }
 
-@mixin shimmer {
+@mixin shimmer($backgroundSizeX: 800px, $backgroundSizeY: 104px) {
   background: #f6f7f8;
   background-image: linear-gradient(
     to right,
@@ -48,7 +48,7 @@
     #f6f7f8 100%
   );
   background-repeat: no-repeat;
-  background-size: 800px 104px;
+  background-size: $backgroundSizeX $backgroundSizeY;
   animation: shimmer 1.5s infinite linear;
 }
 

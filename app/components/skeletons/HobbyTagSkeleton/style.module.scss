@@ -7,22 +7,22 @@
   width: 150px;
   border-radius: $border-radius-md;
   border: 1px solid $lightblueBorder;
-}
 
-.shimmerWrapper {
-  display: block;
-  width: 100%;
-  height: 100%;
-  border-radius: inherit;
-  @include shimmer;
+  .shimmerWrapper {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    @include shimmer;
+  }
 }
 
 @media (max-width: $breakpoint-md) {
   .skeleton {
-      width: 45%;
-  }
+    width: 45%;
 
-  .shimmerWrapper {
+    .shimmerWrapper {
       width: 100%;
+    }
   }
 }

@@ -7,6 +7,7 @@ import Pagination from "../components/Pagination";
 import TitleDivider from "../components/TitleDivider";
 import { metadata as layoutMetadata } from "../layout";
 import PopularHobbies from "../components/PopularHobbies";
+import FallenListSkeleton from "../components/skeletons/FallenListSkeleton/FallenListSkeleton";
 import {
   getAllFallen,
   getFilteredFallen,
@@ -58,11 +59,12 @@ export default async function AllFallenPage({ searchParams }) {
 
       {/* Fallen list section */}
       <div className={styles.itemsContainer}>
-        <Suspense fallback={<p>טוען...</p>}>
+        <Suspense fallback={<FallenListSkeleton limit={limit} />}>
           <FallenList fallen={data} />
         </Suspense>
       </div>
 
+      {/* Pagination section */}
       <Pagination
         currentPage={total === 0 ? total : currentPage}
         totalPages={totalPages}
