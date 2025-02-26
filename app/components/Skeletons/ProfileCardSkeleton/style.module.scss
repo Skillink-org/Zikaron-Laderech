@@ -1,0 +1,43 @@
+@use "@/styles/mixins.scss" as *;
+@use "@/styles/_vars.scss" as *;
+
+.skeleton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  border-bottom: 1px solid $lightblueBorder;
+  border-left: 1px solid $lightblueBorder;
+  border-right: 1px solid $lightblueBorder;
+  border-radius: 0px 0px 15px 15px;
+  padding: 10px;
+  width: 250px;
+
+  .skeletonImage {
+    width: 80%;
+    aspect-ratio: 3/4;
+    border-radius: 100px;
+    @include shimmer(100%, 100%);
+  }
+
+  .skeletonName {
+    width: 50%;
+    height: 40px;
+    border-radius: 100px;
+    @include shimmer(100%, 100%);
+  }
+
+  .skeletonYears {
+    width: 45%;
+    height: 20px;
+    border-radius: 100px;
+    @include shimmer(100%, 100%);
+  }
+}
+
+@media (min-width: 768px) {
+  .skeleton {
+    aspect-ratio: 1/1.2;
+  }
+}
