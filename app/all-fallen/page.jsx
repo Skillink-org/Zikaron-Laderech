@@ -57,6 +57,7 @@ export default async function AllFallenPage({ searchParams }) {
       <PopularHobbies containerType="tag" />
 
       {/* Fallen list section */}
+      {/* TODO - suspense is if the function is async */}
       <div className={styles.itemsContainer}>
         <Suspense fallback={<p>טוען...</p>}>
           <FallenList fallen={data} />

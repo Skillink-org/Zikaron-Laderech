@@ -1,16 +1,21 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import Modal from "react-modal";
 
-import styles from './style.module.scss'
+import styles from './style.module.scss';
 
-import Image from "next/image"
+import Image from "next/image";
 
 import FallenForm from "../FallenForm";
 import StatusMessage from "../StatusMessage";
 
 // TODO-YOSEF: talk with Refael about popup system - with zustand
+
+// TODO-YOSEF: add pagination
+// TODO-YOSEF: add sorting
+// TODO-YOSEF: search with debounce, server page, search params as the official next.js example
+
 
 export default function FallenTable({ fallenData }) {
     const [filteredFallenData, setFilteredFallenData] = useState(fallenData);
