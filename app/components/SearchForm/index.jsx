@@ -29,7 +29,7 @@ const SearchForm = ({ query, searchTrigger }) => {
       <Form
         className={styles.searchContainer}
         onReset={handleReset}
-        action={`/all-fallen?q=${getFallenFromQuery()}`}
+        action="/all-fallen"
       >
         <SearchInput
           className={styles.searchInput}

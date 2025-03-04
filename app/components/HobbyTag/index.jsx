@@ -4,6 +4,7 @@ import useRand from "@/hooks/useRand";
 import styles from "./style.module.scss";
 import DynamicBackground from "../DynamicBackground";
 import { useRouter, useSearchParams } from "next/navigation";
+import HobbyTagSkeleton from '../Skeletons/HobbyTagSkeleton';
 
 export default function HobbyTag({ hobby, className = "", ...props }) {
   const rand = useRand();
@@ -41,8 +42,7 @@ export default function HobbyTag({ hobby, className = "", ...props }) {
           </div>
         </DynamicBackground>
       ) : (
-        // TODO: Add a loading indicator here
-        <></>
+        <HobbyTagSkeleton />
       )}
     </>
   );
