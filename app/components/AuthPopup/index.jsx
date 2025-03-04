@@ -221,6 +221,7 @@ export default function AuthPopup({ onClose }) {
           )}
 
           <div className={styles.toggleContainer}>
+            {/* TODO - not use small if you want smaller font use fontSize */}
             <small className={styles.toggleButton} onClick={toggleForm}>
               {authState === "signIn" ? (
                 <span className={styles.span}>

@@ -10,7 +10,7 @@ import StatusMessage from "../StatusMessage";
 
 export default function FallenForm
     ({ isOpen, contentLabel, profile = {}, onSave, onCancel }) {
-
+// TODO - if using useState - use one useState for all inputs
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [birthDate, setBirthDate] = useState("");
@@ -52,6 +52,7 @@ export default function FallenForm
     const [statusMessage, setStatusMessage] = useState("");
     const [statusType, setStatusType] = useState("");
 
+    // TODO - use zod for the simple form validation
     const validateForm = () => {
         if (!firstName) {
             setStatusMessage("נא להזין שם פרטי");
