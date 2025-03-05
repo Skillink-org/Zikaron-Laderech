@@ -58,8 +58,8 @@ export default function UserProfile({ firstName, lastName, imageSrc, role }) {
 
             {menuOpen && (
                 <div className={styles.menu} ref={menuRef}>
-                    {role === "admin" ?
-                        (<>
+                    {role === "admin" && (
+                        <div className={styles.adminButtons}>
                             <Button
                                 onClick={() => {
                                     setMenuOpen(false);
@@ -76,11 +76,9 @@ export default function UserProfile({ firstName, lastName, imageSrc, role }) {
                             >
                                 ניהול משתמשים
                             </Button>
-                        </>)
-                        :
-                        ("")
-                    }
-
+                        </div>
+                    )}
+                    <div className={styles.divider}></div>
                     <Button
                         onClick={() => signOut()}
                     >
@@ -88,6 +86,7 @@ export default function UserProfile({ firstName, lastName, imageSrc, role }) {
                     </Button>
                 </div>
             )}
+
         </div>
     );
 }

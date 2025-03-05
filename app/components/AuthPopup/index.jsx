@@ -148,8 +148,8 @@ export default function AuthPopup({ onClose }) {
     authState == "signIn"
       ? loginFields
       : authState == "signUp"
-      ? signupFields
-      : resetPasswordFields;
+        ? signupFields
+        : resetPasswordFields;
 
   return (
     <div className={styles.overlay}>
@@ -161,8 +161,8 @@ export default function AuthPopup({ onClose }) {
           {authState == "signIn"
             ? "התחברות"
             : authState == "signUp"
-            ? "הרשמה"
-            : "איפוס סיסמא"}
+              ? "הרשמה"
+              : "איפוס סיסמא"}
         </h2>
         <form className={styles.form} onSubmit={handleSubmit}>
           <div className={styles.textsContainer}>
@@ -221,8 +221,7 @@ export default function AuthPopup({ onClose }) {
           )}
 
           <div className={styles.toggleContainer}>
-            {/* TODO - not use small if you want smaller font use fontSize */}
-            <small className={styles.toggleButton} onClick={toggleForm}>
+            <span className={styles.toggleButton} onClick={toggleForm}>
               {authState === "signIn" ? (
                 <span className={styles.span}>
                   אין לך חשבון? לחץ כאן להרשמה
@@ -234,14 +233,14 @@ export default function AuthPopup({ onClose }) {
               ) : (
                 <span className={styles.span}>חזרה להתחברות</span>
               )}
-            </small>
+            </span>
             {authState === "signIn" && (
-              <small
+              <span
                 className={styles.forgotPassword}
                 onClick={() => setAuthState("resetPassword")}
               >
                 שכחתי סיסמא
-              </small>
+              </span>
             )}
           </div>
         </form>

@@ -81,10 +81,12 @@
 
 .menu {
     position: absolute;
-    top: calc(100% + 2px);
+    top: calc(100% + 5px);
     left: 50%;
     transform: translateX(-50%);
-    justify-content: center;
+    background-color: white;
+    border-radius: 8px;
+    z-index: 9999;
 
     button {
         padding: 10px;
@@ -97,6 +99,43 @@
         margin-bottom: 5px;
     }
 }
+// .menu {
+//     position: absolute;
+//     top: calc(100% + 5px);
+//     left: 50%;
+//     transform: translateX(-50%);
+//     background-color: white;
+//     border-radius: 8px;
+//     z-index: 9999;
+//     padding: 10px;
+//     display: flex;
+//     flex-direction: column;
+//     align-items: center;
+//     min-width: 220px;
+//     box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+
+//     .admin-buttons {
+//         display: grid;
+//         grid-template-columns: repeat(2, 1fr);
+//         gap: 15px;
+//         width: 100%;
+//     }
+
+//     .divider {
+//         width: 100%;
+//         height: 1px;
+//         background-color: rgba(0, 0, 0, 0.2);
+//         margin: 10px 0;
+//     }
+
+//     button {
+//         padding: 10px;
+//         width: 100%;
+//         background-color: $textColor;
+//         text-align: center;
+//     }
+// }
+
 
 .logo {
     text-align: center;
