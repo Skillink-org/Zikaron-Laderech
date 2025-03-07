@@ -10,6 +10,10 @@ import Image from "next/image";
 import FallenForm from "../FallenForm";
 import StatusMessage from "../StatusMessage";
 
+import { connectToDB } from "@/server/connect";
+import { approveFallen, rejectFallen, updateFallenById } from "@/server/actions/fallen.action";
+import { uploadImage } from "@/server/actions/uploadImage.action";
+
 // TODO-YOSEF: talk with Refael about popup system - with zustand
 
 // TODO-YOSEF: add pagination
@@ -81,28 +85,21 @@ export default function FallenTable({ fallenData }) {
     const [statusMessage, setStatusMessage] = useState("");
     const [statusType, setStatusType] = useState("");
 
-    const approveFallen = async (id) => {
+    const approveFallenById = async (id) => {
         try {
-            // TODO - use action instead of fetch
-            const response = await fetch('/api/approve-fallen', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ id })
-            });
+            await connectToDB();
 
-            const result = await response.json();
+            const approvedFallen = await approveFallen(id);
 
-            if (result.success) {
-                console.log(`The profile ${result.data.firstName} ${result.data.lastName} has been approved.`);
+            if (approvedFallen) {
+                console.log(`The profile ${approvedFallen.firstName} ${approvedFallen.lastName} has been approved.`);
                 setFilteredFallenData(prevData => prevData.map(fallen =>
-                    fallen._id === id ? result.data : fallen
+                    fallen._id === id ? approvedFallen : fallen
                 ));
                 setStatusMessage("הפרופיל אושר בהצלחה");
                 setStatusType("success");
             } else {
-                console.error("Approval failed:", result.error);
+                console.error("Approval failed");
                 setStatusMessage("אישור הפרופיל נכשל");
                 setStatusType("error");
             }
@@ -111,6 +108,7 @@ export default function FallenTable({ fallenData }) {
             setStatusMessage("אישור הפרופיל נכשל");
             setStatusType("error");
         }
+
         setTimeout(() => {
             setStatusMessage("");
             setStatusType("");
@@ -131,28 +129,21 @@ export default function FallenTable({ fallenData }) {
         setIsRejectFallenModalOpen(false);
     };
 
-    const rejectFallen = async (id) => {
+    const rejectFallenById = async (id) => {
         try {
-            // TODO - use action instead of fetch
-            const response = await fetch('/api/reject-fallen', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ id, note }),
-            });
+            await connectToDB(); 
 
-            const result = await response.json();
+            const rejectedFallen = await rejectFallen(id, note);
 
-            if (result.success) {
-                console.log(`The profile of ${result.data.firstName} ${result.data.lastName} has been rejected.`);
+            if (rejectedFallen) {
+                console.log(`The profile of ${rejectedFallen.firstName} ${rejectedFallen.lastName} has been rejected.`);
                 setFilteredFallenData(prevData => prevData.map(fallen =>
-                    fallen._id === id ? result.data : fallen
+                    fallen._id === id ? rejectedFallen : fallen
                 ));
                 setStatusMessage("הפרופיל נדחה בהצלחה");
                 setStatusType("success");
             } else {
-                console.error('Error rejecting fallen:', data.error);
+                console.error('Error rejecting fallen');
                 setStatusMessage("דחיית הפרופיל נכשלה");
                 setStatusType("error");
             }
@@ -165,11 +156,12 @@ export default function FallenTable({ fallenData }) {
         setSelectedProfileId('');
         setNote('');
         closeRejectFallenModal();
+
         setTimeout(() => {
             setStatusMessage("");
             setStatusType("");
         }, 10000);
-    }
+    };
 
     const [selectedProfile, setSelectedProfile] = useState({});
     const [isEditFallenOpen, setIsEditFallenOpen] = useState(false);
@@ -184,31 +176,44 @@ export default function FallenTable({ fallenData }) {
 
     const editFallenProfile = async (formData) => {
         try {
-            // TODO - use action instead of fetch
-            const response = await fetch("/api/update-fallen", {
-                method: "POST",
-                body: formData,
-            });
-
-            const result = await response.json();
-
-            if (result.success) {
-                console.log("Data updated successfully:", result.data);
+            await connectToDB(); 
+    
+            const jsonString = formData.get('data');
+            if (!jsonString) {
+                throw new Error("Missing data payload.");
+            }
+    
+            const data = JSON.parse(jsonString);
+    
+            const file = formData.get('image');
+            if (file) {
+                const imageFormData = new FormData();
+                imageFormData.append("image", file);
+    
+                const imageUrl = await uploadImage(imageFormData);
+    
+                data.imageUrl = imageUrl;
+            }
+    
+            const updatedFallen = await updateFallenById(data);
+    
+            if (updatedFallen) {
+                console.log("Data updated successfully:", updatedFallen);
                 setFilteredFallenData(prevData =>
-                    prevData.map(fallen =>
-                        fallen._id === result.data._id ? result.data : fallen
+                    prevData.map(fallenItem =>
+                        fallenItem._id === fallen._id ? updatedFallen : fallenItem
                     )
                 );
             } else {
-                console.error("Failed to update data:", result.error);
+                console.error("Failed to update data.");
             }
         } catch (error) {
             console.error("Error while updating data:", error);
         }
-
+    
         closeEditFallenModal();
     };
-
+    
     useEffect(() => {
         setFilteredFallenData(fallenData);
     }, [fallenData]);
@@ -305,7 +310,7 @@ export default function FallenTable({ fallenData }) {
                             <td className={styles.actions}>
                                 <button
                                     type="button"
-                                    onClick={() => approveFallen(item._id)}
+                                    onClick={() => approveFallenById(item._id)}
                                 >
                                     <Image
                                         src="/approveIcon.svg"
@@ -378,7 +383,7 @@ export default function FallenTable({ fallenData }) {
                     />
                 </label>
 
-                <button className={styles.applyButton} onClick={() => rejectFallen(selectedProfileId)}>דחיה</button>
+                <button className={styles.applyButton} onClick={() => rejectFallenById(selectedProfileId)}>דחיה</button>
             </Modal>
 
             <FallenForm isOpen={isEditFallenOpen} contentLabel={"עריכת נופל"} profile={selectedProfile} onSave={editFallenProfile} onCancel={closeEditFallenModal} />
