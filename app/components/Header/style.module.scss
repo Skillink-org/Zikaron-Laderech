@@ -79,26 +79,26 @@
     }
 }
 
-.menu {
-    position: absolute;
-    top: calc(100% + 5px);
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: white;
-    border-radius: 8px;
-    z-index: 9999;
+// .menu {
+//     position: absolute;
+//     top: calc(100% + 5px);
+//     left: 50%;
+//     transform: translateX(-50%);
+//     background-color: white;
+//     border-radius: 8px;
+//     z-index: 9999;
 
-    button {
-        padding: 10px;
-        width: 100px !important;
-        background-color: $textColor;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
-    }
+//     button {
+//         padding: 10px;
+//         width: 100px !important;
+//         background-color: $textColor;
+//         box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+//     }
 
-    button:not(:last-child) {
-        margin-bottom: 5px;
-    }
-}
+//     button:not(:last-child) {
+//         margin-bottom: 5px;
+//     }
+// }
 // .menu {
 //     position: absolute;
 //     top: calc(100% + 5px);
@@ -135,6 +135,57 @@
 //         text-align: center;
 //     }
 // }
+.menu {
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    padding: 5px;
+    min-width: 160px;
+    display: flex;
+    flex-direction: column;
+
+    // תנאי למשתמש רגיל
+    &.normalUser {
+        background-color: transparent;
+        box-shadow: none;
+    }
+
+    // תנאי לאדמין
+    &.adminUser {
+        background-color: white;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    .adminButtons {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .divider {
+        height: 1px;
+        background-color: #b3b0b0;
+        margin: 5px 0;
+    }
+
+    button {
+        padding: 10px;
+        width: 100%;
+        background-color: $textColor;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+
+        &:hover {
+            background-color: $textColor;
+        }
+    }
+}
 
 
 .logo {

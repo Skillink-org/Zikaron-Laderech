@@ -57,35 +57,37 @@ export default function UserProfile({ firstName, lastName, imageSrc, role }) {
             </div>
 
             {menuOpen && (
-                <div className={styles.menu} ref={menuRef}>
+                <div
+                    className={`${styles.menu} ${role === 'admin' ? styles.adminUser : styles.normalUser}`}
+                    ref={menuRef}
+                >
                     {role === "admin" && (
-                        <div className={styles.adminButtons}>
-                            <Button
-                                onClick={() => {
-                                    setMenuOpen(false);
-                                    redirect("/admin");
-                                }}
-                            >
-                                ניהול נופלים
-                            </Button>
-                            <Button
-                                onClick={() => {
-                                    setMenuOpen(false);
-                                    redirect("/manage-users");
-                                }}
-                            >
-                                ניהול משתמשים
-                            </Button>
-                        </div>
+                        <>
+                            <div className={styles.adminButtons}>
+                                <Button
+                                    onClick={() => {
+                                        setMenuOpen(false);
+                                        redirect("/admin");
+                                    }}
+                                >
+                                    ניהול נופלים
+                                </Button>
+                                <Button
+                                    onClick={() => {
+                                        setMenuOpen(false);
+                                        redirect("/manage-users");
+                                    }}
+                                >
+                                    ניהול משתמשים
+                                </Button>
+                            </div>
+                            <div className={styles.divider}></div>
+                        </>
                     )}
-                    <div className={styles.divider}></div>
-                    <Button
-                        onClick={() => signOut()}
-                    >
-                        התנתק
-                    </Button>
+                    <Button onClick={() => signOut()}>התנתק</Button>
                 </div>
             )}
+
 
         </div>
     );
