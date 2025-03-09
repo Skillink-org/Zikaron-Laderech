@@ -202,9 +202,11 @@ export async function addFallen(fallenData) {
     }
 
     // Ensure dates are valid
+    const createdAt = new Date();
+
     const birthDate = new Date(fallenData.birthDate);
     const deathDate = new Date(fallenData.deathDate);
-
+    
     if (isNaN(birthDate.getTime()) || isNaN(deathDate.getTime())) {
       throw new Error("Invalid birth or death date");
     }
@@ -212,6 +214,7 @@ export async function addFallen(fallenData) {
     // Create a new record
     const fallen = await Fallen.create({
       ...fallenData,
+      createdAt,
       birthDate,
       deathDate,
       status: "pending",

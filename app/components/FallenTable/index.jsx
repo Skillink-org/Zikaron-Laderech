@@ -354,7 +354,7 @@ export default function FallenTable() {
                     {data.length > 0 ?
                         data.map((item, index) => (
                             <tr key={item._id}>
-                                <td className={styles.date}>{item.createdAt ? item.createdAt.slice(0, 10) : 'תאריך לא זמין'}</td>
+                                <td className={styles.date}>{item.createdAt ? new Date(item.createdAt).toLocaleDateString('he-IL')  : 'תאריך לא זמין'}</td>
 
                                 <td>{item.firstName} {item.lastName}</td>
 
