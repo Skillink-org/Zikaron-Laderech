@@ -10,6 +10,7 @@
     padding: 15px;
     border-radius: 10px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    flex-wrap: nowrap;
 
     .searchContainer {
         position: relative;
@@ -56,10 +57,21 @@
         justify-content: center;
         width: auto;
         transition: all 0.3s;
+        flex: 1;
 
         &:hover {
             border: 1px solid black;
         }
+    }
+}
+
+@media (max-width: 500px) {
+    .wrapper {
+        flex-wrap: wrap;
+    }
+
+    .filterButton {
+        padding: 6px !important;
     }
 }
 

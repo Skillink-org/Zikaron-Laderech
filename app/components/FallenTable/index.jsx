@@ -9,46 +9,78 @@ import Image from "next/image";
 
 import FallenForm from "../FallenForm";
 import StatusMessage from "../StatusMessage";
+import Pagination from "../Pagination";
 
 import { connectToDB } from "@/server/connect";
-import { approveFallen, rejectFallen, updateFallenById } from "@/server/actions/fallen.action";
+import {getAllFallen, getFilteredFallenByNameAndStatus , approveFallen, rejectFallen, updateFallenById } from "@/server/actions/fallen.action";
 import { uploadImage } from "@/server/actions/uploadImage.action";
+
+import { useSearchParams } from "next/navigation";
+
+import { useDebouncedCallback } from "use-debounce";
 
 // TODO-YOSEF: talk with Refael about popup system - with zustand
 
-// TODO-YOSEF: add pagination
-// TODO-YOSEF: add sorting
-// TODO-YOSEF: search with debounce, server page, search params as the official next.js example
+export default function FallenTable() {
+    const searchParams = useSearchParams();
 
-
-export default function FallenTable({ fallenData }) {
-    const [filteredFallenData, setFilteredFallenData] = useState(fallenData);
     const [searchQuery, setSearchQuery] = useState('');
-    const [status, setStatus] = useState('');
+    const [status, setStatus] = useState("all");
     const [previousStatus, setPreviousStatus] = useState('');
 
-    const filterData = (searchQuery, status) => {
-        let filteredData = [...fallenData];
+    const [data, setData] = useState([]);
+    const currentPage = Number(searchParams.get("page")) || 1;
+    const [totalPages, setTotalPages] = useState(0);
+    const limit = 10;
+    const skip = (currentPage - 1) * limit;
 
-        if (status !== "") {
-            filteredData = filteredData.filter(item => item.status === status);
-        }
+    const fetchData = async () => {
+        const response = searchQuery
+            ? await getFilteredFallenByNameAndStatus(searchQuery, limit, skip, status)
+            : await getAllFallen(limit, skip, status);
 
-        if (searchQuery !== "") {
-            filteredData = filteredData.filter(item => {
-                const fullName = `${item.firstName} ${item.lastName}`.toLowerCase();
-                return fullName.includes(searchQuery.trim());
-            });
-        }
+        const sortedData = [...response.data].sort((a, b) => {
+            const nameA = `${a.firstName} ${a.lastName}`;
+            const nameB = `${b.firstName} ${b.lastName}`;
 
-        setFilteredFallenData(filteredData);
+            if (nameA < nameB) return sortOrder === 'asc' ? -1 : 1;
+            if (nameA > nameB) return sortOrder === 'asc' ? 1 : -1;
+            return 0;
+        });
+        setData(sortedData);
+
+        setTotalPages(Math.ceil(response.total / limit));
+    };
+
+    const debouncedFetchData = useDebouncedCallback(() => {
+        fetchData();
+    }, 500);
+
+    useEffect(() => {
+        debouncedFetchData();
+    }, []);
+
+    const [sortOrder, setSortOrder] = useState('asc');
+    const sortData = () => {
+        const sortedData = [...data].sort((a, b) => {
+            const nameA = `${a.firstName} ${a.lastName}`;
+            const nameB = `${b.firstName} ${b.lastName}`;
+
+            if (nameA < nameB) return sortOrder === 'asc' ? -1 : 1;
+            if (nameA > nameB) return sortOrder === 'asc' ? 1 : -1;
+            return 0;
+        });
+        setData(sortedData);
+    };
+
+    const toggleSortOrder = () => {
+        setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+        sortData();
     };
 
     function handleChange(e) {
         const query = e.target.value.toLowerCase();
         setSearchQuery(query);
-
-        filterData(query, status);
     }
 
     const [isOpen, setIsOpen] = useState(false);
@@ -64,10 +96,12 @@ export default function FallenTable({ fallenData }) {
     };
 
     const applyFilter = () => {
-        filterData(searchQuery, status);
-
-        closeModal();
+        setIsOpen(false);
     };
+
+    useEffect(() => {
+        debouncedFetchData();
+    }, [searchQuery, status, currentPage]);
 
     const getStatusClass = (status) => {
         switch (status) {
@@ -87,13 +121,13 @@ export default function FallenTable({ fallenData }) {
 
     const approveFallenById = async (id) => {
         try {
-            await connectToDB();
+            // await connectToDB();
 
             const approvedFallen = await approveFallen(id);
 
             if (approvedFallen) {
                 console.log(`The profile ${approvedFallen.firstName} ${approvedFallen.lastName} has been approved.`);
-                setFilteredFallenData(prevData => prevData.map(fallen =>
+                setData(prevData => prevData.map(fallen =>
                     fallen._id === id ? approvedFallen : fallen
                 ));
                 setStatusMessage("הפרופיל אושר בהצלחה");
@@ -131,13 +165,13 @@ export default function FallenTable({ fallenData }) {
 
     const rejectFallenById = async (id) => {
         try {
-            await connectToDB(); 
+            // await connectToDB();
 
             const rejectedFallen = await rejectFallen(id, note);
 
             if (rejectedFallen) {
                 console.log(`The profile of ${rejectedFallen.firstName} ${rejectedFallen.lastName} has been rejected.`);
-                setFilteredFallenData(prevData => prevData.map(fallen =>
+                setData(prevData => prevData.map(fallen =>
                     fallen._id === id ? rejectedFallen : fallen
                 ));
                 setStatusMessage("הפרופיל נדחה בהצלחה");
@@ -176,30 +210,30 @@ export default function FallenTable({ fallenData }) {
 
     const editFallenProfile = async (formData) => {
         try {
-            await connectToDB(); 
-    
+            // await connectToDB();
+
             const jsonString = formData.get('data');
             if (!jsonString) {
                 throw new Error("Missing data payload.");
             }
-    
+
             const data = JSON.parse(jsonString);
-    
+
             const file = formData.get('image');
             if (file) {
                 const imageFormData = new FormData();
                 imageFormData.append("image", file);
-    
+
                 const imageUrl = await uploadImage(imageFormData);
-    
+
                 data.imageUrl = imageUrl;
             }
-    
+
             const updatedFallen = await updateFallenById(data);
-    
+
             if (updatedFallen) {
                 console.log("Data updated successfully:", updatedFallen);
-                setFilteredFallenData(prevData =>
+                setData(prevData =>
                     prevData.map(fallenItem =>
                         fallenItem._id === fallen._id ? updatedFallen : fallenItem
                     )
@@ -210,13 +244,10 @@ export default function FallenTable({ fallenData }) {
         } catch (error) {
             console.error("Error while updating data:", error);
         }
-    
+
         closeEditFallenModal();
     };
-    
-    useEffect(() => {
-        setFilteredFallenData(fallenData);
-    }, [fallenData]);
+
 
     return (
         <>
@@ -254,6 +285,30 @@ export default function FallenTable({ fallenData }) {
                     סינון
                 </button>
 
+                <button
+                    type="button"
+                    className={styles.filterButton}
+                    onClick={toggleSortOrder}
+                >
+
+
+                    {sortOrder === 'asc' ?
+                        <Image
+                            src="/upArrow.svg"
+                            alt="Sort Ascending"
+                            width={24}
+                            height={24}
+                        />
+                        :
+                        <Image
+                            src="/downArrow.svg"
+                            alt="Sort Descending"
+                            width={24}
+                            height={24}
+                        />
+                    }
+                </button>
+
                 <Modal
                     isOpen={isOpen}
                     onRequestClose={closeModal}
@@ -275,7 +330,7 @@ export default function FallenTable({ fallenData }) {
 
                     <label htmlFor="status">סטטוס:</label>
                     <select id="status" value={status} onChange={handleStatusChange}>
-                        <option value="">הכל</option>
+                        <option value="all">הכל</option>
                         <option value="pending">ממתין לאישור</option>
                         <option value="approved">מאושר</option>
                         <option value="rejected">נדחה</option>
@@ -295,59 +350,74 @@ export default function FallenTable({ fallenData }) {
                     </tr>
                 </thead>
                 <tbody>
-                    {filteredFallenData.map((item, index) => (
-                        <tr key={item._id}>
-                            <td className={styles.date}>{item.createdAt ? item.createdAt.slice(0, 10) : 'תאריך לא זמין'}</td>
 
-                            <td>{item.firstName} {item.lastName}</td>
+                    {data.length > 0 ?
+                        data.map((item, index) => (
+                            <tr key={item._id}>
+                                <td className={styles.date}>{item.createdAt ? item.createdAt.slice(0, 10) : 'תאריך לא זמין'}</td>
 
-                            <td>
-                                <span className={`${styles.status} ${getStatusClass(item.status)}`}>
-                                    {item.status === "pending" ? "ממתין לאישור" : item.status === "approved" ? "מאושר" : "נדחה"}
-                                </span>
-                            </td>
+                                <td>{item.firstName} {item.lastName}</td>
 
-                            <td className={styles.actions}>
-                                <button
-                                    type="button"
-                                    onClick={() => approveFallenById(item._id)}
-                                >
-                                    <Image
-                                        src="/approveIcon.svg"
-                                        alt="Approve icon"
-                                        width={20}
-                                        height={20}
-                                    />
-                                </button>
+                                <td>
+                                    <span className={`${styles.status} ${getStatusClass(item.status)}`}>
+                                        {item.status === "pending" ? "ממתין לאישור" : item.status === "approved" ? "מאושר" : "נדחה"}
+                                    </span>
+                                </td>
 
-                                <button
-                                    type="button"
-                                    onClick={() => openEditFallenModal(item)}
-                                >
-                                    <Image
-                                        src="/editIcon.svg"
-                                        alt="Edit icon"
-                                        width={20}
-                                        height={20}
-                                    />
-                                </button>
+                                <td className={styles.actions}>
+                                    <button
+                                        type="button"
+                                        onClick={() => approveFallenById(item._id)}
+                                    >
+                                        <Image
+                                            src="/approveIcon.svg"
+                                            alt="Approve icon"
+                                            width={20}
+                                            height={20}
+                                        />
+                                    </button>
 
-                                <button
-                                    type="button"
-                                    onClick={() => openRejectFallenModal(item._id)}
-                                >
-                                    <Image
-                                        src="/rejectIcon.svg"
-                                        alt="Reject icon"
-                                        width={20}
-                                        height={20}
-                                    />
-                                </button>
+                                    <button
+                                        type="button"
+                                        onClick={() => openEditFallenModal(item)}
+                                    >
+                                        <Image
+                                            src="/editIcon.svg"
+                                            alt="Edit icon"
+                                            width={20}
+                                            height={20}
+                                        />
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        onClick={() => openRejectFallenModal(item._id)}
+                                    >
+                                        <Image
+                                            src="/rejectIcon.svg"
+                                            alt="Reject icon"
+                                            width={20}
+                                            height={20}
+                                        />
+                                    </button>
+                                </td>
+                            </tr>
+                        ))
+                        :
+                        <tr>
+                            <td colSpan="4" >
+                                <StatusMessage
+                                    message="לא נמצאו נופלים התואמים את החיפוש"
+                                    type="error"
+                                />
                             </td>
                         </tr>
-                    ))}
+
+                    }
                 </tbody>
             </table>
+
+            <Pagination currentPage={currentPage} totalPages={totalPages} />
 
             {statusMessage && (
                 <div className={styles.statusMessage}>
