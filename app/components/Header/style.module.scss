@@ -146,13 +146,11 @@
     display: flex;
     flex-direction: column;
 
-    // תנאי למשתמש רגיל
     &.normalUser {
         background-color: transparent;
         box-shadow: none;
     }
 
-    // תנאי לאדמין
     &.adminUser {
         background-color: white;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
