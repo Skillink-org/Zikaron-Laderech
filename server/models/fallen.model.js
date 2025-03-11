@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 
 const fallenSchema = new mongoose.Schema({
+    createdAt: { type: Date, default: Date.now },
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
     birthDate: { type: Date, required: true },
