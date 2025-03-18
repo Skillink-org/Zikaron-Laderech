@@ -1,13 +1,15 @@
 'use client'
 import { useState } from 'react';
-import StatusMessage from '@/app/components/StatusMessage';
-import styles from './page.module.scss';
-import HobbyBubble from '@/app/components/HobbyBubble';
 import { useSession } from 'next-auth/react';
+import { useFallen } from '@/app/contexts/FallenContext';
 import { joinHobby } from '@/server/actions/fallen.action';
 import AuthPopup from '@/app/components/AuthPopup';
+import HobbyBubble from '@/app/components/HobbyBubble';
+import StatusMessage from '@/app/components/StatusMessage';
+import styles from './style.module.scss';
 
-export default function HobbiesList({ hobbies, fallenName, fallenId }) {
+export default function HobbyList({ fallenName, fallenId}) {
+    const { hobbies, updateHobby } = useFallen();
     const { data: session } = useSession();
     const [statusMessage, setStatusMessage] = useState('');
     const [statusType, setStatusType] = useState('');
@@ -34,6 +36,7 @@ export default function HobbiesList({ hobbies, fallenName, fallenId }) {
         const response = await joinHobby(fallenId, hobby, userId);
 
         if (response.ok) {
+            updateHobby(hobby);
             updateStatus("הצטרפת בהצלחה לתחביב!", "success");
         }
         else if (response.status === 404) {
@@ -46,19 +49,21 @@ export default function HobbiesList({ hobbies, fallenName, fallenId }) {
     }
 
     return (
-        <div className={styles.hobbies}>
+        <>
             {showAuthPopup && <AuthPopup onClose={() => setShowAuthPopup(false)} />}
-            {hobbies.map((hobby, index) => (
-                <HobbyBubble
-                    children={hobby}
-                    plusMode={true}
-                    key={index}
-                    dynamicBackgroundClassName={styles.hobby}
-                    className={`${styles.hobbyBubble}`}
-                    onClick={() => handleClick(fallenId, hobby)}
-                />
-            ))}
-            {showStatus && <StatusMessage message={statusMessage} type={statusType} />}
-        </div>
+            <div className={styles.hobbies}>
+                {showStatus && <StatusMessage message={statusMessage} type={statusType} />}
+                {hobbies.map((hobby, index) => (
+                    <HobbyBubble
+                        children={hobby.name}
+                        plusMode={true}
+                        key={index}
+                        dynamicBackgroundClassName={styles.hobby}
+                        className={`${styles.hobbyBubble}`}
+                        onClick={() => handleClick(fallenId, hobby.name)}
+                    />
+                ))}
+            </div>
+        </>
     );
 }

@@ -1,4 +1,5 @@
 @use '@/styles/_vars.scss' as *;
+// TODO - watch the error in the terminal - about @import
 @import '../../styles/mixins';
 
 
@@ -56,7 +57,7 @@
   width: 100%;
   height: 40px;
   border: 1px solid $lightblueBorder;
-  border-radius: 15px;
+  border-radius: $border-radius;
   resize: none;
   font-style: normal;
   font-weight: 400;

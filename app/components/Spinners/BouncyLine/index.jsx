@@ -1,6 +1,6 @@
 import styles from "./style.module.scss";
 
-const Spinner = () => {
+const BouncyLine = () => {
   return (
     <div className={styles.spinnerContainer}>
       <div className={styles.spinnerBackground}>
@@ -10,4 +10,4 @@ const Spinner = () => {
   );
 };
 
-export default Spinner;
+export default BouncyLine;

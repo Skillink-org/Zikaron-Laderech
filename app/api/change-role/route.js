@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { approveFallen } from '@/server/actions/fallen.action';
+import { changRole } from '@/server/actions/user.action';
 import { connectToDB } from '@/server/connect';
 
 export async function POST(request) {
@@ -7,11 +7,11 @@ export async function POST(request) {
         await connectToDB();
 
         const { id } = await request.json();
-        const fallen = await approveFallen(id);
+        const user = await changRole(id);
 
         return NextResponse.json({
             success: true,
-            data: fallen
+            data: user
         });
 
     } catch (error) {
@@ -19,7 +19,7 @@ export async function POST(request) {
         return NextResponse.json(
             {
                 success: false,
-                error: error.message || 'Error approving fallen'
+                error: error.message || 'Error updating user role'
             },
             { status: 500 }
         );

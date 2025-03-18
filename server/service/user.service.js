@@ -2,8 +2,13 @@
 import User from '@/server/models/user.model';
 import PasswordReset from '@/server/models/passwordReset.model';
 import { connectToDB } from '../connect';
+import { serializer } from "@/lib/serializer";
 import crypto from "crypto";
-import { transporter } from '@/lib/email'
+import { transporter } from '@/lib/email';
+
+export async function getAllUsers() {
+    return serializer(await User.find({}, { password: 0 }));
+}
 
 export async function getUserByEmail(email) {
     await connectToDB();
@@ -16,6 +21,27 @@ export async function createUser(user) {
     const newUser = new User(user);
     await newUser.save();
     return newUser;
+}
+
+export async function changRole(id) {
+    try {
+        await connectToDB();
+        const user = await User.findById(id);
+        if (!user) throw new Error("User not found");
+
+        const newRole = user.role === "admin" ? "user" : "admin";
+
+        const updatedUser = await User.findByIdAndUpdate(
+            id,
+            { role: newRole },
+            { new: true }
+        );
+
+        return updatedUser;
+    } catch (error) {
+        console.error("Error in changeRole:", error);
+        throw error;
+    }
 }
 
 export async function sendWelcomeEmail(email, name, link) {
@@ -86,7 +112,6 @@ export async function isTokenValid(token) {
     }
 }
 
-
 export async function updateUserPassword(userId, newPassword) {
     await connectToDB();
     const updatedUser = await User.findByIdAndUpdate(
@@ -99,5 +124,3 @@ export async function updateUserPassword(userId, newPassword) {
     }
     return updatedUser;
 }
-
-

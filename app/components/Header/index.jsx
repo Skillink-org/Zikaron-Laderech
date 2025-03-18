@@ -21,7 +21,8 @@ export default function Header() {
             {isLoggedIn ? <UserProfile
                 firstName={session?.user?.firstName}
                 lastName={session?.user?.lastName}
-                imageSrc={session?.user?.image} />
+                imageSrc={session?.user?.image}
+                role={session?.user?.role} />
                 : <AuthButton />}
         </header>
     )

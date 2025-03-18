@@ -8,21 +8,25 @@ import Image from "next/image"
 
 import StatusMessage from "../StatusMessage";
 
-export default function FallenForm
-    ({ isOpen, contentLabel, profile = {}, onSave, onCancel }) {
+import { z } from "zod";
+import { fallenSchema } from "@/lib/fallenSchema";
 
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [birthDate, setBirthDate] = useState("");
-    const [deathDate, setDeathDate] = useState("");
-    const [hobbies, setHobbies] = useState([]);
-    const [about, setAbout] = useState("");
-    const [familyWords, setFamilyWords] = useState("");
-    const [quote, setQuote] = useState("");
+export default function FallenForm ({ isOpen, contentLabel, profile = {}, onSave, onCancel }) {
+    const [fallenData, setFallenData] = useState({
+        firstName: "",
+        lastName: "",
+        birthDate: "",
+        deathDate: "",
+        hobbies: "",
+        about: "",
+        familyWords: "",
+        quote: "",
+        imageUrl: "",
+        email: "",
+        phone: "",
+    });
+
     const [image, setImage] = useState(null);
-    const [imageUrl, setImageUrl] = useState("");
-    const [email, setEmail] = useState("");
-    const [phone, setPhone] = useState("");
 
     const formatDate = (dateString) => {
         if (!dateString) return "";
@@ -31,20 +35,19 @@ export default function FallenForm
 
     useEffect(() => {
         if (profile) {
-            setFirstName(profile.firstName || "");
-            setLastName(profile.lastName || "");
-            setBirthDate(formatDate(profile.birthDate));
-            setDeathDate(formatDate(profile.deathDate));
-            setAbout(profile.about || "");
-            setFamilyWords(profile.familyWords || "");
-            setQuote(profile.quote || "");
-            setImageUrl(profile.imageUrl || "");
-            setEmail(profile.email || "");
-            setPhone(profile.phone || "");
-
-            if (Array.isArray(profile.hobbies)) {
-                setHobbies(profile.hobbies.map(hobby => hobby.name).join(", "));
-            }
+            setFallenData({
+                firstName: profile.firstName || "",
+                lastName: profile.lastName || "",
+                birthDate: formatDate(profile.birthDate),
+                deathDate: formatDate(profile.deathDate),
+                hobbies: Array.isArray(profile.hobbies) ? profile.hobbies.map(hobby => hobby.name).join(", ") : "",
+                about: profile.about || "",
+                familyWords: profile.familyWords || "",
+                quote: profile.quote || "",
+                imageUrl: profile.imageUrl || "",
+                email: profile.email || "",
+                phone: profile.phone || "",
+            });
         }
     }, [profile]);
 
@@ -53,101 +56,23 @@ export default function FallenForm
     const [statusType, setStatusType] = useState("");
 
     const validateForm = () => {
-        if (!firstName) {
-            setStatusMessage("נא להזין שם פרטי");
-            setStatusType("error");
+        try {
+            fallenSchema.parse(fallenData);
+
+            setStatusMessage("");
+            setStatusType("success");
+
+            return true;
+        } catch (error) {
+            console.error("ZodError:", error);
+
+            if (error instanceof z.ZodError) {
+                const firstErrorMessage = error.errors[0].message;
+                setStatusMessage(firstErrorMessage);
+                setStatusType("error");
+            }
             return false;
         }
-
-        if (!lastName) {
-            setStatusMessage("נא להזין שם משפחה");
-            setStatusType("error");
-            return false;
-        }
-
-        if (!birthDate) {
-            setStatusMessage("נא להזין תאריך לידה");
-            setStatusType("error");
-            return false;
-        }
-
-        if (!deathDate) {
-            setStatusMessage("נא להזין תאריך פטירה");
-            setStatusType("error");
-            return false;
-        }
-
-        if (!hobbies.trim()) {
-            setStatusMessage("נא להזין לפחות תחביב אחד");
-            setStatusType("error");
-            return false;
-        }
-
-        if (!quote.trim()) {
-            setStatusMessage("נא להזין ציטוט של הנופל");
-            setStatusType("error");
-            return false;
-        }
-
-        if (!about.trim()) {
-            setStatusMessage("נא להזין מידע אודות הנופל");
-            setStatusType("error");
-            return false;
-        }
-
-        if (!familyWords.trim()) {
-            setStatusMessage("נא להזין מסר מהמשפחה");
-            setStatusType("error");
-            return false;
-        }
-
-        if (!image && !imageUrl) {
-            setStatusMessage("נא להעלות תמונה");
-            setStatusType("error");
-            return false;
-        }
-
-        if (!familyWords.trim()) {
-            setStatusMessage("נא להזין כתובת דוא''ל ליצירת קשר");
-            setStatusType("error");
-            return false;
-        }
-
-        if (!/^[a-zA-Zא-ת\s]*$/.test(firstName)) {
-            setStatusMessage('נא להזין שם פרטי תקני');
-            setStatusType('error');
-            return false;
-        };
-
-        if (!/^[a-zA-Zא-ת\s]*$/.test(lastName)) {
-            setStatusMessage('נא להזין שם משפחה תקני');
-            setStatusType('error');
-            return false;
-        };
-
-        const birth = new Date(birthDate);
-        const death = new Date(deathDate);
-        const today = new Date();
-
-        if (birth >= today || death <= birth) {
-            setStatusMessage("נא להזין תאריך לידה תקין");
-            setStatusType("error");
-            return false;
-        }
-
-        if (death > today) {
-            setStatusMessage("נא להזין תאריך פטירה תקין");
-            setStatusType("error");
-            return false;
-        }
-
-        if (!/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(email)) {
-            setStatusMessage('נא להזין כתובת דוא"ל תקנית');
-            setStatusType('error');
-            return false;
-        };
-
-        return true;
     };
 
     const handleImageUpload = (e) => {
@@ -171,7 +96,7 @@ export default function FallenForm
 
     const handleSubmit = async () => {
 
-        const hobbiesArray = hobbies.split(",").map(hobbyName => {
+        const hobbiesArray = fallenData.hobbies.split(",").map(hobbyName => {
             hobbyName = hobbyName.trim();
 
             const existingHobby = (Array.isArray(profile.hobbies) ? profile.hobbies : []).find(h => h.name === hobbyName);
@@ -184,17 +109,17 @@ export default function FallenForm
 
         const profileData = {
             _id: profile._id,
-            firstName,
-            lastName,
-            birthDate,
-            deathDate,
+            firstName: fallenData.firstName,
+            lastName: fallenData.lastName,
+            birthDate: fallenData.birthDate,
+            deathDate: fallenData.deathDate,
             hobbies: hobbiesArray,
-            about,
-            familyWords,
-            quote,
-            imageUrl,
-            email,
-            phone
+            about: fallenData.about,
+            familyWords: fallenData.familyWords,
+            quote: fallenData.quote,
+            imageUrl: fallenData.imageUrl,
+            email: fallenData.email,
+            phone: fallenData.phone
         };
 
         if (!validateForm()) return;
@@ -239,11 +164,11 @@ export default function FallenForm
 
                 <div className={styles.topSection}>
                     <div className={styles.imageContainer}>
-                        {profile.imageUrl ? (
+                        {fallenData.imageUrl ? (
                             <Image
                                 className={styles.imagePreview}
-                                src={profile.imageUrl}
-                                alt={`${firstName} ${lastName} image`}
+                                src={fallenData.imageUrl}
+                                alt={`${fallenData.firstName} ${fallenData.lastName} image`}
                                 width={200}
                                 height={200}
                             />
@@ -267,8 +192,8 @@ export default function FallenForm
                             שם פרטי:
                             <input
                                 type="text"
-                                value={firstName}
-                                onChange={(e) => setFirstName(e.target.value)}
+                                value={fallenData.firstName}
+                                onChange={(e) => setFallenData((prev) => ({ ...prev, firstName: e.target.value }))}
                                 required />
                         </label>
 
@@ -276,8 +201,8 @@ export default function FallenForm
                             שם משפחה:
                             <input
                                 type="text"
-                                value={lastName}
-                                onChange={(e) => setLastName(e.target.value)}
+                                value={fallenData.lastName}
+                                onChange={(e) => setFallenData((prev) => ({ ...prev, lastName: e.target.value }))}
                                 required />
                         </label>
                     </div>
@@ -287,8 +212,8 @@ export default function FallenForm
                             תאריך לידה:
                             <input
                                 type="date"
-                                value={birthDate}
-                                onChange={(e) => setBirthDate(e.target.value)}
+                                value={fallenData.birthDate}
+                                onChange={(e) => setFallenData((prev) => ({ ...prev, birthDate: e.target.value }))}
                                 required />
                         </label>
 
@@ -296,8 +221,8 @@ export default function FallenForm
                             תאריך פטירה:
                             <input
                                 type="date"
-                                value={deathDate}
-                                onChange={(e) => setDeathDate(e.target.value)}
+                                value={fallenData.deathDate}
+                                onChange={(e) => setFallenData((prev) => ({ ...prev, deathDate: e.target.value }))}
                                 required />
                         </label>
                     </div>
@@ -308,8 +233,8 @@ export default function FallenForm
                 <label className={styles.fullWidthLabel}>
                     תחביבים: (מופרדים באמצעות פסיק)
                     <textarea
-                        value={hobbies}
-                        onChange={(e) => setHobbies(e.target.value)}
+                        value={fallenData.hobbies}
+                        onChange={(e) => setFallenData((prev) => ({ ...prev, hobbies: e.target.value }))}
                         required />
                 </label>
 
@@ -317,24 +242,24 @@ export default function FallenForm
                     ציטוט:
                     <input
                         type="text"
-                        value={quote}
-                        onChange={(e) => setQuote(e.target.value)}
+                        value={fallenData.quote}
+                        onChange={(e) => setFallenData((prev) => ({ ...prev, quote: e.target.value }))}
                         required />
                 </label>
 
                 <label className={styles.fullWidthLabel}>
                     אודות:
                     <textarea
-                        value={about}
-                        onChange={(e) => setAbout(e.target.value)}
+                        value={fallenData.about}
+                        onChange={(e) => setFallenData((prev) => ({ ...prev, about: e.target.value }))}
                         required />
                 </label>
 
                 <label className={styles.fullWidthLabel}>
                     דבר המשפחה:
                     <textarea
-                        value={familyWords}
-                        onChange={(e) => setFamilyWords(e.target.value)}
+                        value={fallenData.familyWords}
+                        onChange={(e) => setFallenData((prev) => ({ ...prev, familyWords: e.target.value }))}
                         required />
                 </label>
 
@@ -347,16 +272,16 @@ export default function FallenForm
                             כתובת דוא"ל:
                             <input
                                 type="email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
+                                value={fallenData.email}
+                                onChange={(e) => setFallenData((prev) => ({ ...prev, email: e.target.value }))}
                                 required />
                         </label>
                         <label>
                             פלאפון:
                             <input
                                 type="number"
-                                value={phone}
-                                onChange={(e) => setPhone(e.target.value)}
+                                value={fallenData.phone}
+                                onChange={(e) => setFallenData((prev) => ({ ...prev, phone: e.target.value }))}
                             />
                         </label>
                     </div>

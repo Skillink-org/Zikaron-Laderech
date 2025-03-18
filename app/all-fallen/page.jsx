@@ -1,16 +1,11 @@
 import { Suspense } from "react";
 import styles from "./page.module.scss";
-import HobbyTag from "../components/HobbyTag";
-import { connectToDB } from "@/server/connect";
 import FallenList from "../components/FallenList";
-import CustomBubble from "../components/CustomBubble";
+import SearchForm from "../components/SearchForm";
 import TitleDivider from "../components/TitleDivider";
 import { metadata as layoutMetadata } from "../layout";
-import SearchForm from "../components/SearchForm/SearchForm";
-import {
-  getAllFallen,
-  getFilteredFallen,
-} from "@/server/service/fallen.service";
+import PopularHobbies from "../components/PopularHobbies";
+import FallenListSkeleton from "../components/Skeletons/FallenListSkeleton";
 
 export const metadata = {
   title: "כל הנופלים",
@@ -27,34 +22,28 @@ export const metadata = {
 };
 
 export default async function AllFallenPage({ searchParams }) {
-  await connectToDB();
+  // Get params
+  const params = await searchParams;
+  const query = params.q || "";
+  const currentPage = Number(params.page) || 1;
 
-  const q = (await searchParams).q || "";
-  const fallen = q ? await getFilteredFallen(q) : await getAllFallen();
-
-  // TODO: Replace dummy data in real popular hobbies from API
-  const hobbies = ["טניס", "שירה", "ריצה", "אפיה", "סריגה", "שחיה"];
+  // Configure pagination's limit
+  const limit = 10;
 
   return (
     <>
       {/* Search section */}
-      <CustomBubble className={styles.hero}>
-        <p className={styles.title}>מצאו נופל לפי שם או תחביב</p>
-        <SearchForm className={styles.searchFormContainer} query={q} />
-      </CustomBubble>
+      <SearchForm query={query} searchTrigger="change" />
+
       <TitleDivider title={"סינון לפי תחביבים נפוצים"} />
 
       {/* Hobbies filter section */}
-      <div className={styles.itemsContainer}>
-        {hobbies.map((hobby, index) => (
-          <HobbyTag hobby={hobby} key={index} />
-        ))}
-      </div>
+      <PopularHobbies containerType="tag" />
 
-      {/* Fallen list section */}
+      {/* Fallen list and pagination section */}
       <div className={styles.itemsContainer}>
-        <Suspense fallback={<p>טוען...</p>}>
-          <FallenList fallen={fallen} />
+        <Suspense fallback={<FallenListSkeleton limit={limit} />}>
+          <FallenList query={query} currentPage={currentPage} limit={limit} />
         </Suspense>
       </div>
     </>

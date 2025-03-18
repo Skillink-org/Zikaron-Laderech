@@ -1,11 +1,11 @@
 "use client";
-import { useState } from "react";
-import styles from "./page.module.scss";
-import ImageWithTitle from "../components/ImageWithTitle/index";
-import Button from "../components/Button";
-import StatusMessage from "../components/StatusMessage";
-import CustomBubble from "../components/CustomBubble";
 import { uploadImage } from "@/server/actions/uploadImage.action";
+import { useState } from "react";
+import Button from "../components/Button";
+import CustomBubble from "../components/CustomBubble";
+import ImageWithTitle from "../components/ImageWithTitle/index";
+import StatusMessage from "../components/StatusMessage";
+import styles from "./page.module.scss";
 
 
 // TODO-YOSEF: replace fetch with action
@@ -109,6 +109,12 @@ export default function AddFallenPage() {
         }));
 
       //send the form data to the server
+      // TODO -  use Action
+      // TODO - watch the error - if you want to limit the image size you have to add a warning message to the client: 
+      //       ⨯ uncaughtException:  [Error: Body exceeded 1 MB limit.
+      //         To configure the body size limit for Server Actions, see: https://nextjs.org/docs/app/api-reference/next-config-js/serverActions#bodysizelimit] {
+      // statusCode: 413
+      // }
       const response = await fetch('/api/add-fallen', {
         method: 'POST',
         headers: {
@@ -341,21 +347,21 @@ export default function AddFallenPage() {
                 className={styles.hiddenInput}
               />
               {formData.image && (
-  <div className={styles.imageContainer}>
-    <img
-      src={formData.image}
-      alt="תצוגה מקדימה"
-      className={styles.imagePreview}
-    />
-    <button 
-      type="button"
-      onClick={handleRemoveImage}
-      className={styles.removeImage}
-    >
-      ✕
-    </button>
-  </div>
-)}
+                <div className={styles.imageContainer}>
+                  <img
+                    src={formData.image}
+                    alt="תצוגה מקדימה"
+                    className={styles.imagePreview}
+                  />
+                  <button
+                    type="button"
+                    onClick={handleRemoveImage}
+                    className={styles.removeImage}
+                  >
+                    ✕
+                  </button>
+                </div>
+              )}
             </label>
 
             <div className={styles.line1}>

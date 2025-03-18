@@ -4,6 +4,7 @@ import Image from "next/image";
 import useRand from "@/hooks/useRand";
 import styles from "./style.module.scss";
 import DynamicBackground from "../DynamicBackground";
+import HobbyBubbleSkeleton from "../Skeletons/HobbyBubbleSkeleton";
 
 export default function HobbyBubble({
   dynamicBackgroundClassName = "",
@@ -11,6 +12,7 @@ export default function HobbyBubble({
   children = "טניס",
   plusMode = true,
   onClick,
+  ...props
 }) {
   const rand = useRand();
 
@@ -21,24 +23,24 @@ export default function HobbyBubble({
           <div
             className={`${styles.hobbyBubble} ${className}`}
             onClick={onClick}
+            {...props}
           >
-            <span className={styles.title}>{children}</span>
-            {plusMode ? (
-              <Image
-                src="/plusIcon.svg"
-                alt="Plus icon"
-                className={styles.Image}
-                width={20}
-                height={20}
-              />
-            ) : (
-              ""
-            )}
+            <div className={styles.title}>{children}</div>
+            {plusMode && (
+                <div className={styles.plusWrapper}>
+                  <Image
+                    src="/plusIcon.svg"
+                    alt="Plus icon"
+                    className={styles.Image}
+                    width={20}
+                    height={20}
+                  />
+                </div>
+              )}
           </div>
         </DynamicBackground>
       ) : (
-        // TODO: Add a loading indicator here
-        <></>
+        <HobbyBubbleSkeleton />
       )}
     </>
   );

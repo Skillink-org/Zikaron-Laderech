@@ -1,41 +1,44 @@
-import styles from './style.module.scss'
-import Image from 'next/image';
+import styles from "./style.module.scss";
 import ContactForm from '@/app/components/ContactForm';
 import Link from "next/link";
-
+import ImageWithTitle from '../components/ImageWithTitle';
+import CustomBubble from '../components/CustomBubble';
 
 const ContactPage = () => {
   return (
-    <div className={styles["contact-container"]}>
-      <div className={styles["header-image"]}>
-        <Image
-          src="/contact.png"
-          alt="יצירת קשר"
-          width={1400}
-          height={300}
-          className={styles["contact-image"]}
-        />
-      </div>
-      
+    <>
+      {/* Header image section */}
+      <ImageWithTitle
+        imageUrl={"/profileImage.webp"}
+        title="יצירת קשר"
+        subtitle="יחד נוכל להמשיך את המסע של יקירינו ולהפוך את זכרם לפיסה חיה ומתמשכת"
+      />
+
+      {/* Contact form section */}
       <ContactForm />
 
-      <div className={styles["social-buttons"]}>
-        <Link href="https://twitter.com" target="_blank" className={styles["social-button"]}>
-          <span className={styles["social-title"]}>X</span>
-          <span className={styles["social-text"]}>אנחנו גם ב-X (טוויטר לשעבר)</span>
+      {/* Social media section */}
+      <div className={styles.socialButtons}>
+        <Link href="https://facebook.com" target="_blank">
+          <CustomBubble className={styles.socialButton}>
+            <p className={styles.socialTitle}>Facebook</p>
+            <p className={styles.socialText}>אנחנו גם בפייסבוק</p>
+          </CustomBubble>
         </Link>
-
-        <Link href="https://instagram.com" target="_blank" className={styles["social-button"]}>
-          <span className={styles["social-title"]}>Instagram</span>
-          <span className={styles["social-text"]}>אנחנו גם באינסטגרם</span>
+        <Link href="https://instagram.com" target="_blank">
+          <CustomBubble className={styles.socialButton}>
+            <p className={styles.socialTitle}>Instagram</p>
+            <p className={styles.socialText}>אנחנו גם באינסטגרם</p>
+          </CustomBubble>
         </Link>
-
-        <Link href="https://facebook.com" target="_blank" className={styles["social-button"]}>
-          <span className={styles["social-title"]}>Facebook</span>
-          <span className={styles["social-text"]}>אנחנו גם בפייסבוק</span>
+        <Link href="https://twitter.com" target="_blank">
+          <CustomBubble className={styles.socialButton}>
+            <p className={styles.socialTitle}>X</p>
+            <p className={styles.socialText}>אנחנו גם ב-X (לשעבר טוויטר)</p>
+          </CustomBubble>
         </Link>
       </div>
-    </div>
+    </>
   );
 };
 
