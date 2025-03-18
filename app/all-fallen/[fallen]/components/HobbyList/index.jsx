@@ -1,15 +1,13 @@
 'use client'
 import { useState } from 'react';
 import { useSession } from 'next-auth/react';
-import { useFallen } from '@/app/contexts/FallenContext';
 import { joinHobby } from '@/server/actions/fallen.action';
 import AuthPopup from '@/app/components/AuthPopup';
 import HobbyBubble from '@/app/components/HobbyBubble';
 import StatusMessage from '@/app/components/StatusMessage';
 import styles from './style.module.scss';
 
-export default function HobbyList({ fallenName, fallenId}) {
-    const { hobbies, updateHobby } = useFallen();
+export default function HobbyList({ fallenName, fallenId, hobbies, updateHobby}) {
     const { data: session } = useSession();
     const [statusMessage, setStatusMessage] = useState('');
     const [statusType, setStatusType] = useState('');

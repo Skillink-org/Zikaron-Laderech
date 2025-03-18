@@ -1,11 +1,9 @@
 'use client';
-import { useFallen } from '@/app/contexts/FallenContext';
 import HobbyDataBubble from "@/app/components/HobbyDataBubble";
 import TitleDivider from "@/app/components/TitleDivider";
 import styles from './style.module.scss'
 
-export default function HobbyDataList({ fallenName }) {
-  const { hobbies, totalContinuers } = useFallen();
+export default function HobbyDataList({ fallenName, hobbies, totalContinuers }) {
   const continuedHobbies = hobbies.filter(hobby => hobby.continueCount > 0);
 
   return (
