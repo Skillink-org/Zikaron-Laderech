@@ -12,12 +12,12 @@
 .dataBubbles {
     display: flex;
     justify-content: space-between;
-    gap: $spacing-md;
+    gap: $spacing-lg;
 
     .dataBubble {
         display: flex;
         align-items: start;
-        padding: 0px 10px 0px 0px;
+        padding: $spacing-md;
         flex: 1;
 
         .dataNumber {

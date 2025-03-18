@@ -1,16 +1,15 @@
 @use '@/styles/_vars.scss' as *;
-
+@use "@/styles/_mixins.scss" as *;
 
 .header {
+    @include header-layout;
     height: $headerHeight;
-    display: grid;
-    grid-template-rows: 1fr;
-    grid-template-columns: auto 1fr auto;
+    display: flex;
     align-items: center;
-    justify-items: center;
-    padding-inline: 20px;
     font-family: $font-family;
-
+    justify-content: space-between;
+    border-bottom: 1px solid $lightblueBorder;
+    border-radius: $border-radius;
     &:has(.mobileNav.open) {
         margin-right: 26px;
     }
@@ -20,40 +19,35 @@
     display: none;
     align-items: center;
     cursor: pointer;
-
-    input {
-        // display: none;
-    }
-
-    .searchIcon {
-        display: none;
-    }
 }
 
 .auth {
     display: flex;
     align-items: center;
     justify-content: center;
-    justify-self: start;
 }
 
+.authButton {
+    background-color: white !important;
+    border: 1px solid $lightblueBorder !important;
+    color: $textColor !important;
+    font-size: $text-md !important;
+}
 
 .userProfile {
-    position: relative;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
-    font-family: $font-family;
     gap: 5px;
     cursor: pointer;
+    position: relative;
 
     .profilePicture {
         border-radius: 50%;
         object-fit: cover;
-    }
 
-    .profilePicture:hover {
-        box-shadow: 0 0 10px rgba(33, 33, 33, 0.6);
+        &:hover {
+            box-shadow: 0 0 10px rgba(33, 33, 33, 0.6);
+        }
     }
 
     .initials {
@@ -67,10 +61,10 @@
         font-weight: 600;
         font-size: $text-md;
         color: white;
-    }
 
-    .initials:hover {
-        box-shadow: 0 0 10px rgba(33, 33, 33, 0.6);
+        &:hover {
+            box-shadow: 0 0 10px rgba(33, 33, 33, 0.6);
+        }
     }
 
     .profileContainer {
@@ -84,11 +78,9 @@
     top: calc(100% + 2px);
     left: 50%;
     transform: translateX(-50%);
-    justify-content: center;
 
     button {
         padding: 10px;
-        width: 100px !important;
         background-color: $textColor;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
     }
@@ -99,11 +91,11 @@
 }
 
 .logo {
-    text-align: center;
     font-weight: 700;
-    font-size: 35px;
-    padding-bottom: 5px;
+    font-size: clamp(28px, 4vw, 35px);
     color: $primary;
+    white-space: nowrap;
+    flex-shrink: 0;
 
     span {
         color: $textColor;
@@ -112,22 +104,18 @@
 
 .nav {
     display: none;
-    flex-direction: row;
     align-items: center;
-    justify-content: center;
 
     a {
-        font-size: 18px;
+        font-size: $text-md;
     }
 }
 
 .mobileNav {
     display: flex;
     align-items: center;
-    justify-content: center;
 
     .navIcon {
-        position: static;
         cursor: pointer;
         z-index: 999;
     }
@@ -143,13 +131,11 @@
         }
     }
 
-    &.closed {
-        .nav {
-            transform: translateX(100%);
-        }
+    &.closed .nav {
+        transform: translateX(100%);
     }
 
-    & .nav {
+    .nav {
         position: fixed;
         z-index: 998;
         height: 100vh;
@@ -161,29 +147,26 @@
         align-items: center;
         justify-content: center;
         gap: 20px;
-
         background-color: $grayBackground;
         color: $textColor;
         border-left: 1px solid $lightblueBorder;
-        transition: all 0.2s ease-in-out;
+        transition: transform 0.2s ease-in-out;
 
         a {
             padding-block: 30px;
         }
-
     }
 }
 
 @media (min-width: 1100px) {
-
     .header {
         display: flex;
-        justify-content: center;
+        justify-content: space-between;
+        
     }
 
     .search {
         display: flex;
-        padding-inline: 20px;
     }
 
     .mobileNav {
@@ -193,14 +176,4 @@
     .nav {
         display: flex;
     }
-}
-
-
-@media (min-width: 1440px) {
-    .header {
-        max-width: 1400px;
-        margin-inline: auto;
-        padding-inline: 0px;
-    }
-
 }

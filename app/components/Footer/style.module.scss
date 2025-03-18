@@ -1,7 +1,8 @@
 @use '@/styles/_vars.scss' as *;
 
 .footer {
-    height: $headerHeight;
+    height: $footerHeight;
+    padding: $spacing-lg;
     display: flex;
     gap: 20px;
     flex-direction: column;
@@ -14,7 +15,6 @@
 .nav {
     display: none;
     flex-direction: row;
-
     color: $textColor;
     font-size: $text-md;
     text-align: center;
@@ -29,7 +29,7 @@
 }
 
 .copyright {
-    font-size: 16px;
+    font-size: $text-sm;
 }
 
 @media (min-width: $breakpoint-md) {
