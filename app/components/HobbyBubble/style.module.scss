@@ -14,11 +14,17 @@
   color: $bubbleTextColor;
   width: 100%;
   min-width: 100px;
-
+  // height: 80px;
   .title {
     font-size: $text-base;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    // white-space: nowrap;
+    // overflow: hidden;
+    // text-overflow: ellipsis;
+    // height: 100%;
+    width: 50%;
+  }
+
+  .plusWrapper{
+    height: 100%;
   }
 }

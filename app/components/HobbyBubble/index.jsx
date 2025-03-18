@@ -25,18 +25,18 @@ export default function HobbyBubble({
             onClick={onClick}
             {...props}
           >
-            <span className={styles.title}>{children}</span>
-            {plusMode ? (
-              <Image
-                src="/plusIcon.svg"
-                alt="Plus icon"
-                className={styles.Image}
-                width={20}
-                height={20}
-              />
-            ) : (
-              ""
-            )}
+            <div className={styles.title}>{children}</div>
+            {plusMode && (
+                <div className={styles.plusWrapper}>
+                  <Image
+                    src="/plusIcon.svg"
+                    alt="Plus icon"
+                    className={styles.Image}
+                    width={20}
+                    height={20}
+                  />
+                </div>
+              )}
           </div>
         </DynamicBackground>
       ) : (
