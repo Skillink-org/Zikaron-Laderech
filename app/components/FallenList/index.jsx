@@ -11,13 +11,13 @@ import {
 
 async function FallenList({ query, currentPage, limit }) {
   await connectToDB();
-  
+
   const skip = (currentPage - 1) * limit;
-  
+
   // Fetch fallen data based on query and pagination settings
   const { data, total } = query
-  ? await getFilteredFallen(query, limit, skip)
-  : await getAllFallen(limit, skip);
+    ? await getFilteredFallen(query, limit, skip)
+    : await getAllFallen(limit, skip);
 
   // Calculate total pages based on the total number of fallen and the limit per page
   const totalPages = Math.ceil(total / limit);
@@ -29,7 +29,7 @@ async function FallenList({ query, currentPage, limit }) {
           <Link
             key={fallen._id}
             className={styles.cardBackground}
-            href={`/all-fallen/${String(fallen._id)}`}
+            href={`/all-fallen/${String(fallen.slug)}`}
           >
             <ProfileCard fallen={fallen} />
           </Link>
