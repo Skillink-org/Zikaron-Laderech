@@ -4,6 +4,7 @@ const fallenSchema = new mongoose.Schema({
     createdAt: { type: Date, default: Date.now },
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
+    slug: { type: String, required: true, unique: true },
     birthDate: { type: Date, required: true },
     deathDate: { type: Date, required: true },
     hobbies: [{
