@@ -9,9 +9,3 @@
     gap: $spacing-md;
     @include custom-scrollbar;
 }
-
-@media (max-width: 930px) {
-    .hobbiesWithData {
-        flex-direction: column;
-    }
-}

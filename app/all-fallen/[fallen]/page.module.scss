@@ -56,12 +56,13 @@
 
     .leftCol {
         width: 25%;
+        // justify-content: space-between;
         padding-top: 0;
     }
 
 }
 
-@media (max-width: $breakpoint-md) {
+@media (max-width: $breakpoint-lg) {
     .sctionsDivider {
         display: none !important;
     }
@@ -69,10 +70,7 @@
     .totalDivider {
         flex-direction: row !important;
     }
-}
 
-
-@media (max-width: 930px) {
     .fallen {
         flex-direction: column;
         height: auto;
