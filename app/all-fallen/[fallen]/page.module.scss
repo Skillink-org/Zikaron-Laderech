@@ -7,6 +7,11 @@
     gap: $spacing-md;
     height: calc(100vh - $footerHeight - $headerHeight);
 
+
+    .title {
+        color: $titleColor;
+    }
+
     .col {
         gap: $spacing-md;
         padding: 15px 15px;
@@ -26,11 +31,13 @@
 
     .middleCol {
         width: 50%;
-        gap: $spacing-md;
         padding-top: 0;
 
         .middleColText {
             @include custom-scrollbar;
+            gap: $spacing-md;
+            display: flex;
+            flex-direction: column;
 
             .mainTitle {
                 font-family: $font-family;
@@ -43,12 +50,12 @@
                 color: $textColor;
                 font-family: $font-family;
             }
+
         }
     }
 
     .leftCol {
         width: 25%;
-        justify-content: space-between;
         padding-top: 0;
     }
 

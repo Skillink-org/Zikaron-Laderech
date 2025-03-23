@@ -1,5 +1,5 @@
 import { connectToDB } from "@/server/connect";
-import { getFallen, getFallenById } from "@/server/service/fallen.service";
+import { getFallen } from "@/server/service/fallen.service";
 import StatusMessage from "@/app/components/StatusMessage";
 import FallenPageClient from "./components/fallenPage.client";
 
