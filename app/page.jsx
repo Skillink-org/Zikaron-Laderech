@@ -2,6 +2,7 @@ import SearchForm from "./components/SearchForm";
 import ImageWithTitle from "./components/ImageWithTitle";
 import PopularHobbies from "./components/PopularHobbies";
 import InvitationBubble from "./components/InvitationBubble";
+import TitleDivider from "./components/TitleDivider";
 
 const HomePage = () => {
   return (
@@ -15,9 +16,10 @@ const HomePage = () => {
 
       {/* Search section */}
       <SearchForm query="" searchTrigger="click" />
-
+      <TitleDivider />
       {/* Popular hobbies section */}
       <PopularHobbies containerType="bubble" />
+      <TitleDivider />
 
       {/* Invitation bubble section */}
       <InvitationBubble />

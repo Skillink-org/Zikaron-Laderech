@@ -3,7 +3,7 @@
 @mixin page-layout($padding: 200px, $min-height: 100vh) {
   padding-left: $padding;
   padding-right: $padding;
-  padding-bottom: 40px;
+  // padding-bottom: 40px;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -14,7 +14,7 @@
   }
 }
 
-@mixin custom-scrollbar {
+@mixin custom-scrollbar { 
   overflow-y: auto;
   padding: 10px 5px;
   margin-left: -10px;
@@ -59,4 +59,26 @@
   100% {
     background-position: 468px 0;
   }
+}
+
+@mixin header-layout($padding: 200px) {
+  padding-inline: 20px;
+
+  @media (min-width: $breakpoint-xxl) {
+    padding-inline: $padding;
+  }
+}
+
+// Used for main title style
+@mixin title {
+  color: $primary;
+  font-weight: 600;
+  font-size: $text-mid-xl;
+}
+
+// Used for large title style
+@mixin largeTitle {
+  color: $primary;
+  font-weight: 600;
+  font-size: $text-xl;
 }

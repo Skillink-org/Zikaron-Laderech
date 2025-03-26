@@ -10,8 +10,6 @@
     justify-content: center;
     align-items: center;
     font-size: $text-xl;
-    border-bottom: 1px solid $lightblueBorder;
-    border-left: 1px solid $lightblueBorder;
-    border-right: 1px solid $lightblueBorder;
-    border-radius: 0px 0px 15px 15px;
+    border: 1px solid $lightblueBorder;
+    border-radius: $border-radius;
   }

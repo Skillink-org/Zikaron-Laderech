@@ -27,27 +27,29 @@ $darkElementGradient: linear-gradient(to top, var(--mutedBlue) 20%, var(--darkGr
 //Text sizing
 $font-family: 'Noto Sans Hebrew', sans-serif;
 $text-xxl: 48px; // כותרת ענק
-$text-xl: 36px; // כותרת
+$text-xl: 36px; //  כותרת גדולה
+$text-mid-xl: 30px; // כותרת בינונית
 $text-lg: 24px; // משנה
 $text-md: 16px; // טקסט מוגדל
 $text-base: 14px; // טקסט בסיס
 $text-sm: 12px; //טקסט קטן
 
 //header and footer height
-$headerHeight: 80px;
-$footerHeight: 120px;
+$headerHeight: 100px;
+$footerHeight: 80px;
 
 //Spacing
 $spacing-xxs: 4px;
 $spacing-xs: 8px;
 $spacing-sm: 12px;
-$spacing-md: 16px;
-$spacing-lg: 24px;
-$spacing-xl: 32px;
+$spacing-md: 10px;
+$spacing-lg: 20px;
+$spacing-xl: 30px;
 $spacing-xxl: 40px;
-$spacing-xxxl: 64px;
+$spacing-xxxl: 60px;
 
 //Border radius
+$border-radius: 10px;
 $border-radius-sm: 4px;
 $border-radius-md: 8px;
 $border-radius-lg: 12px;
