@@ -83,7 +83,7 @@ export async function getFilteredFallenByNameAndStatus(query, limit = 0, skip = 
         $or: [
           { firstName: { $regex: query, $options: "i" } },
           { lastName: { $regex: query, $options: "i" } },
-          
+
           {
             $expr: {
               $regexMatch: {
@@ -194,6 +194,21 @@ export async function deleteFallen(id) {
   return await Fallen.findByIdAndDelete(id);
 }
 
+async function generateSlug(firstName, lastName) {
+  let baseSlug = `${firstName} ${lastName}`.replace(/\s+/g, '-');
+  let finalSlug = baseSlug;
+  let counter = 1;
+
+  while (await Fallen.findOne({ slug: finalSlug })) {
+    finalSlug = `${baseSlug} ${counter}`.replace(/\s+/g, '-');
+    counter++;
+  }
+
+  return finalSlug
+    .toLowerCase()
+    .replace(/\s+/g, '-');
+};
+
 export async function addFallen(fallenData) {
   try {
     // Basic validation
@@ -206,10 +221,12 @@ export async function addFallen(fallenData) {
 
     const birthDate = new Date(fallenData.birthDate);
     const deathDate = new Date(fallenData.deathDate);
-    
+
     if (isNaN(birthDate.getTime()) || isNaN(deathDate.getTime())) {
       throw new Error("Invalid birth or death date");
     }
+
+    const slug = await generateSlug(fallenData.firstName, fallenData.lastName);
 
     // Create a new record
     const fallen = await Fallen.create({
@@ -218,6 +235,7 @@ export async function addFallen(fallenData) {
       birthDate,
       deathDate,
       status: "pending",
+      slug: slug,
     });
 
     return serializer(fallen);
