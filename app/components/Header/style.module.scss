@@ -2,7 +2,6 @@
 @use "@/styles/_mixins.scss" as *;
 
 .header {
-    @include header-layout;
     height: $headerHeight;
     display: flex;
     align-items: center;
@@ -13,6 +12,7 @@
     &:has(.mobileNav.open) {
         margin-right: 26px;
     }
+    @include header-layout;
 }
 
 .search {

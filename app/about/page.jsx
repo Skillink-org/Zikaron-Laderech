@@ -8,6 +8,7 @@ import {
   getFallenCount,
   getHobbiesCount,
 } from "@/server/service/fallen.service";
+import { connectToDB } from "@/server/connect";
 
 export const metadata = {
   title: "אודות",
@@ -24,6 +25,7 @@ export const metadata = {
 };
 
 export default async function AboutPage() {
+  await connectToDB();
   const [fallenCount, hobbiesCount, continuersCount] = await Promise.all([
     getFallenCount(),
     getHobbiesCount(),
@@ -62,6 +64,7 @@ export default async function AboutPage() {
         </p>
       </CustomBubble>
 
+      {/* TODO - new async component */}
       {/* Data bubbles section */}
       <div className={styles.dataBubbles}>
         <CustomBubble className={styles.dataBubble}>

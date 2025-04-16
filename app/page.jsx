@@ -18,6 +18,7 @@ const HomePage = () => {
       <SearchForm query="" searchTrigger="click" />
       <TitleDivider />
       {/* Popular hobbies section */}
+      {/* TODO - add suspense */}
       <PopularHobbies containerType="bubble" />
       <TitleDivider />
 
