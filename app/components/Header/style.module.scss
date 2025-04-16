@@ -1,0 +1,240 @@
+@use '@/styles/_vars.scss' as *;
+@use "@/styles/_mixins.scss" as *;
+
+.header {
+    @include header-layout;
+    height: $headerHeight;
+    display: flex;
+    align-items: center;
+    font-family: $font-family;
+    justify-content: space-between;
+    border-bottom: 1px solid $lightblueBorder;
+    border-radius: $border-radius;
+    &:has(.mobileNav.open) {
+        margin-right: 26px;
+    }
+}
+
+.search {
+    display: none;
+    align-items: center;
+    cursor: pointer;
+}
+
+.auth {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.authButton {
+    background-color: white !important;
+    border: 1px solid $lightblueBorder !important;
+    color: $textColor !important;
+    font-size: $text-md !important;
+}
+
+.userProfile {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    position: relative;
+
+    .profilePicture {
+        border-radius: 50%;
+        object-fit: cover;
+
+        &:hover {
+            box-shadow: 0 0 10px rgba(33, 33, 33, 0.6);
+        }
+    }
+
+    .initials {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: $buttonColor;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        font-size: $text-md;
+        color: white;
+
+        &:hover {
+            box-shadow: 0 0 10px rgba(33, 33, 33, 0.6);
+        }
+    }
+
+    .profileContainer {
+        display: flex;
+        align-items: center;
+    }
+}
+
+.menu {
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    padding: 5px;
+    min-width: 160px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; // הכפתורים מיושרים לימין במסכים גדולים
+
+    &.normalUser {
+        background-color: transparent;
+        box-shadow: none;
+    }
+
+    &.adminUser {
+        background-color: white;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    .adminButtons {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        width: 100%;
+    }
+
+    .divider {
+        height: 1px;
+        background-color: #b3b0b0;
+        margin: 5px 0;
+    }
+
+    button {
+        padding: 10px;
+        width: 100%;
+    button {
+        padding: 10px;
+        background-color: $textColor;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+
+        &:hover {
+            background-color: $textColor;
+        }
+    }
+
+    // Media Query for mobile devices
+    @media (max-width: 768px) {
+        position: absolute;
+        top: calc(100% + 10px);
+        right: 0;
+        left: auto;
+        transform: none;
+        min-width: 140px;
+        width: auto;
+
+        .adminButtons {
+            gap: 3px;
+            width: 100%;
+        }
+
+        button {
+            padding: 8px;
+            font-size: 12px;
+            width: 100%;
+            margin-left: auto;
+            margin-right: 0;
+        }
+    }
+}
+
+.logo {
+    font-weight: 700;
+    font-size: clamp(28px, 4vw, 35px);
+    color: $primary;
+    white-space: nowrap;
+    flex-shrink: 0;
+
+    span {
+        color: $textColor;
+    }
+}
+
+.nav {
+    display: none;
+    align-items: center;
+
+    a {
+        font-size: $text-md;
+    }
+}
+
+.mobileNav {
+    display: flex;
+    align-items: center;
+
+    .navIcon {
+        cursor: pointer;
+        z-index: 999;
+    }
+
+    &.open {
+        .navIcon {
+            position: fixed;
+            right: 20px;
+        }
+
+        .nav {
+            transform: translateX(0);
+        }
+    }
+
+    &.closed .nav {
+        transform: translateX(100%);
+    }
+
+    .nav {
+        position: fixed;
+        z-index: 998;
+        height: 100vh;
+        width: 50%;
+        right: 0;
+        top: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+        background-color: $grayBackground;
+        color: $textColor;
+        border-left: 1px solid $lightblueBorder;
+        transition: transform 0.2s ease-in-out;
+
+        a {
+            padding-block: 30px;
+        }
+    }
+}
+
+@media (min-width: 1100px) {
+    .header {
+        display: flex;
+        justify-content: space-between;
+        
+    }
+
+    .search {
+        display: flex;
+    }
+
+    .mobileNav {
+        display: none;
+    }
+
+    .nav {
+        display: flex;
+    }
+}

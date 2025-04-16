@@ -1,0 +1,34 @@
+@use '@/styles/_vars.scss' as *;
+
+.largeBubble {
+  background: $darkElementGradient;
+  border-radius: $border-radius-md;
+  text-align: center;
+  padding: $spacing-lg 0;
+  width: 100%;
+  font-family: $font-family;
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    color: white;
+    font-weight: bold;
+    gap: $spacing-lg;
+
+    .title {
+      font-size: $text-xxl;
+    }
+
+    .subtitle {
+      font-size: $text-md;
+      font-weight: 500;
+    }
+
+    .button {
+      width: fit-content;
+      align-self: center;
+      color: $primary;
+      background-color: $grayBackground;
+    }
+  }
+}

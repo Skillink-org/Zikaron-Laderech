@@ -1,0 +1,109 @@
+@use "@/styles/_vars.scss" as *;
+
+.resetContainer {
+    background: $grayBackground;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+    width: 400px;
+    max-width: 90%;
+    font-family: $font-family;
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    @media (max-width: $breakpoint-md) {
+        max-width: 70%;
+    }
+}
+
+.title {
+    font-size: $text-lg;
+    margin-bottom: 1rem;
+    text-align: center;
+    color: $primary;
+}
+
+.expiredTokenMessage {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 10px 10px;
+    border-radius: 5px;
+    font-size: $text-md;
+    text-align: center;
+    border: 1px solid #f5c6cb;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+}
+
+.errorMessage {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 10px 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+    font-size: $text-md;
+    text-align: center;
+    border: 1px solid #f5c6cb;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.successMessage {
+    background-color: #dcf2c4;
+    color: #156f44;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin-top: 10px;
+    font-size: $text-md;
+    text-align: center;
+    border: 1px solid #91f397;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+}
+
+.resetButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: $buttonColor;
+    color: $grayBackground;
+    font-size: $text-md;
+    min-width: 120px;
+    height: 40px;
+    cursor: pointer;
+    transition: background 0.3s;
+
+    &:hover {
+        background: $buttonColor;
+    }
+}
+
+.loader {
+    width: 24px;
+    height: 24px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top: 3px solid #fff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    display: inline-block;
+}
+
+@keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+  
+    100% {
+      transform: rotate(360deg);
+    }
+  }

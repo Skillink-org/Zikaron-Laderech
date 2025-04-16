@@ -9,9 +9,18 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "cloudinary": "^2.5.1",
+    "dotenv": "^16.4.7",
+    "lucide-react": "^0.474.0",
+    "mongoose": "^8.9.5",
     "next": "15.1.6",
+    "next-auth": "^5.0.0-beta.25",
+    "nodemailer": "^6.10.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "sass": "^1.83.4"
+    "react-modal": "^3.16.3",
+    "sass": "^1.83.4",
+    "use-debounce": "^10.0.4",
+    "zod": "^3.24.2"
   }
 }

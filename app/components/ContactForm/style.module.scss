@@ -1,0 +1,56 @@
+@use '@/styles/_vars.scss' as *;
+
+.contact-form {
+  width: 100%;
+  gap: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  height: 40px;
+  border: 1px solid $lightblueBorder;
+  border-radius: $border-radius;
+  resize: none;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 22px;
+  display: flex;
+  align-items: center;
+  text-align: right;
+  color: $textColor;
+  padding: 15px;
+  box-sizing: border-box;
+
+  &::placeholder {
+    color: #dddddd;
+  }
+}
+
+.contact-form textarea {
+  height: 96px;
+}
+
+.contact-form button:hover {
+  opacity: 0.9;
+}
+
+/* Mobile responsive styles */
+@media (max-width: $breakpoint-md) {
+  .form-row {
+    flex-direction: column;
+    gap: 15px;
+  }
+}

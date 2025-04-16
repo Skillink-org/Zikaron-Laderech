@@ -1,0 +1,47 @@
+@use '@/styles/_vars.scss' as *;
+
+.customBubble {
+    display: flex;
+    justify-content: space-around !important;
+    align-items: center;
+    width: 100%;
+    gap: 40px;
+    height: min-content;
+    flex-direction: row !important;
+
+    .header {
+        color: $primary;
+        font-weight: bold;
+        font-size: $text-lg;
+    }
+
+    .searchContainer {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+
+        .searchButton {
+            display: flex;
+        }
+    }
+}
+
+@media (max-width: $breakpoint-lg) {
+    .customBubble {
+        flex-direction: column !important;
+
+        .header {
+            text-align: center;
+        }
+
+        .searchContainer {
+            width: 100%;
+            flex-direction: column;
+        }
+    }
+
+    .searchInput,
+    .searchButton {
+        width: 100%;
+    }
+}

@@ -1,0 +1,112 @@
+@use '@/styles/_vars.scss' as *;
+
+.socialButtons {
+    display: flex;
+    justify-content: space-between;
+    gap: $spacing-lg;
+    margin-top: $spacing-xl;
+    margin-bottom: $spacing-xl;
+    
+    a {
+        flex: 1;
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .socialButton {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: $spacing-md;
+        flex: 1;
+
+        .socialTitle {
+            font-weight: bolder;
+            margin-bottom: $spacing-sm;
+            font-size: $text-xl;
+            color: $titleColor;
+        }
+
+        .socialText {
+            font-size: $text-base;
+        }
+    }
+}
+
+/* Large screens but not quite desktop (under 1100px) */
+@media (max-width: 1100px) {
+    .socialButtons {
+        .socialButton {
+            .socialTitle {
+                font-size: $text-lg;
+            }
+            
+            .socialText {
+                font-size: $text-sm;
+            }
+        }
+    }
+}
+
+/* Medium screens (tablets) */
+@media (max-width: $breakpoint-md) {
+    .socialButtons {
+        flex-direction: column;
+        gap: $spacing-md;
+        
+        a {
+            width: 100%;
+        }
+        
+        .socialButton {
+            text-align: right;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            
+            .socialTitle {
+                font-size: $text-xl;
+                margin-bottom: 0;
+                margin-left: $spacing-md;
+            }
+            
+            .socialText {
+                font-size: $text-base;
+            }
+        }
+    }
+}
+
+/* Small screens (mobile and narrower tablets) */
+@media (max-width: $breakpoint-sm) {
+    .socialButtons {
+        .socialButton {
+            padding: $spacing-sm;
+            
+            .socialTitle {
+                font-size: $text-lg;
+            }
+            
+            .socialText {
+                font-size: $text-sm;
+            }
+        }
+    }
+}
+
+/* Extra small screens */
+@media (max-width: 480px) {
+    .socialButtons {
+        .socialButton {
+            .socialTitle {
+                font-size: $text-base;
+            }
+            
+            .socialText {
+                font-size: $text-sm;
+            }
+        }
+    }
+}

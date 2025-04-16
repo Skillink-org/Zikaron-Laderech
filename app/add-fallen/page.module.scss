@@ -1,0 +1,161 @@
+@use '@/styles/_vars.scss' as *;
+// TODO - watch the error in the terminal - about @import
+@import '../../styles/mixins';
+
+
+.header {
+  width: 100%;
+}
+
+.form {
+  width: 100%;
+  // // background: linear-gradient(0deg, rgba(245, 245, 245, 0.3) 0%, #ffffff 60.1%, #ffffff 100%);
+  // border: 1px solid #e8f1f8;
+  // border-radius: 10px;
+  // display: flex;
+  // flex-direction: column;
+  // align-items: center;
+  gap: 20px;
+  // padding: 20px;
+}
+
+
+.line1>.name,
+.line1>.birthDate,
+.line1>.date,
+.line1>.email,
+.line1>.phone {
+  flex: 1;
+}
+
+.allFormDetails {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.line1 {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-between;
+}
+
+.name,
+.birthDate,
+.date,
+.hobbies,
+.image,
+.about,
+.familyMessage,
+.quote,
+.email,
+.phone,
+.customFileUpload {
+  width: 100%;
+  height: 40px;
+  border: 1px solid $lightblueBorder;
+  border-radius: $border-radius;
+  resize: none;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 22px;
+  display: flex;
+  align-items: center;
+  text-align: right;
+  color: $textColor;
+  padding: 15px;
+  box-sizing: border-box;
+
+  &::placeholder {
+    color: #dddddd;
+  }
+}
+
+.customFileUpload {
+  min-height: 20px;
+  height: auto;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  color: $placeHolderColor;
+
+
+  &:hover{
+    cursor: pointer;
+  }
+  .imagePreview {
+    margin-top: 15px;
+    max-width: 200px;
+    border-radius: 8px;
+  }
+
+  // .uploadProgress {
+  //   position: absolute;
+  //   bottom: 5px;
+  //   left: 5px;
+  //   right: 5px;
+  //   height: 4px;
+  //   background: #f0f0f0;
+  //   border-radius: 2px;
+    
+  //   .progressBar {
+  //     height: 100%;
+  //     background: $primaryColor;
+  //     border-radius: 2px;
+  //     transition: width 0.3s ease;
+  //   }
+  // }
+}
+
+.imageContainer {
+  position: relative;
+  display: inline-block;
+}
+
+.removeImage {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: white;
+  border: 1px solid $lightblueBorder;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.about,
+.familyMessage {
+  height: 96px;
+}
+
+.hiddenInput {
+  display: none;
+}
+
+.submitButton {
+  height: 40px;
+}
+
+.statusMessageContainer {
+  width: 100%;
+  max-width: 1242px;
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+.statusMessage {
+  width: 100%;
+}

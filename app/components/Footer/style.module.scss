@@ -1,0 +1,44 @@
+@use '@/styles/_vars.scss' as *;
+
+.footer {
+    height: $footerHeight;
+    padding: $spacing-lg;
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid $lightblueBorder;
+    font-family: $font-family;
+}
+
+.nav {
+    display: none;
+    flex-direction: row;
+    color: $textColor;
+    font-size: $text-md;
+    text-align: center;
+
+    a {
+        width: 128px;
+    }
+
+    a:nth-child(2) {
+        width: 160px;
+    }
+}
+
+.copyright {
+    font-size: $text-sm;
+}
+
+@media (min-width: $breakpoint-md) {
+    .footer {
+        padding-bottom: $spacing-md;
+    }
+
+    .nav {
+        display: flex;
+        width: 672px;
+    }
+}

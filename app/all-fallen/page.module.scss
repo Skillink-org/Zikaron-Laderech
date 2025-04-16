@@ -1,0 +1,56 @@
+@use '@/styles/_vars.scss' as *;
+@use "@/styles/_mixins.scss" as *;
+
+.hero {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: 40px;
+    padding: 10px 0;
+    height: min-content;
+    flex-direction: row !important;
+
+    .title {
+        @include title;
+        align-content: center;
+        text-align: center;
+
+    }
+}
+
+.itemsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    width: 100%;
+}
+
+@media (max-width: $breakpoint-lg) {
+    .title {
+        text-align: center;
+    }
+
+    .hero {
+        flex-direction: column !important;
+
+    }
+
+    .itemsContainer {
+        justify-content: space-evenly;
+    }
+}
+
+@media (max-width: $breakpoint-lg) {
+    .hero {
+        gap: $spacing-lg;
+    }
+
+}
+
+@media (min-width: 1300px) {
+    .itemsContainer {
+        justify-content: center;
+    }
+}

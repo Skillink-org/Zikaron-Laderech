@@ -1,0 +1,32 @@
+@use '@/styles/_mixins.scss'as *;
+@use '@/styles/_vars.scss'as *;
+
+.hobbies {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: $spacing-md;
+    @include custom-scrollbar;
+
+    .hobby {
+        flex-grow: 1;
+        flex: 0 0 auto;
+        cursor: pointer;
+    }
+}
+
+@media (max-width: $breakpoint-lg) {
+    .hobbyBubble {
+        aspect-ratio: 0 / 0 !important;
+    }
+
+    .hobbies {
+        gap: $spacing-xs;
+        justify-content: space-between;
+
+        .hobby {
+            flex: 0 0 calc(50% - $spacing-xxs);
+        }
+    }
+}

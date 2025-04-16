@@ -1,0 +1,28 @@
+.container {
+    background: white;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 16px;
+    padding: 24px;
+    border: 1px solid #bfdbfe;
+    max-width: 768px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .searchBox {
+    display: flex;
+    align-items: center;
+    background: #f3f4f6;
+    border-radius: 50px;
+    padding: 8px;
+    border: 1px solid #d1d5db;
+  }
+  
+  .searchInput {
+    flex-grow: 1;
+    background: transparent;
+    outline: none;
+    padding: 8px;
+    color: #374151;
+  }
+  

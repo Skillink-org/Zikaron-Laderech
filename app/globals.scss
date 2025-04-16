@@ -1,11 +1,25 @@
+@use '@/styles/_vars.scss' as *;
+
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  font-family: $font-family;
 }
 
-html{
+html {
   direction: rtl;
+}
+
+body {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+main {
+  flex-grow: 1;
 }
 
 a {

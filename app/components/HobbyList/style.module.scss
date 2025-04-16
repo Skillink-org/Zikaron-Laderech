@@ -1,0 +1,28 @@
+@use '@/styles/_mixins.scss' as *;
+
+.hobbies {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: $spacing-md;
+    width: 100%;
+    padding: 10px;
+    @include custom-scrollbar;
+    
+    .hobby {
+        width: 100%;
+        cursor: pointer;
+        display: flex;
+    }
+}
+
+@media (max-width: 600px) {
+    .hobbies {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 930px) {
+    .hobbyBubble {
+        aspect-ratio: 0 / 0 !important;
+    }
+}
