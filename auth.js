@@ -47,7 +47,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
             role: "user",
           });
         }
-        user.id = existingUser.id;
+        user_id = existingUser_id;
         user.role = existingUser.role;
       }
       return true;
