@@ -35,6 +35,7 @@ export default function HobbyList({ fallenName, fallenId, hobbies, updateHobby})
 
         if (response.ok) {
             updateHobby(hobby);
+            // TODO - use toast 
             updateStatus("הצטרפת בהצלחה לתחביב!", "success");
         }
         else if (response.status === 404) {

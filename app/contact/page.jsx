@@ -9,7 +9,7 @@ const ContactPage = () => {
     <>
       {/* Header image section */}
       <ImageWithTitle
-        imageUrl={"/profileImage.webp"}
+        imageUrl={"/ContactHero.webp"}
         title="יצירת קשר"
         subtitle="יחד נוכל להמשיך את המסע של יקירינו ולהפוך את זכרם לפיסה חיה ומתמשכת"
       />

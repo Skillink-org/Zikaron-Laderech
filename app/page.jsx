@@ -9,7 +9,7 @@ const HomePage = () => {
     <>
       {/* Header image section */}
       <ImageWithTitle
-        imageUrl={"/profileImage.webp"}
+        imageUrl={"/HomePageHero.webp"}
         title="לכל תחביב יש שם"
         subtitle="פלטפורמה המאפשרת להכיר את התחביבים שהיו חשובים לנופלי ה-7/10 והמלחמה ולהמשיך אותם לזכרם. דרך סיפורים אישיים, תמונות ותחביבים, כל אחד יכול לקחת חלק בהנצחה פעילה."
       />
@@ -18,6 +18,7 @@ const HomePage = () => {
       <SearchForm query="" searchTrigger="click" />
       <TitleDivider />
       {/* Popular hobbies section */}
+      {/* TODO - add suspense */}
       <PopularHobbies containerType="bubble" />
       <TitleDivider />
 
