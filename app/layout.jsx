@@ -30,15 +30,11 @@ export const metadata = {
   applicationName: "זכרון לדרך",
 };
 
-export default async function RootLayout({ children }) {
-  // TODO - YOSEF: remove this i think - check documentation
-  // https://authjs.dev/getting-started/session-management/get-session?framework=next-js-client
-  const session = await auth();
-
+export default function RootLayout({ children }) {
   return (
     <html lang="he">
       <body>
-        <SessionProvider session={session}>
+        <SessionProvider>
           <Header />
           <main className={styles.mainContainer}>{children}</main>
           <Footer />

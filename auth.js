@@ -30,6 +30,10 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
     }),
   ],
   secret: process.env.NEXT_AUTH_SECRET,
+  // הוספת הגדרות JWT מינימליות לפתרון הבעיה
+  jwt: {
+    secret: process.env.NEXT_AUTH_SECRET,
+  },
   session: {
     strategy: "jwt",
     maxAge: 7 * 24 * 60 * 60,
@@ -74,6 +78,3 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
     },
   },
 });
-
-// TODO
-// Error: no matching decryption secret

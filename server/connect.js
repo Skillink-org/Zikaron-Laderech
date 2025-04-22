@@ -13,12 +13,12 @@ export const connectToDB = async () => {
     let url = process.env.DB_LINK;
 
     // Connect to the database
-    console.log({ status: 'info', message: `Connecting to MongoDB at ${url}` });
+    console.log({ status: 'info', message: 'Connecting to MongoDB' });
     await mongoose.connect(url);
 
     // Log the connection details
     console.log(
-      `Successfully connected to MongoDB at ${mongoose.connection.host}:${mongoose.connection.port}`
+      `Successfully connected to MongoDB`
     );
   } catch (err) {
     // Handle connection errors

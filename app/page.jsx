@@ -3,6 +3,10 @@ import ImageWithTitle from "./components/ImageWithTitle";
 import PopularHobbies from "./components/PopularHobbies";
 import InvitationBubble from "./components/InvitationBubble";
 import TitleDivider from "./components/TitleDivider";
+import { Suspense } from "react";
+
+// צריך גם להוסיף קומפוננטה של Skeleton
+import PopularHobbiesSkeleton from "./components/Skeletons/PopularHobbiesSkeleton"; // יתכן שתצטרך ליצור קומפוננטה זו
 
 const HomePage = () => {
   return (
@@ -18,8 +22,9 @@ const HomePage = () => {
       <SearchForm query="" searchTrigger="click" />
       <TitleDivider />
       {/* Popular hobbies section */}
-      {/* TODO - add suspense */}
-      <PopularHobbies containerType="bubble" />
+      <Suspense fallback={<PopularHobbiesSkeleton containerType="bubble" />}>
+        <PopularHobbies containerType="bubble" />
+      </Suspense>
       <TitleDivider />
 
       {/* Invitation bubble section */}
