@@ -19,9 +19,11 @@ export default function HobbyList({ fallenName, fallenId, hobbies, updateHobby})
         setStatusType(type);
         setShowStatus(true);
 
-        setTimeout(() => {
-            setShowStatus(false);
-        }, 3000);
+        // הסטטוס ייעלם אוטומטית דרך קומפוננטת הטוסט
+    };
+
+    const hideStatus = () => {
+        setShowStatus(false);
     };
 
     async function handleClick(fallenId, hobby) {
@@ -35,13 +37,12 @@ export default function HobbyList({ fallenName, fallenId, hobbies, updateHobby})
 
         if (response.ok) {
             updateHobby(hobby);
-            // TODO - use toast 
             updateStatus("הצטרפת בהצלחה לתחביב!", "success");
         }
         else if (response.status === 404) {
             updateStatus('הצטרפותך לתחביב נכשלה', "error");
         } else if (response.status === 400) {
-            updateStatus(`כבר נרשמת לתחביב ${hobby} של ${fallenName}`, "error");
+            updateStatus(`כבר נרשמת לתחביב ה${hobby} של ${fallenName}`, "error");
         } else {
             updateStatus(response.message, "error");
         }
@@ -51,7 +52,14 @@ export default function HobbyList({ fallenName, fallenId, hobbies, updateHobby})
         <>
             {showAuthPopup && <AuthPopup onClose={() => setShowAuthPopup(false)} />}
             <div className={styles.hobbies}>
-                {showStatus && <StatusMessage message={statusMessage} type={statusType} />}
+                {showStatus && 
+                    <StatusMessage 
+                        message={statusMessage} 
+                        type={statusType} 
+                        mode="toast" 
+                        onHide={hideStatus} 
+                    />
+                }
                 {hobbies.map((hobby, index) => (
                     <HobbyBubble
                         children={hobby.name}

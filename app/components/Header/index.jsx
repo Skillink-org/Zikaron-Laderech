@@ -2,10 +2,10 @@
 import { useSession } from 'next-auth/react'
 import styles from './style.module.scss'
 import MobileNav from './MobileNav'
-import Search from './Search'
 import NavList from './NavList'
 import AuthButton from './AuthButton'
 import UserProfile from './UserProfile'
+import Link from 'next/link'
 
 export default function Header() {
     const { data: session } = useSession();
@@ -15,7 +15,9 @@ export default function Header() {
     return (
         <header className={styles.header}>
             <MobileNav />
-            <div className={styles.logo}><span>זיכרון </span>לדרך</div>
+            <Link href="/" className={styles.logoLink}>
+                <div className={styles.logo}><span>זיכרון </span>לדרך</div>
+            </Link>
             <NavList />
             {/* <Search /> */}
             {isLoggedIn ? <UserProfile

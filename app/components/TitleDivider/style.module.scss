@@ -5,6 +5,11 @@
   align-items: center;
   gap: 20px;
   width: 100%;
+  // margin: 15px 0;
+}
+
+.lineOnly {
+  gap: 0;
 }
 
 .divider {
@@ -28,6 +33,10 @@
 @media (max-width: $breakpoint-md) {
   .container {
     flex-direction: column;
+    
+    &.lineOnly {
+      flex-direction: row;
+    }
   }
 
   .divider {

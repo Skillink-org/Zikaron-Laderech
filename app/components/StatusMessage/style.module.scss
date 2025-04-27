@@ -7,8 +7,8 @@
   height: 80px;
   width: 100%;
   display: flex;
-  justify-content: center; 
-  align-items: center; 
+  justify-content: center;
+  align-items: center;
 }
 
 .success {
@@ -18,6 +18,7 @@
 .error {
   background: linear-gradient(0deg, #ffffff 0%, #f8e8e8 100%);
 }
+
 .text {
   font-family: $font-family;
   font-style: normal;
@@ -26,4 +27,44 @@
   line-height: 33px;
   text-align: center;
   color: $textColor;
+}
+
+// toast mode styles
+.toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: auto;
+  min-width: 250px;
+  max-width: 350px;
+  height: auto;
+  min-height: 50px;
+  padding: 12px 20px;
+  z-index: 5000;
+  animation: slideIn 0.3s ease-out forwards, fadeOut 0.3s ease-out 2.7s forwards;
+}
+
+.toast .text {
+  font-size: $text-sm;
+  line-height: 1.4;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }

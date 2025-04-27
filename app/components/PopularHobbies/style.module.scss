@@ -1,24 +1,60 @@
 @use '@/styles/_vars.scss' as *;
 
+/* Base styles for bubble container */
 .hobbyBubblesContainer {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
     gap: $spacing-md;
-    // padding: $spacing-sm 0;
 }
 
+/* Base styles for tags container */
 .hobbyTagsContainer {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 10px;
     justify-content: center;
     width: 100%;
 }
 
+/* Rules by screen size */
+
+/* For all screens except the smallest (mobile): Show bubbles, hide tags */
+@media (min-width: $breakpoint-xs) {
+    .hobbyBubblesContainer {
+        display: flex;
+    }
+    
+    .hobbyTagsContainer {
+        display: none;
+    }
+    
+    /* Exception: If containerType="tag", show tags on larger screens too */
+    .forceTagsDisplay {
+        display: flex !important;
+    }
+    
+    /* Exception: If containerType="tag", hide bubbles on larger screens */
+    .forceBubblesHide {
+        display: none !important;
+    }
+}
+
+/* For the smallest screens (mobile): Show tags, hide bubbles */
+@media (max-width: $breakpoint-xs) {
+    .hobbyBubblesContainer {
+        display: none;
+    }
+    
+    .hobbyTagsContainer {
+        display: flex;
+    }
+}
+
+/* Additional responsive styles */
 @media (max-width: $breakpoint-lg) {
     .hobbyTagsContainer {
-        justify-content: space-evenly;
+        // justify-content: space-evenly;
     }
 }
 

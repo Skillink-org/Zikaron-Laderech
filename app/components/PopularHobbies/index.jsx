@@ -7,12 +7,19 @@ import { getPopularHobbies } from "@/server/service/fallen.service";
 
 export default async function PopularHobbies({ containerType = "tag" }) {
   await connectToDB();
-
   const hobbies = await getPopularHobbies();
 
-  if (containerType === "bubble") {
-    return (
-      <div className={styles.hobbyBubblesContainer}>
+  const tagsClasses = `${styles.hobbyTagsContainer} ${
+    containerType === "tag" ? styles.showTagsDesktop : ""
+  }`;
+  
+  const bubblesClasses = `${styles.hobbyBubblesContainer} ${
+    containerType === "tag" ? styles.hideBubblesDesktop : ""
+  }`;
+
+  return (
+    <>
+      <div className={bubblesClasses}>
         {hobbies.map((hobby, index) => (
           <HobbyBubble
             key={index}
@@ -24,10 +31,8 @@ export default async function PopularHobbies({ containerType = "tag" }) {
           </HobbyBubble>
         ))}
       </div>
-    );
-  } else {
-    return (
-      <div className={styles.hobbyTagsContainer}>
+
+      <div className={tagsClasses}>
         {hobbies.map((hobby, index) => (
           <HobbyTag
             hobby={hobby._id}
@@ -36,6 +41,6 @@ export default async function PopularHobbies({ containerType = "tag" }) {
           />
         ))}
       </div>
-    );
-  }
+    </>
+  );
 }

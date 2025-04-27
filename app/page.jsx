@@ -20,7 +20,7 @@ const HomePage = () => {
 
       {/* Search section */}
       <SearchForm query="" searchTrigger="click" />
-      <TitleDivider />
+      <TitleDivider variant="line"/>
       {/* Popular hobbies section */}
       <Suspense fallback={<PopularHobbiesSkeleton containerType="bubble" />}>
         <PopularHobbies containerType="bubble" />
