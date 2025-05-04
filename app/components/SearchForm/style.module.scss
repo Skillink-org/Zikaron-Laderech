@@ -2,46 +2,99 @@
 
 .customBubble {
     display: flex;
-    justify-content: space-around !important;
+    // justify-content: space-between !important;
+    justify-content: center !important;
     align-items: center;
     width: 100%;
     gap: 40px;
     height: min-content;
     flex-direction: row !important;
-
     .header {
         color: $primary;
         font-weight: bold;
         font-size: $text-lg;
+        width: 30%;
     }
 
     .searchContainer {
         display: flex;
         gap: 10px;
         align-items: center;
+        width: 50%;
 
         .searchButton {
             display: flex;
+            width: auto;
+            min-width: 60px;
+            padding: 8px 16px;
+            justify-content: center;
+            border-radius: 8px;
+            white-space: nowrap;
+            flex-shrink: 0;
+            height: 35px;
+
+        }
+        
+        .searchInput {
+            flex-grow: 1;
+            min-width: 200px;
+        }
+    }
+}
+// large screen: horizontal layout
+@media (min-width: $breakpoint-lg) {
+    .customBubble {
+        .searchContainer {
+            flex-direction: row;
+            
+            .searchButton {
+                width: auto;
+            }
         }
     }
 }
 
-@media (max-width: $breakpoint-lg) {
+// medium screen: horizontal layout
+@media (max-width: $breakpoint-lg) and (min-width: $breakpoint-md) {
     .customBubble {
-        flex-direction: column !important;
-
         .header {
             text-align: center;
         }
 
         .searchContainer {
             width: 100%;
-            flex-direction: column;
+            flex-direction: row;
+            
+            .searchButton {
+                width: auto;
+            }
         }
     }
+}
 
-    .searchInput,
-    .searchButton {
-        width: 100%;
+// small screen: vertical layout
+@media (max-width: $breakpoint-md) {
+    .customBubble {
+        flex-direction: column !important;
+
+        .header {
+            width: 100%;
+            text-align: center;
+        }
+        .searchContainer {
+            width: 100%;
+            flex-direction: column;
+            gap: 15px;
+            
+            .searchInput {
+                width: 100%;
+            }
+            
+            .searchButton {
+                width: 100%;
+                height: 35px;
+                min-width: unset;
+            }
+        }
     }
 }

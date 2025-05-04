@@ -1,0 +1,29 @@
+/* app/components/DataBubbles/styles.module.scss */
+@use '@/styles/_vars.scss' as *;
+
+.dataBubbles {
+    display: flex;
+    justify-content: space-between;
+    gap: $spacing-lg;
+
+    .dataBubble {
+        display: flex;
+        align-items: start;
+        padding: $spacing-md;
+        flex: 1;
+
+        .dataNumber {
+            font-weight: bolder;
+        }
+
+        .dataText {
+            font-size: $text-base;
+        }
+    }
+}
+
+@media (max-width: $breakpoint-md) {
+    .dataBubbles {
+        flex-direction: column;
+    }
+}

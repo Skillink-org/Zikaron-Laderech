@@ -1,16 +1,15 @@
 "use client";
-import { uploadImage } from "@/server/actions/uploadImage.action";
+
 import { useState } from "react";
 import Button from "../components/Button";
 import CustomBubble from "../components/CustomBubble";
 import ImageWithTitle from "../components/ImageWithTitle/index";
 import StatusMessage from "../components/StatusMessage";
 import styles from "./page.module.scss";
-
-
-// TODO-YOSEF: replace fetch with action
-// TODO-YOSEF: replace form manual validation with zod
-
+import { uploadImage } from "@/server/actions/uploadImage.action";
+import { addFallen } from "@/server/actions/addFallen.action";
+import { z } from "zod";
+import { fallenSchema } from "@/lib/fallenSchema"; // ייבוא הסכמה הקיימת
 
 export default function AddFallenPage() {
   const cloudName = process.env.CLOUDINARY_NAME;
@@ -56,7 +55,7 @@ export default function AddFallenPage() {
       if (hobbiesArray.length > 6) return;
     }
 
-    if (name === "email") {
+    if (name === "email" && value) {
       if (!/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(value)) return;
     }
 
@@ -86,60 +85,103 @@ export default function AddFallenPage() {
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!validateForm()) return;
-
+  const validateForm = () => {
     try {
-      setStatusMessage("מעלה תמונה...");
-      setStatusType("loading");
+      const dataToValidate = {
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        birthDate: formData.deathDate ? new Date(formData.birthYear).toISOString() : "",
+        deathDate: formData.deathDate ? new Date(formData.deathDate).toISOString() : "",
+        hobbies: formData.hobbies,
+        about: formData.about,
+        familyWords: formData.familyMessage,
+        quote: formData.quote,
+        imageUrl: formData.image ? "temp-url" : "",
+        email: formData.email,
+        phone: formData.phone,
+      };
 
-      const formDataToSend = new FormData();
-      formDataToSend.append("image", formData.imageFile);
-      const imageUrl = await uploadImage(formDataToSend);
+      fallenSchema.parse(dataToValidate);
+      
+      if (!formData.imageFile) {
+        setStatusMessage("נא להעלות תמונה");
+        setStatusType("error");
+        return false;
+      }
 
-      //format the hobbies into an array of objects
-      const hobbies = formData.hobbies
-        .split(',')
-        .map(hobby => hobby.trim())
-        .filter(hobby => hobby)
-        .map(name => ({
-          name,
-          continueCount: 0
-        }));
+      return true;
+    } catch (error) {
+      console.error("ZodError:", error);
+      if (error instanceof z.ZodError) {
+        const firstErrorMessage = error.errors[0].message;
+        setStatusMessage(firstErrorMessage);
+        setStatusType("error");
+      }
+      return false;
+    }
+  };
 
-      //send the form data to the server
-      // TODO -  use Action
-      // TODO - watch the error - if you want to limit the image size you have to add a warning message to the client: 
-      //       ⨯ uncaughtException:  [Error: Body exceeded 1 MB limit.
-      //         To configure the body size limit for Server Actions, see: https://nextjs.org/docs/app/api-reference/next-config-js/serverActions#bodysizelimit] {
-      // statusCode: 413
-      // }
-      const response = await fetch('/api/add-fallen', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          firstName: formData.firstName,
-          lastName: formData.lastName,
-          birthDate: new Date(formData.birthYear),
-          deathDate: new Date(formData.deathDate),
-          hobbies,
-          about: formData.about,
-          familyWords: formData.familyMessage,
-          quote: formData.quote,
-          imageUrl,
-          email: formData.email,
-          phone: formData.phone,
-          status: "pending"
-        }),
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  
+  if (!validateForm()) return;
+
+  try {
+    setStatusMessage("מעלה תמונה...");
+    setStatusType("loading");
+
+    if (formData.imageFile && formData.imageFile.size > 5 * 1024 * 1024) {
+      setStatusMessage("התמונה גדולה מדי. נא להעלות תמונה עד 5MB");
+      setStatusType("error");
+      return;
+    }
+
+    const formDataToSend = new FormData();
+    formDataToSend.append("image", formData.imageFile);
+    
+    let imageUrl;
+    try {
+      imageUrl = await uploadImage(formDataToSend);
+    } catch (uploadError) {
+      console.error("שגיאה בהעלאת תמונה:", uploadError);
+      if (uploadError.message?.includes("limit") || uploadError.message?.includes("size")) {
+        setStatusMessage("התמונה גדולה מדי. נא להעלות תמונה עד 5MB");
+      } else {
+        setStatusMessage("אירעה שגיאה בהעלאת התמונה. נא לנסות שוב.");
+      }
+      setStatusType("error");
+      return;
+    }
+
+    //format the hobbies into an array of objects
+    const hobbies = formData.hobbies
+      .split(',')
+      .map(hobby => hobby.trim())
+      .filter(hobby => hobby)
+      .map(name => ({
+        name,
+        continueCount: 0
+      }));
+
+    // שימוש ב-Server Action
+    try {
+      const result = await addFallen({
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        birthDate: new Date(formData.birthYear),
+        deathDate: new Date(formData.deathDate),
+        hobbies,
+        about: formData.about,
+        familyWords: formData.familyMessage,
+        quote: formData.quote,
+        imageUrl,
+        email: formData.email,
+        phone: formData.phone,
+        status: "pending"
       });
 
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result.error || 'שגיאה בשמירת הנתונים');
+      if (!result.success) {
+        throw new Error(result.error);
       }
 
       setStatusMessage(`הנתונים נשמרו בהצלחה! 
@@ -163,15 +205,21 @@ export default function AddFallenPage() {
           phone: ""
         });
       }, 3000);
-
-    } catch (error) {
-      console.error("שגיאה:", error);
-      setStatusMessage(error.message || "אירעה שגיאה. נא לנסות שוב.");
+    } catch (saveError) {
+      console.error("שגיאה בשמירת נתונים:", saveError);
+      if (saveError.message?.includes("Failed to parse URL")) {
+        setStatusMessage("שגיאת שרת: בעיה בחיבור לשרת. נא לנסות שוב מאוחר יותר.");
+      } else {
+        setStatusMessage(saveError.message || "אירעה שגיאה בשמירת הנתונים. נא לנסות שוב.");
+      }
       setStatusType("error");
     }
-  };
-
-
+  } catch (error) {
+    console.error("שגיאה כללית:", error);
+    setStatusMessage(error.message || "אירעה שגיאה. נא לנסות שוב.");
+    setStatusType("error");
+  }
+};
   const handleRemoveImage = () => {
     setFormData(prev => ({
       ...prev,
@@ -180,64 +228,11 @@ export default function AddFallenPage() {
     }));
   };
 
-  //validation function
-  const validateForm = () => {
-    if (!formData.firstName) {
-      setStatusMessage("נא להזין שם פרטי");
-      setStatusType("error");
-      return false;
-    }
-
-    if (!formData.lastName) {
-      setStatusMessage("נא להזין שם משפחה");
-      setStatusType("error");
-      return false;
-    }
-
-    if (!formData.birthYear) {
-      setStatusMessage("נא להזין שנת לידה");
-      setStatusType("error");
-      return false;
-    }
-
-    if (!formData.deathDate) {
-      setStatusMessage("נא להזין תאריך פטירה");
-      setStatusType("error");
-      return false;
-    }
-
-    if (!formData.hobbies.trim()) {
-      setStatusMessage("נא להזין לפחות תחביב אחד");
-      setStatusType("error");
-      return false;
-    }
-
-    if (!formData.about.trim()) {
-      setStatusMessage("נא להזין מידע אודות הנופל");
-      setStatusType("error");
-      return false;
-    }
-
-    if (!formData.familyMessage.trim()) {
-      setStatusMessage("נא להזין מסר מהמשפחה");
-      setStatusType("error");
-      return false;
-    }
-
-    if (!formData.imageFile) {
-      setStatusMessage("נא להעלות תמונה");
-      setStatusType("error");
-      return false;
-    }
-
-    return true;
-  };
-
   return (
     <>
       <div className={styles.header}>
         <ImageWithTitle
-          imageUrl={"/profileImage.webp"}
+          imageUrl={"/AddFallenHero.webp"}
           title={"הוספת נופל למיזם"}
           subtitle={
             "הוסיפו את יקירכם למאגר של המיזם. נא למלא מידע ככל האפשר על הנופל והקשר שלו לתחביב. אנו נעבור על המידע ונפרסם אותו. במידה שנפלה טעות, נעדכן אתכם"

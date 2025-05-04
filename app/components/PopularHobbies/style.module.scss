@@ -1,35 +1,64 @@
 @use '@/styles/_vars.scss' as *;
 
 .hobbyBubblesContainer {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: $spacing-md;
-    // padding: $spacing-sm 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: $spacing-md;
+  padding: $spacing-sm 0;
 }
 
 .hobbyTagsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  width: 100%;
+}
+
+
+@media (max-width: $breakpoint-xs) {
+  .hobbyBubblesContainer {
+    display: none;
+  }
+  
+  .hobbyTagsContainer {
     display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-    width: 100%;
+  }
 }
 
-@media (max-width: $breakpoint-lg) {
-    .hobbyTagsContainer {
-        justify-content: space-evenly;
-    }
+@media (min-width: $breakpoint-xs) {
+  .hobbyBubblesContainer {
+    display: flex;
+  }
+
+  .hobbyTagsContainer {
+    display: none;
+  }
 }
 
-@media (min-width: 1300px) {
-    .hobbyTagsContainer {
-        justify-content: center;
-    }
+.alwaysVisible {
+  display: flex !important;
+}
+
+.alwaysHidden {
+  display: none !important;
 }
 
 @media (max-width: $breakpoint-md) {
-    .bubble {
-        aspect-ratio: 0 / 0 !important;
-    }
+  .bubble {
+    aspect-ratio: 0 / 0 !important;
+  }
+}
+
+@media (max-width: $breakpoint-lg) {
+  .hobbyTagsContainer {
+    justify-content: center;
+  }
+}
+
+@media (min-width: 1300px) {
+  .hobbyTagsContainer {
+    justify-content: center;
+  }
 }

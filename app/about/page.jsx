@@ -3,12 +3,8 @@ import CustomBubble from "../components/CustomBubble";
 import { metadata as layoutMetadata } from "../layout";
 import ImageWithTitle from "../components/ImageWithTitle";
 import InvitationBubble from "../components/InvitationBubble";
-import {
-  getContinuersCount,
-  getFallenCount,
-  getHobbiesCount,
-} from "@/server/service/fallen.service";
-import { connectToDB } from "@/server/connect";
+import DataBubbles from "../components/DataBubbles";
+import { Suspense } from "react";
 
 export const metadata = {
   title: "אודות",
@@ -24,19 +20,12 @@ export const metadata = {
   authors: [{ name: "Yakov Vazan", url: "https://github.com/YakovVazan" }],
 };
 
-export default async function AboutPage() {
-  await connectToDB();
-  const [fallenCount, hobbiesCount, continuersCount] = await Promise.all([
-    getFallenCount(),
-    getHobbiesCount(),
-    getContinuersCount(),
-  ]);
-
+export default function AboutPage() {
   return (
     <>
       {/* Header image section */}
       <ImageWithTitle
-        imageUrl={"/profileImage.webp"}
+        imageUrl={"/AboutHero.webp"}
         title="המסע שלנו"
         subtitle="יחד נוכל להמשיך את המסע של יקירינו ולהפוך את זכרם לפיסה חיה ומתמשכת"
       />
@@ -64,22 +53,10 @@ export default async function AboutPage() {
         </p>
       </CustomBubble>
 
-      {/* TODO - new async component */}
-      {/* Data bubbles section */}
-      <div className={styles.dataBubbles}>
-        <CustomBubble className={styles.dataBubble}>
-          <p className={styles.dataNumber}>{fallenCount}</p>
-          <p className={styles.dataText}>נופלים ונופלות מונצחים</p>
-        </CustomBubble>
-        <CustomBubble className={styles.dataBubble}>
-          <p className={styles.dataNumber}>{hobbiesCount}</p>
-          <p className={styles.dataText}>תחביבים מתועדים</p>
-        </CustomBubble>
-        <CustomBubble className={styles.dataBubble}>
-          <p className={styles.dataNumber}>{continuersCount}</p>
-          <p className={styles.dataText}>מנציחים ממשיכים בדרכם</p>
-        </CustomBubble>
-      </div>
+      {/* Data bubbles section - now with Suspense */}
+      <Suspense fallback={<div className={styles.dataBubbles}>טוען נתונים...</div>}>
+        <DataBubbles />
+      </Suspense>
 
       {/* Invitation section */}
       <InvitationBubble />

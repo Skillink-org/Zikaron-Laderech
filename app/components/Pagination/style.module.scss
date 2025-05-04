@@ -3,11 +3,8 @@
 .paginationContainer {
     width: 100%;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
-    gap: $spacing-sm;
-    margin-top: $spacing-md;
-
     .paginationButton {
         display: flex;
         color: $textColor;

@@ -1,23 +1,15 @@
-"use client";
-
 import LargeBubble from "../LargeBubble";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const InvitationBubble = () => {
-  const router = useRouter();
-
-  const handleClick = () => {
-    router.push("/all-fallen", { scroll: false });
-  };
-
   return (
-    // TODO: change to link componet instead of onClick - better seo - not need use client
-    <LargeBubble
-      title="הצטרפו להנצחה"
-      subtitle="יחד נמשיך את המורשת של יקירינו דרך התחביבים והסיפורים שהשאריו אחריהם"
-      buttonText="לעמוד הנופלים"
-      onButtonClick={handleClick}
-    />
+    <Link href="/all-fallen" scroll={false} style={{ textDecoration: 'none' }}>
+      <LargeBubble
+        title="הצטרפו להנצחה"
+        subtitle="יחד נמשיך את המורשת של יקירינו דרך התחביבים והסיפורים שהשאריו אחריהם"
+        buttonText="לעמוד הנופלים"
+      />
+    </Link>
   );
 };
 
