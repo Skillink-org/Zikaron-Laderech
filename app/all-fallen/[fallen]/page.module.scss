@@ -7,7 +7,6 @@
     gap: $spacing-md;
     height: calc(100vh - $footerHeight - $headerHeight);
 
-
     .title {
         color: $titleColor;
     }
@@ -23,7 +22,6 @@
         border-style: solid;
         border-radius: 0px 0px 10px 10px;
     }
-
 
     .rightCol {
         width: 25%;
@@ -50,23 +48,16 @@
                 color: $textColor;
                 font-family: $font-family;
             }
-
         }
     }
 
     .leftCol {
         width: 25%;
-        // justify-content: space-between;
         padding-top: 0;
     }
-
 }
 
 @media (max-width: $breakpoint-lg) {
-    .sctionsDivider {
-        // display: none !important;
-    }
-
     .totalDivider {
         flex-direction: row !important;
     }
@@ -74,25 +65,70 @@
     .fallen {
         flex-direction: column;
         height: auto;
-
+        align-items: center;
+        
         .hobbiesDivider {
             display: none !important;
         }
-
+        
         .col {
             height: auto;
             overflow-y: visible;
+            max-width: 800px;
+            width: 50%;
         }
+    }
+}
 
-        .rightCol {
+@media (max-width: $breakpoint-md2) {
+    .fallen {
+        .col {
+            width: 60%;
+            max-width: 720px;
+        }
+    }
+}
+
+@media (max-width: $breakpoint-md) {
+    .fallen {
+        .col {
+            width: 70%;
+            max-width: 650px;
+        }
+    }
+}
+
+@media (max-width: $breakpoint-sm) {
+    .fallen {
+        .col {
+            width: 80%;
+            max-width: 580px;
+        }
+    }
+}
+
+@media (max-width: $breakpoint-xs) {
+    .totalDivider {
+        flex-direction: row !important;
+    }
+
+    .fallen {
+        flex-direction: column;
+        height: auto;
+        
+        .hobbiesDivider {
+            display: none !important;
+        }
+        
+        .col {
+            height: auto;
+            overflow-y: visible;
             width: 100%;
+            padding: 15px 10px;
+            max-width: none;
         }
-
-        .middleCol {
-            width: 100%;
-        }
-
-        .leftCol {
+        
+        .rightCol, .middleCol, .leftCol {
             width: 100%;
         }
     }

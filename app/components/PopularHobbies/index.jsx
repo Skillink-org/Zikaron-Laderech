@@ -1,9 +1,10 @@
 import React from "react";
-import HobbyTag from "../HobbyTag";
 import styles from "./style.module.scss";
 import HobbyBubble from "../HobbyBubble";
 import { connectToDB } from "@/server/connect";
 import { getPopularHobbies } from "@/server/service/fallen.service";
+import HobbyTag from "../HobbyTag";
+import MobileFilterDropdown from "../MobileFilterDropdown/Index";
 
 export default async function PopularHobbies({ 
   displayMode = "home",
@@ -17,11 +18,15 @@ export default async function PopularHobbies({
   }`;
 
   const tagsClasses = `${styles.hobbyTagsContainer} ${
-    displayMode === "fallen" ? styles.alwaysVisible : ""
+    displayMode === "fallen" ? styles.desktopOnly : ""
   }`;
+
+  // visible only on mobile fallen page
+  const isFallenPage = displayMode === "fallen";
 
   return (
     <>
+      {/* bubbles on regular page */}
       <div className={bubblesClasses}>
         {hobbies.map((hobby, index) => (
           <HobbyBubble
@@ -36,6 +41,12 @@ export default async function PopularHobbies({
         ))}
       </div>
 
+      {/* {mobile menu only visible on fallen page} */}
+      {isFallenPage && (
+        <MobileFilterDropdown hobbies={hobbies} isClickable={isClickable} />
+      )}
+
+      {/* tags - if it is a fallen page, or if it's not a fallen page */}
       <div className={tagsClasses}>
         {hobbies.map((hobby, index) => (
           <HobbyTag

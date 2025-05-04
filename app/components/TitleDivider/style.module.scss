@@ -33,6 +33,12 @@
 @media (max-width: $breakpoint-md) {
   .container {
     flex-direction: column;
+    gap: 10px;
+
+    .title {
+      text-align: center;
+    }
+
     
     &.lineOnly {
       flex-direction: row;

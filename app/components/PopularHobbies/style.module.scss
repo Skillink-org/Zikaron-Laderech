@@ -16,14 +16,19 @@
   width: 100%;
 }
 
+.desktopOnly {
+  @media (max-width: $breakpoint-xs) {
+    display: none !important;
+  }
+  
+  @media (min-width: $breakpoint-xs) {
+    display: flex !important;
+  }
+}
 
 @media (max-width: $breakpoint-xs) {
   .hobbyBubblesContainer {
     display: none;
-  }
-  
-  .hobbyTagsContainer {
-    display: flex;
   }
 }
 

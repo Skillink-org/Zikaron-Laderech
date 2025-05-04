@@ -25,10 +25,22 @@ export default function HobbyTag({
   const handleClick = () => {
     if (!isClickable) return;
 
-    const params = getParams();
-    params.delete("page");
-    params.set("q", hobby);
+    const searchInput = document.querySelector('input[name="q"]');
+    if (searchInput) {
+      searchInput.value = hobby;
+      
+      const event = new Event('change', { bubbles: true });
+      searchInput.dispatchEvent(event);
+    }
 
+    const params = new URLSearchParams();
+    params.set("q", hobby);
+    
+    const currentParams = getParams();
+    if (currentParams.has("sort")) {
+      params.set("sort", currentParams.get("sort"));
+    }
+    
     router.push(`?${params.toString()}`, { scroll: false });
   };
 
