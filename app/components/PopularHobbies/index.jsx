@@ -5,16 +5,19 @@ import HobbyBubble from "../HobbyBubble";
 import { connectToDB } from "@/server/connect";
 import { getPopularHobbies } from "@/server/service/fallen.service";
 
-export default async function PopularHobbies({ containerType = "tag" }) {
+export default async function PopularHobbies({ 
+  displayMode = "home",
+  isClickable = false
+}) {
   await connectToDB();
   const hobbies = await getPopularHobbies();
 
-  const tagsClasses = `${styles.hobbyTagsContainer} ${
-    containerType === "tag" ? styles.showTagsDesktop : ""
-  }`;
-  
   const bubblesClasses = `${styles.hobbyBubblesContainer} ${
-    containerType === "tag" ? styles.hideBubblesDesktop : ""
+    displayMode === "fallen" ? styles.alwaysHidden : ""
+  }`;
+
+  const tagsClasses = `${styles.hobbyTagsContainer} ${
+    displayMode === "fallen" ? styles.alwaysVisible : ""
   }`;
 
   return (
@@ -26,6 +29,7 @@ export default async function PopularHobbies({ containerType = "tag" }) {
             plusMode={false}
             className={styles.bubble}
             title={`${hobby.fallenCount} נופלים`}
+            isClickable={isClickable}
           >
             {hobby._id}
           </HobbyBubble>
@@ -38,6 +42,7 @@ export default async function PopularHobbies({ containerType = "tag" }) {
             hobby={hobby._id}
             key={index}
             title={`${hobby.fallenCount} נופלים`}
+            isClickable={isClickable}
           />
         ))}
       </div>

@@ -23,7 +23,7 @@ const HomePage = () => {
       <TitleDivider variant="line"/>
       {/* Popular hobbies section */}
       <Suspense fallback={<PopularHobbiesSkeleton containerType="bubble" />}>
-        <PopularHobbies containerType="bubble" />
+      <PopularHobbies displayMode="home" isClickable={false} />
       </Suspense>
       <TitleDivider />
 

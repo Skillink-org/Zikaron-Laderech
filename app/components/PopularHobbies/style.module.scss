@@ -1,71 +1,64 @@
 @use '@/styles/_vars.scss' as *;
 
-/* Base styles for bubble container */
 .hobbyBubblesContainer {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: $spacing-md;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: $spacing-md;
+  padding: $spacing-sm 0;
 }
 
-/* Base styles for tags container */
 .hobbyTagsContainer {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center;
-    width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  width: 100%;
 }
 
-/* Rules by screen size */
 
-/* For all screens except the smallest (mobile): Show bubbles, hide tags */
-@media (min-width: $breakpoint-xs) {
-    .hobbyBubblesContainer {
-        display: flex;
-    }
-    
-    .hobbyTagsContainer {
-        display: none;
-    }
-    
-    /* Exception: If containerType="tag", show tags on larger screens too */
-    .forceTagsDisplay {
-        display: flex !important;
-    }
-    
-    /* Exception: If containerType="tag", hide bubbles on larger screens */
-    .forceBubblesHide {
-        display: none !important;
-    }
-}
-
-/* For the smallest screens (mobile): Show tags, hide bubbles */
 @media (max-width: $breakpoint-xs) {
-    .hobbyBubblesContainer {
-        display: none;
-    }
-    
-    .hobbyTagsContainer {
-        display: flex;
-    }
+  .hobbyBubblesContainer {
+    display: none;
+  }
+  
+  .hobbyTagsContainer {
+    display: flex;
+  }
 }
 
-/* Additional responsive styles */
-@media (max-width: $breakpoint-lg) {
-    .hobbyTagsContainer {
-        // justify-content: space-evenly;
-    }
+@media (min-width: $breakpoint-xs) {
+  .hobbyBubblesContainer {
+    display: flex;
+  }
+
+  .hobbyTagsContainer {
+    display: none;
+  }
 }
 
-@media (min-width: 1300px) {
-    .hobbyTagsContainer {
-        justify-content: center;
-    }
+.alwaysVisible {
+  display: flex !important;
+}
+
+.alwaysHidden {
+  display: none !important;
 }
 
 @media (max-width: $breakpoint-md) {
-    .bubble {
-        aspect-ratio: 0 / 0 !important;
-    }
+  .bubble {
+    aspect-ratio: 0 / 0 !important;
+  }
+}
+
+@media (max-width: $breakpoint-lg) {
+  .hobbyTagsContainer {
+    justify-content: center;
+  }
+}
+
+@media (min-width: 1300px) {
+  .hobbyTagsContainer {
+    justify-content: center;
+  }
 }

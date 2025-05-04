@@ -8,8 +8,18 @@
     border-radius: 0px 0px 15px 15px;
     padding: 10px;
     width: 250px;
+    display: flex;
+    flex-direction: column;
+    max-width: 280px;
+    flex-grow: 1;
 
     &:hover {
         cursor: pointer;
+    }
+}
+
+@media (max-width: $breakpoint-xs) {
+    .cardBackground {
+        width: 100%;
     }
 }

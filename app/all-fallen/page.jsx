@@ -38,8 +38,7 @@ export default async function AllFallenPage({ searchParams }) {
       <TitleDivider title={"סינון לפי תחביבים נפוצים"} />
 
       {/* Hobbies filter section */}
-      <PopularHobbies containerType="tag" />
-
+      <PopularHobbies displayMode="fallen" isClickable={true} />
       {/* Fallen list and pagination section */}
       <div className={styles.itemsContainer}>
         <Suspense fallback={<FallenListSkeleton limit={limit} />}>
