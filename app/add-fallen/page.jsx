@@ -163,7 +163,6 @@ const handleSubmit = async (e) => {
         continueCount: 0
       }));
 
-    // שימוש ב-Server Action
     try {
       const result = await addFallen({
         firstName: formData.firstName,
@@ -370,7 +369,7 @@ const handleSubmit = async (e) => {
                 required
               />
               <input
-                type="number"
+                type="tel"
                 name="phone"
                 value={formData.phone}
                 onChange={handleChange}

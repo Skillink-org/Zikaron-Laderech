@@ -28,10 +28,18 @@ export default function HobbyBubble({
       // אם יש פונקציית onClick מבחוץ, משתמשים בה
       onClick();
     } else {
-      // אחרת, מנווטים לעמוד הנופלים עם פרמטר התחביב
-      const params = new URLSearchParams(searchParams);
-      params.delete("page");
-      params.set("hobby", children);
+      // יצירת אובייקט פרמטרים חדש
+      const params = new URLSearchParams();
+      
+      // הנקודה החשובה: אנחנו מגדירים את התחביב כפרמטר q
+      // זה יחליף את השם שהיה בתיבת החיפוש בתחביב
+      params.set("q", children);
+      
+      // שמירה על פרמטרים אחרים שאינם קשורים לחיפוש
+      const currentParams = new URLSearchParams(searchParams);
+      if (currentParams.has("sort")) {
+        params.set("sort", currentParams.get("sort"));
+      }
 
       router.push(`/fallen?${params.toString()}`, { scroll: false });
     }

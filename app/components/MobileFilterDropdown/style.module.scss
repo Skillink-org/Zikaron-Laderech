@@ -1,0 +1,65 @@
+@use '@/styles/_vars.scss' as *;
+
+.mobileMenuContainer {
+  width: 100%;
+  position: relative;
+  margin: 10px 0;
+  display: none;
+}
+
+.dropdownButton {
+  width: 100%;
+  padding: 10px;
+  background-color: #f5f5f5;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  text-align: center;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+  &:hover {
+    background-color: #eaeaea;
+  }
+  
+  &.active {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    background-color: #eaeaea;
+  }
+}
+
+.dropdownIcon {
+  font-size: 0.8rem;
+  margin-right: 4px;
+}
+
+.dropdownContent {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  border: 1px solid #e0e0e0;
+  border-top: none;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  padding: 10px;
+  background-color: #ffffff;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+@media (max-width: $breakpoint-xs) {
+  .mobileMenuContainer {
+    display: block;
+  }
+}
+
+@media (min-width: $breakpoint-xs) {
+  .mobileMenuContainer {
+    display: none;
+  }
+}
