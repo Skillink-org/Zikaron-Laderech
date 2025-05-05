@@ -116,7 +116,7 @@ export async function getFilteredFallenByNameAndStatus(query, limit = 0, skip = 
   };
 }
 
-export async function getPopularHobbies() {
+export async function getPopularHobbies(limit = 10) {
   return await Fallen.aggregate([
     { $match: { status: "approved" } },
     { $unwind: "$hobbies" },
@@ -127,7 +127,7 @@ export async function getPopularHobbies() {
       },
     },
     { $sort: { fallenCount: -1, _id: 1 } },
-    { $limit: 10 },
+    { $limit: limit },
   ]);
 }
 
@@ -194,20 +194,58 @@ export async function deleteFallen(id) {
   return await Fallen.findByIdAndDelete(id);
 }
 
+// async function generateSlug(firstName, lastName) {
+
+//   let baseSlug = `${firstName} ${lastName}`.replace(/\s+/g, '-');
+//   let finalSlug = baseSlug;
+//   let counter = 1;
+
+//   while (await Fallen.findOne({ slug: finalSlug })) {
+//     finalSlug = `${baseSlug} ${counter}`.replace(/\s+/g, '-');
+//     counter++;
+//   }
+
+//   return finalSlug
+//     .toLowerCase()
+//     .replace(/\s+/g, '-');
+// };
+
 async function generateSlug(firstName, lastName) {
-  let baseSlug = `${firstName} ${lastName}`.replace(/\s+/g, '-');
-  let finalSlug = baseSlug;
-  let counter = 1;
-
-  while (await Fallen.findOne({ slug: finalSlug })) {
-    finalSlug = `${baseSlug} ${counter}`.replace(/\s+/g, '-');
-    counter++;
+  // Map for converting Hebrew characters to Latin
+  function hebrewToLatinInitials(name) {
+    const hebrewToLatinMap = {
+      'א': 'a', 'ב': 'b', 'ג': 'g', 'ד': 'd', 'ה': 'h', 'ו': 'v', 'ז': 'z', 
+      'ח': 'ch', 'ט': 't', 'י': 'y', 'כ': 'k', 'ל': 'l', 'מ': 'm', 'נ': 'n', 
+      'ס': 's', 'ע': 'a', 'פ': 'p', 'צ': 'ts', 'ק': 'k', 'ר': 'r', 'ש': 'sh', 'ת': 't'
+    };
+    
+    // Get first character of the name
+    if (!name || name.length === 0) return '';
+    const firstChar = name.charAt(0);
+    return hebrewToLatinMap[firstChar] || firstChar;
   }
-
-  return finalSlug
-    .toLowerCase()
-    .replace(/\s+/g, '-');
-};
+  
+  // Create initials from names
+  const firstInitial = hebrewToLatinInitials(firstName);
+  const lastInitial = hebrewToLatinInitials(lastName);
+  const baseSlug = `${firstInitial}${lastInitial}`;
+  
+  // Find the last sequential number used for these initials
+  const existingSlugs = await Fallen.find({ 
+    slug: new RegExp(`^${baseSlug}\\d+$`) 
+  }).sort({ slug: -1 }).limit(1);
+  
+  // Determine the next counter number
+  let counter = 1;
+  if (existingSlugs.length > 0) {
+    const lastSlug = existingSlugs[0].slug;
+    const lastNumber = parseInt(lastSlug.replace(baseSlug, ''), 10);
+    counter = isNaN(lastNumber) ? 1 : lastNumber + 1;
+  }
+  
+  // Generate final slug
+  return `${baseSlug}${counter}`.toLowerCase();
+}
 
 export async function addFallen(fallenData) {
   try {

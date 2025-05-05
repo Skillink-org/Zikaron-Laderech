@@ -8,10 +8,11 @@ import MobileFilterDropdown from "../MobileFilterDropdown/Index";
 
 export default async function PopularHobbies({ 
   displayMode = "home",
-  isClickable = false
+  isClickable = false,
+  limit = 10
 }) {
   await connectToDB();
-  const hobbies = await getPopularHobbies();
+  const hobbies = await getPopularHobbies(limit);
 
   const bubblesClasses = `${styles.hobbyBubblesContainer} ${
     displayMode === "fallen" ? styles.alwaysHidden : ""
