@@ -1,15 +1,13 @@
 "use server";
 
-import { connect, connectToDBToDB } from '@/server/connect';///את זה סידרתי 
+import { connect, connectToDBToDB } from '@/server/connect';
 import ContactForm from "@/server/models/contact.model";
 import nodemailer from "nodemailer";
 
-// פונקציה לבדיקה אם אימייל תקין
 function isValidEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
-// פונקציה לבדיקה אם מספר טלפון תקין (לישראל)
 function isValidPhone(phone) {
   return /^(\+972|0)([23489]|5[0-9])[0-9]{7}$/.test(phone);
 }
@@ -23,7 +21,6 @@ export async function submitContactForm(formData) {
     message: formData.get("message"),
   };
 
-  // בדיקות תקינות ידניות
   if (!data.fullName || data.fullName.length < 2) {
     return { error: "שם מלא חייב להכיל לפחות 2 תווים" };
   }
@@ -44,7 +41,6 @@ export async function submitContactForm(formData) {
     await connectToDB();
     const newContact = await ContactForm.create(data);
     
-    // שליחת מייל אישור
     await sendConfirmationEmail(data.fullName, data.email, data.message);
 
     return { success: "ההודעה נשלחה בהצלחה!" };

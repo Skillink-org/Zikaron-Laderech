@@ -2,6 +2,7 @@
 
 import { auth } from "@/auth";
 import * as service from "@/server/service/fallen.service.js";
+import Fallen from "../models/fallen.model";
 
 export async function getFallenById(id) {
   const response = await service.getFallenById(id);
@@ -46,11 +47,59 @@ export async function deleteFallen(id) {
 }
 
 export async function approveFallen(id) {
-  return await service.approveFallen(id);
+  try {
+    // הקריאה לפונקציית השירות המקורית
+    const fallen = await Fallen.findByIdAndUpdate(
+      id,
+      { status: "approved" },
+      { new: true }
+    );
+
+    if (!fallen) throw new Error("Fallen not found");
+    
+    try {
+      // שימוש בפונקציה מקובץ email.js
+      const { sendApprovalNotification } = await import('@/lib/email');
+      await sendApprovalNotification(fallen, fallen.slug);
+    } catch (emailError) {
+      console.error("Error sending approval email:", emailError);
+      // ממשיכים גם אם יש שגיאה בשליחת האימייל
+    }
+
+    // חשוב! ייבוא פונקציית serializer
+    const { serializer } = await import("@/lib/serializer");
+    return serializer(fallen);
+  } catch (error) {
+    console.error("Error in approveFallen:", error);
+    throw error;
+  }
 }
 
 export async function rejectFallen(id, note) {
-  return await service.rejectFallen(id, note);
+  try {
+    const fallen = await Fallen.findByIdAndUpdate(
+      id,
+      { status: "rejected" },
+      { new: true }
+    );
+
+    if (!fallen) throw new Error("Fallen not found");
+    
+    try {
+      // שימוש בפונקציה מקובץ email.js
+      const { sendRejectionNotification } = await import('@/lib/email');
+      await sendRejectionNotification(fallen, note);
+    } catch (emailError) {
+      console.error("Error sending rejection email:", emailError);
+    }
+
+    // חשוב! ייבוא פונקציית serializer
+    const { serializer } = await import("@/lib/serializer");
+    return serializer(fallen);
+  } catch (error) {
+    console.error("Error in rejectFallen:", error);
+    throw error;
+  }
 }
 
 export async function joinHobby(fallenId, hobby) {

@@ -35,18 +35,45 @@ export default function AddFallenPage() {
   const [statusMessage, setStatusMessage] = useState("");
   const [statusType, setStatusType] = useState(""); // 'success' or 'error'
 
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+
+  //   if (name === "firstName" || name === "lastName") {
+  //     if (!/^[a-zA-Zא-ת\s]*$/.test(value)) return;
+  //   }
+
+  //   if (name === "birthYear") {
+  //     const numValue = parseInt(value, 10);
+  //     if (numValue < 0 || numValue > currentYear) return;
+  //   }
+
+  //   if (name === "hobbies") {
+  //     const hobbiesArray = value
+  //       .split(",")
+  //       .map((hobby) => hobby.trim())
+  //       .filter((hobby) => hobby !== "");
+  //     if (hobbiesArray.length > 6) return;
+  //   }
+
+  //   if (name === "email" && value) {
+  //     if (!/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(value)) return;
+  //   }
+
+  //   setFormData({ ...formData, [name]: value });
+  // };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-
+  
     if (name === "firstName" || name === "lastName") {
       if (!/^[a-zA-Zא-ת\s]*$/.test(value)) return;
     }
-
+  
     if (name === "birthYear") {
       const numValue = parseInt(value, 10);
       if (numValue < 0 || numValue > currentYear) return;
     }
-
+  
     if (name === "hobbies") {
       const hobbiesArray = value
         .split(",")
@@ -54,11 +81,12 @@ export default function AddFallenPage() {
         .filter((hobby) => hobby !== "");
       if (hobbiesArray.length > 6) return;
     }
-
-    if (name === "email" && value) {
-      if (!/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(value)) return;
+  
+    if (name === "email" && value.includes('@')) {
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+      }
     }
-
+  
     setFormData({ ...formData, [name]: value });
   };
 
@@ -102,7 +130,7 @@ export default function AddFallenPage() {
       };
 
       fallenSchema.parse(dataToValidate);
-      
+
       if (!formData.imageFile) {
         setStatusMessage("נא להעלות תמונה");
         setStatusType("error");
@@ -121,104 +149,110 @@ export default function AddFallenPage() {
     }
   };
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  
-  if (!validateForm()) return;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  try {
-    setStatusMessage("מעלה תמונה...");
-    setStatusType("loading");
+    if (!validateForm()) return;
 
-    if (formData.imageFile && formData.imageFile.size > 5 * 1024 * 1024) {
-      setStatusMessage("התמונה גדולה מדי. נא להעלות תמונה עד 5MB");
-      setStatusType("error");
-      return;
-    }
-
-    const formDataToSend = new FormData();
-    formDataToSend.append("image", formData.imageFile);
-    
-    let imageUrl;
     try {
-      imageUrl = await uploadImage(formDataToSend);
-    } catch (uploadError) {
-      console.error("שגיאה בהעלאת תמונה:", uploadError);
-      if (uploadError.message?.includes("limit") || uploadError.message?.includes("size")) {
+      setStatusMessage("מעלה תמונה...");
+      setStatusType("loading");
+
+      if (formData.imageFile && formData.imageFile.size > 5 * 1024 * 1024) {
         setStatusMessage("התמונה גדולה מדי. נא להעלות תמונה עד 5MB");
-      } else {
-        setStatusMessage("אירעה שגיאה בהעלאת התמונה. נא לנסות שוב.");
-      }
-      setStatusType("error");
-      return;
-    }
-
-    //format the hobbies into an array of objects
-    const hobbies = formData.hobbies
-      .split(',')
-      .map(hobby => hobby.trim())
-      .filter(hobby => hobby)
-      .map(name => ({
-        name,
-        continueCount: 0
-      }));
-
-    try {
-      const result = await addFallen({
-        firstName: formData.firstName,
-        lastName: formData.lastName,
-        birthDate: new Date(formData.birthYear),
-        deathDate: new Date(formData.deathDate),
-        hobbies,
-        about: formData.about,
-        familyWords: formData.familyMessage,
-        quote: formData.quote,
-        imageUrl,
-        email: formData.email,
-        phone: formData.phone,
-        status: "pending"
-      });
-
-      if (!result.success) {
-        throw new Error(result.error);
+        setStatusType("error");
+        return;
       }
 
-      setStatusMessage(`הנתונים נשמרו בהצלחה! 
-        ${result.data.firstName} ${result.data.lastName} נוסף למאגר וממתין לאישור.`);
-      setStatusType("success");
+      const formDataToSend = new FormData();
+      formDataToSend.append("image", formData.imageFile);
 
-      //reset the form
-      setTimeout(() => {
-        setFormData({
-          firstName: "",
-          lastName: "",
-          birthYear: "",
-          deathDate: "",
-          hobbies: "",
-          about: "",
-          familyMessage: "",
-          quote: "",
-          image: null,
-          imageFile: null,
-          email: "",
-          phone: ""
+      let imageUrl;
+      try {
+        imageUrl = await uploadImage(formDataToSend);
+      } catch (uploadError) {
+        console.error("שגיאה בהעלאת תמונה:", uploadError);
+        if (uploadError.message?.includes("limit") || uploadError.message?.includes("size")) {
+          setStatusMessage("התמונה גדולה מדי. נא להעלות תמונה עד 5MB");
+        } else {
+          setStatusMessage("אירעה שגיאה בהעלאת התמונה. נא לנסות שוב.");
+        }
+        setStatusType("error");
+        return;
+      }
+
+      //format the hobbies into an array of objects
+      const hobbies = formData.hobbies
+        .split(',')
+        .map(hobby => hobby.trim())
+        .filter(hobby => hobby)
+        .map(name => ({
+          name,
+          continueCount: 0
+        }));
+
+      try {
+        const result = await addFallen({
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          birthDate: new Date(formData.birthYear),
+          deathDate: new Date(formData.deathDate),
+          hobbies,
+          about: formData.about,
+          familyWords: formData.familyMessage,
+          quote: formData.quote,
+          imageUrl,
+          email: formData.email,
+          phone: formData.phone,
+          status: "pending"
         });
-      }, 3000);
-    } catch (saveError) {
-      console.error("שגיאה בשמירת נתונים:", saveError);
-      if (saveError.message?.includes("Failed to parse URL")) {
-        setStatusMessage("שגיאת שרת: בעיה בחיבור לשרת. נא לנסות שוב מאוחר יותר.");
-      } else {
-        setStatusMessage(saveError.message || "אירעה שגיאה בשמירת הנתונים. נא לנסות שוב.");
+
+        if (!result.success) {
+          throw new Error(result.error);
+        }
+
+        setStatusMessage(`הנתונים נשמרו בהצלחה! 
+  ${result.data.firstName} ${result.data.lastName} נוסף למאגר וממתין לאישור.`);
+        setStatusType("success");
+
+        setTimeout(() => {
+          setStatusMessage("");
+          setStatusType("");
+        }, 5000);
+
+        //reset the form
+        setTimeout(() => {
+          setFormData({
+            firstName: "",
+            lastName: "",
+            birthYear: "",
+            deathDate: "",
+            hobbies: "",
+            about: "",
+            familyMessage: "",
+            quote: "",
+            image: null,
+            imageFile: null,
+            email: "",
+            phone: ""
+          });
+        }, 3000);
+
+      } catch (saveError) {
+        console.error("שגיאה בשמירת נתונים:", saveError);
+        if (saveError.message?.includes("Failed to parse URL")) {
+          setStatusMessage("שגיאת שרת: בעיה בחיבור לשרת. נא לנסות שוב מאוחר יותר.");
+        } else {
+          setStatusMessage(saveError.message || "אירעה שגיאה בשמירת הנתונים. נא לנסות שוב.");
+        }
+        setStatusType("error");
       }
+    } catch (error) {
+      console.error("שגיאה כללית:", error);
+      setStatusMessage(error.message || "אירעה שגיאה. נא לנסות שוב.");
       setStatusType("error");
     }
-  } catch (error) {
-    console.error("שגיאה כללית:", error);
-    setStatusMessage(error.message || "אירעה שגיאה. נא לנסות שוב.");
-    setStatusType("error");
-  }
-};
+  };
   const handleRemoveImage = () => {
     setFormData(prev => ({
       ...prev,

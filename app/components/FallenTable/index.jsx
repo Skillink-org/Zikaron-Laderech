@@ -2,31 +2,22 @@
 
 import { useEffect, useState } from "react";
 import Modal from "react-modal";
-
 import styles from './style.module.scss';
-
 import Image from "next/image";
-
 import FallenForm from "../FallenForm";
 import StatusMessage from "../StatusMessage";
 import Pagination from "../Pagination";
-
-import { connectToDB } from "@/server/connect";
-import {getAllFallen, getFilteredFallenByNameAndStatus , approveFallen, rejectFallen, updateFallenById } from "@/server/actions/fallen.action";
+import {getAllFallen, getFilteredFallenByNameAndStatus, approveFallen, rejectFallen, updateFallenById } from "@/server/actions/fallen.action";
 import { uploadImage } from "@/server/actions/uploadImage.action";
-
 import { useSearchParams } from "next/navigation";
-
 import { useDebouncedCallback } from "use-debounce";
-
-// TODO-YOSEF: talk with Refael about popup system - with zustand
 
 export default function FallenTable() {
     const searchParams = useSearchParams();
-
     const [searchQuery, setSearchQuery] = useState('');
     const [status, setStatus] = useState("all");
     const [previousStatus, setPreviousStatus] = useState('');
+    const [actionStates, setActionStates] = useState({});
 
     const [data, setData] = useState([]);
     const currentPage = Number(searchParams.get("page")) || 1;
@@ -121,26 +112,46 @@ export default function FallenTable() {
 
     const approveFallenById = async (id) => {
         try {
-            // await connectToDB();
+            setActionStates(prev => ({
+                ...prev,
+                [id]: { ...prev[id], isProcessing: true }
+            }));
 
             const approvedFallen = await approveFallen(id);
 
             if (approvedFallen) {
                 console.log(`The profile ${approvedFallen.firstName} ${approvedFallen.lastName} has been approved.`);
+                
                 setData(prevData => prevData.map(fallen =>
-                    fallen._id === id ? approvedFallen : fallen
+                    fallen._id === id ? { ...fallen, status: "approved" } : fallen
                 ));
+                
                 setStatusMessage("הפרופיל אושר בהצלחה");
                 setStatusType("success");
+                
+                setActionStates(prev => ({
+                    ...prev,
+                    [id]: { isProcessing: false, isCompleted: true, action: 'approved' }
+                }));
             } else {
                 console.error("Approval failed");
                 setStatusMessage("אישור הפרופיל נכשל");
                 setStatusType("error");
+                
+                setActionStates(prev => ({
+                    ...prev,
+                    [id]: { isProcessing: false }
+                }));
             }
         } catch (error) {
             console.error("Error occurred:", error);
             setStatusMessage("אישור הפרופיל נכשל");
             setStatusType("error");
+            
+            setActionStates(prev => ({
+                ...prev,
+                [id]: { isProcessing: false }
+            }));
         }
 
         setTimeout(() => {
@@ -157,6 +168,7 @@ export default function FallenTable() {
         setSelectedProfileId(id);
         setIsRejectFallenModalOpen(true);
     };
+    
     const closeRejectFallenModal = () => {
         setSelectedProfileId('');
         setNote('');
@@ -165,26 +177,46 @@ export default function FallenTable() {
 
     const rejectFallenById = async (id) => {
         try {
-            // await connectToDB();
+            setActionStates(prev => ({
+                ...prev,
+                [id]: { ...prev[id], isProcessing: true }
+            }));
 
             const rejectedFallen = await rejectFallen(id, note);
 
             if (rejectedFallen) {
                 console.log(`The profile of ${rejectedFallen.firstName} ${rejectedFallen.lastName} has been rejected.`);
+                
                 setData(prevData => prevData.map(fallen =>
-                    fallen._id === id ? rejectedFallen : fallen
+                    fallen._id === id ? { ...fallen, status: "rejected" } : fallen
                 ));
+                
                 setStatusMessage("הפרופיל נדחה בהצלחה");
                 setStatusType("success");
+                
+                setActionStates(prev => ({
+                    ...prev,
+                    [id]: { isProcessing: false, isCompleted: true, action: 'rejected' }
+                }));
             } else {
                 console.error('Error rejecting fallen');
                 setStatusMessage("דחיית הפרופיל נכשלה");
                 setStatusType("error");
+                
+                setActionStates(prev => ({
+                    ...prev,
+                    [id]: { isProcessing: false }
+                }));
             }
         } catch (error) {
             console.error('Error:', error);
             setStatusMessage("דחיית הפרופיל נכשלה");
             setStatusType("error");
+            
+            setActionStates(prev => ({
+                ...prev,
+                [id]: { isProcessing: false }
+            }));
         }
 
         setSelectedProfileId('');
@@ -199,10 +231,12 @@ export default function FallenTable() {
 
     const [selectedProfile, setSelectedProfile] = useState({});
     const [isEditFallenOpen, setIsEditFallenOpen] = useState(false);
+    
     const openEditFallenModal = (profile) => {
         setSelectedProfile(profile);
         setIsEditFallenOpen(true)
     };
+    
     const closeEditFallenModal = () => {
         setSelectedProfile({});
         setIsEditFallenOpen(false);
@@ -210,8 +244,6 @@ export default function FallenTable() {
 
     const editFallenProfile = async (formData) => {
         try {
-            // await connectToDB();
-
             const jsonString = formData.get('data');
             if (!jsonString) {
                 throw new Error("Missing data payload.");
@@ -235,7 +267,7 @@ export default function FallenTable() {
                 console.log("Data updated successfully:", updatedFallen);
                 setData(prevData =>
                     prevData.map(fallenItem =>
-                        fallenItem._id === fallen._id ? updatedFallen : fallenItem
+                        fallenItem._id === data._id ? updatedFallen : fallenItem
                     )
                 );
             } else {
@@ -247,7 +279,6 @@ export default function FallenTable() {
 
         closeEditFallenModal();
     };
-
 
     return (
         <>
@@ -290,8 +321,6 @@ export default function FallenTable() {
                     className={styles.filterButton}
                     onClick={toggleSortOrder}
                 >
-
-
                     {sortOrder === 'asc' ?
                         <Image
                             src="/upArrow.svg"
@@ -350,7 +379,6 @@ export default function FallenTable() {
                     </tr>
                 </thead>
                 <tbody>
-
                     {data.length > 0 ?
                         data.map((item, index) => (
                             <tr key={item._id}>
@@ -368,13 +396,21 @@ export default function FallenTable() {
                                     <button
                                         type="button"
                                         onClick={() => approveFallenById(item._id)}
+                                        disabled={actionStates[item._id]?.isProcessing || item.status === "approved"}
+                                        className={`${styles.actionButton} ${item.status === "approved" ? styles.completed : ""}`}
                                     >
-                                        <Image
-                                            src="/approveIcon.svg"
-                                            alt="Approve icon"
-                                            width={20}
-                                            height={20}
-                                        />
+                                        {actionStates[item._id]?.isProcessing ? (
+                                            <div className={styles.loadingSpinner}></div>
+                                        ) : item.status === "approved" ? (
+                                            <div className={styles.approvedIcon}>✓</div>
+                                        ) : (
+                                            <Image
+                                                src="/approveIcon.svg"
+                                                alt="Approve icon"
+                                                width={20}
+                                                height={20}
+                                            />
+                                        )}
                                     </button>
 
                                     <button
@@ -392,13 +428,21 @@ export default function FallenTable() {
                                     <button
                                         type="button"
                                         onClick={() => openRejectFallenModal(item._id)}
+                                        disabled={actionStates[item._id]?.isProcessing || item.status === "rejected"}
+                                        className={`${styles.actionButton} ${item.status === "rejected" ? styles.completed : ""}`}
                                     >
-                                        <Image
-                                            src="/rejectIcon.svg"
-                                            alt="Reject icon"
-                                            width={20}
-                                            height={20}
-                                        />
+                                        {actionStates[item._id]?.isProcessing ? (
+                                            <div className={styles.loadingSpinner}></div>
+                                        ) : item.status === "rejected" ? (
+                                            <div className={styles.rejectedIcon}>✕</div>
+                                        ) : (
+                                            <Image
+                                                src="/rejectIcon.svg"
+                                                alt="Reject icon"
+                                                width={20}
+                                                height={20}
+                                            />
+                                        )}
                                     </button>
                                 </td>
                             </tr>
@@ -406,13 +450,12 @@ export default function FallenTable() {
                         :
                         <tr>
                             <td colSpan="4" >
-                                <StatusMessage
+                                <StatusMessage 
                                     message="לא נמצאו נופלים התואמים את החיפוש"
                                     type="error"
                                 />
                             </td>
                         </tr>
-
                     }
                 </tbody>
             </table>
@@ -421,7 +464,7 @@ export default function FallenTable() {
 
             {statusMessage && (
                 <div className={styles.statusMessage}>
-                    <StatusMessage message={statusMessage} type={statusType} />
+                    <StatusMessage message={statusMessage} type={statusType} mode="toast" />
                 </div>
             )}
 
@@ -444,8 +487,7 @@ export default function FallenTable() {
 
                 <h2>דחיית פרופיל</h2>
 
-                <label className={styles.fullWidthLabel}
-                >
+                <label className={styles.fullWidthLabel}>
                     סיבת דחיה:
                     <textarea
                         value={note}
@@ -458,5 +500,5 @@ export default function FallenTable() {
 
             <FallenForm isOpen={isEditFallenOpen} contentLabel={"עריכת נופל"} profile={selectedProfile} onSave={editFallenProfile} onCancel={closeEditFallenModal} />
         </>
-    )
+    );
 }
