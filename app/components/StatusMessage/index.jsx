@@ -16,7 +16,8 @@ import styles from './style.module.scss';
 
 const StatusMessage = ({ message, type, mode = 'default', onHide }) => {
     useEffect(() => {
-        // אם במצב טוסט, נפעיל טיימר להעלמה אוטומטית
+        //If in toast mode, set a timer to automatically hide
+
         if (mode === 'toast' && onHide) {
             const timer = setTimeout(() => {
                 onHide();
