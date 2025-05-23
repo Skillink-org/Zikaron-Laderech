@@ -21,10 +21,10 @@ const ContactSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-}, { timestamps: true }); // מוסיף createdAt ו-updatedAt
+}, { timestamps: true }); // Adds createdAt and updatedAt fields
 
-// אם המודל כבר קיים, נמנע יצירה מחדש
-// שם המודל במסד נתונים - Contact
+// Prevent model recreation if it already exists
+// Model name in database - Contact
 const ContactForm = mongoose.models.ContactForm || mongoose.model("ContactForm", ContactSchema);
 
 export default ContactForm;

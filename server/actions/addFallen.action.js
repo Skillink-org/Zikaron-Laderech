@@ -8,7 +8,7 @@ import { revalidatePath } from "next/cache";
  */
 export async function addFallen(fallenData) {
   try {
-    // שליחת הנתונים לשרת - חייב להשתמש ב-URL מלא בסביבת שרת
+    // Send data to server - must use full URL in server environment
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
     const response = await fetch(`${apiUrl}/api/add-fallen`, {
       method: 'POST',
@@ -16,7 +16,7 @@ export async function addFallen(fallenData) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(fallenData),
-      // להוסיף אופציות חשובות לשרת
+      // Add important server options
       cache: 'no-store',
     });
 
@@ -27,7 +27,7 @@ export async function addFallen(fallenData) {
 
     const result = await response.json();
 
-    // לאחר שמירה מוצלחת, מרעננים את הנתיבים הרלוונטיים
+    // After successful save, refresh relevant paths
     revalidatePath('/');
     revalidatePath('/fallen');
     

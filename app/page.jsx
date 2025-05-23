@@ -5,8 +5,8 @@ import InvitationBubble from "./components/InvitationBubble";
 import TitleDivider from "./components/TitleDivider";
 import { Suspense } from "react";
 
-// צריך גם להוסיף קומפוננטה של Skeleton
-import PopularHobbiesSkeleton from "./components/Skeletons/PopularHobbiesSkeleton"; // יתכן שתצטרך ליצור קומפוננטה זו
+// Need to add Skeleton component
+import PopularHobbiesSkeleton from "./components/Skeletons/PopularHobbiesSkeleton"; // You may need to create this component
 
 const HomePage = () => {
   return (

@@ -48,7 +48,7 @@ export async function deleteFallen(id) {
 
 export async function approveFallen(id) {
   try {
-    // הקריאה לפונקציית השירות המקורית
+    // Call to the original service function
     const fallen = await Fallen.findByIdAndUpdate(
       id,
       { status: "approved" },
@@ -58,15 +58,15 @@ export async function approveFallen(id) {
     if (!fallen) throw new Error("Fallen not found");
     
     try {
-      // שימוש בפונקציה מקובץ email.js
+      // Using function from email.js
       const { sendApprovalNotification } = await import('@/lib/email');
       await sendApprovalNotification(fallen, fallen.slug);
     } catch (emailError) {
       console.error("Error sending approval email:", emailError);
-      // ממשיכים גם אם יש שגיאה בשליחת האימייל
+      // Continue even if there's an email sending error
     }
 
-    // חשוב! ייבוא פונקציית serializer
+    // Important! Import serializer function
     const { serializer } = await import("@/lib/serializer");
     return serializer(fallen);
   } catch (error) {
@@ -86,14 +86,14 @@ export async function rejectFallen(id, note) {
     if (!fallen) throw new Error("Fallen not found");
     
     try {
-      // שימוש בפונקציה מקובץ email.js
+      // Using function from email.js
       const { sendRejectionNotification } = await import('@/lib/email');
       await sendRejectionNotification(fallen, note);
     } catch (emailError) {
       console.error("Error sending rejection email:", emailError);
     }
 
-    // חשוב! ייבוא פונקציית serializer
+    // Important! Import serializer function
     const { serializer } = await import("@/lib/serializer");
     return serializer(fallen);
   } catch (error) {

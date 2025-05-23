@@ -19,7 +19,7 @@ export default function HobbyList({ fallenName, fallenId, hobbies, updateHobby})
         setStatusType(type);
         setShowStatus(true);
 
-        // הסטטוס ייעלם אוטומטית דרך קומפוננטת הטוסט
+        // Status will disappear automatically through the toast component
     };
 
     const hideStatus = () => {

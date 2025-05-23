@@ -4,7 +4,7 @@ import HobbyBubbleSkeleton from "../HobbyBubbleSkeleton";
 import HobbyTagSkeleton from "../HobbyTagSkeleton";
 
 export default function PopularHobbiesSkeleton({ containerType = "tag" }) {
-  // יצירת מערך עם 6 פריטים דמה
+  // Create array with 6 dummy items
   const skeletonItems = Array(6).fill(null);
 
   if (containerType === "bubble") {
