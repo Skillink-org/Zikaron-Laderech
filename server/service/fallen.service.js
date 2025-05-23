@@ -254,6 +254,12 @@ export async function addFallen(fallenData) {
       throw new Error("Missing first name or last name");
     }
 
+    // Check if fallen already exists
+    const existingFallen = await checkExistingFallen(fallenData.firstName, fallenData.lastName, fallenData.birthDate, fallenData.deathDate);
+    if (existingFallen) {
+      throw new Error(`נופל בשם ${fallenData.firstName} ${fallenData.lastName} עם תאריכי לידה ופטירה דומים כבר קיים במערכת`);
+    }
+
     // Ensure dates are valid
     const createdAt = new Date();
 
@@ -333,6 +339,48 @@ export async function rejectFallen(id, note) {
     return serializer(fallen);
   } catch (error) {
     console.error("Error in rejectFallen:", error);
+    throw error;
+  }
+}
+
+export async function checkExistingFallen(firstName, lastName, birthDate, deathDate) {
+  try {
+    // Convert dates to Date objects for comparison
+    const birthDateObj = new Date(birthDate);
+    const deathDateObj = new Date(deathDate);
+
+    const existingFallen = await Fallen.findOne({
+      firstName: { $regex: new RegExp(`^${firstName}$`, 'i') },
+      lastName: { $regex: new RegExp(`^${lastName}$`, 'i') },
+      $or: [
+        // Check if dates match exactly
+        {
+          birthDate: birthDateObj,
+          deathDate: deathDateObj
+        },
+        // Check if dates are within a 2-day range (to account for different time zones or data entry variations)
+        {
+          $and: [
+            { 
+              birthDate: { 
+                $gte: new Date(birthDateObj.getTime() - 2 * 24 * 60 * 60 * 1000),
+                $lte: new Date(birthDateObj.getTime() + 2 * 24 * 60 * 60 * 1000)
+              }
+            },
+            {
+              deathDate: {
+                $gte: new Date(deathDateObj.getTime() - 2 * 24 * 60 * 60 * 1000),
+                $lte: new Date(deathDateObj.getTime() + 2 * 24 * 60 * 60 * 1000)
+              }
+            }
+          ]
+        }
+      ]
+    });
+    
+    return existingFallen;
+  } catch (error) {
+    console.error("Error checking existing fallen:", error);
     throw error;
   }
 }

@@ -242,6 +242,8 @@ export default function AddFallenPage() {
         console.error("שגיאה בשמירת נתונים:", saveError);
         if (saveError.message?.includes("Failed to parse URL")) {
           setStatusMessage("שגיאת שרת: בעיה בחיבור לשרת. נא לנסות שוב מאוחר יותר.");
+        } else if (saveError.message?.includes("עם תאריכי לידה ופטירה דומים כבר קיים במערכת")) {
+          setStatusMessage(saveError.message);
         } else {
           setStatusMessage(saveError.message || "אירעה שגיאה בשמירת הנתונים. נא לנסות שוב.");
         }
