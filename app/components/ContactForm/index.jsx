@@ -5,6 +5,7 @@ import Button from '../Button';
 import CustomBubble from '../CustomBubble';
 import GenericInput from '../GenericInput';
 import styles from './style.module.scss';
+import StatusMessage from '../StatusMessage';
 import { submitContactForm } from "@/server/actions/contact.action";
 
 const ContactForm = () => {
@@ -16,7 +17,9 @@ const ContactForm = () => {
     message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [status, setStatus] = useState({ message: '', type: '' });
+  const [statusMessage, setStatusMessage] = useState('');
+  const [statusType, setStatusType] = useState('');
+  const [showStatus, setShowStatus] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -28,14 +31,23 @@ const ContactForm = () => {
     setIsSubmitting(true);
     
     try {
-      await submitContactForm(formData);
-      setStatus({ message: 'פנייתך התקבלה בהצלחה!', type: 'success' });
-      setFormData({ fullName: '', email: '', phone: '', subject: '', message: '' });
+      const result = await submitContactForm(formData);
+      if (result.success) {
+        setStatusMessage('ההודעה נשלחה בהצלחה!');
+        setStatusType('success');
+        setFormData({ fullName: '', email: '', phone: '', subject: '', message: '' });
+      } else {
+        setStatusMessage(result.error || 'שגיאה בשליחת הטופס');
+        setStatusType('error');
+      }
     } catch (error) {
-      setStatus({ message: error.message || 'אירעה שגיאה בשליחת הטופס', type: 'error' });
+      setStatusMessage(error.message || 'שגיאה בשליחת הטופס');
+      setStatusType('error');
+    } finally {
+      setIsSubmitting(false);
+      setShowStatus(true);
+      setTimeout(() => setShowStatus(false), 3000);
     }
-    
-    setIsSubmitting(false);
   };
 
   return (
@@ -94,9 +106,13 @@ const ContactForm = () => {
           {isSubmitting ? 'שולח...' : 'שליחה'}
         </Button>
         
-        {status.message && (
-          <div className={styles[status.type]}>
-            {status.message}
+        {showStatus && (
+          <div className={styles.statusMessage}>
+            <StatusMessage 
+              message={statusMessage} 
+              type={statusType} 
+              onHide={() => setShowStatus(false)}
+            />
           </div>
         )}
       </form>

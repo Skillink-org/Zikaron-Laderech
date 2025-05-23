@@ -26,13 +26,13 @@ $darkElementGradient: linear-gradient(to top, var(--mutedBlue) 20%, var(--darkGr
 
 //Text sizing
 $font-family: 'Noto Sans Hebrew', sans-serif;
-$text-xxl: 48px; // כותרת ענק
-$text-xl: 36px; //  כותרת גדולה
-$text-mid-xl: 30px; // כותרת בינונית
-$text-lg: 24px; // משנה
-$text-md: 16px; // טקסט מוגדל
-$text-base: 14px; // טקסט בסיס
-$text-sm: 12px; //טקסט קטן
+$text-xxl: 48px; // Extra large heading
+$text-xl: 36px; // Large heading
+$text-mid-xl: 30px; // Medium heading
+$text-lg: 24px; // Subheading
+$text-md: 16px; // Enlarged text
+$text-base: 14px; // Base text
+$text-sm: 12px; // Small text
 
 //header and footer height
 $headerHeight: 100px;

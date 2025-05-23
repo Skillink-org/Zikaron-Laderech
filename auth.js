@@ -30,7 +30,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
     }),
   ],
   secret: process.env.NEXT_AUTH_SECRET,
-  // הוספת הגדרות JWT מינימליות לפתרון הבעיה
+  // Add minimal JWT settings to solve the issue
   jwt: {
     secret: process.env.NEXT_AUTH_SECRET,
   },

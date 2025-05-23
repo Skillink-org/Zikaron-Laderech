@@ -3,19 +3,20 @@
 import { connectToDB } from '@/server/connect';
 import ContactForm from "@/server/models/contact.model";
 import nodemailer from "nodemailer";
+import { sendContactFormNotification } from '@/lib/email';
 
-// פונקציה לבדיקה אם אימייל תקין
+// Function to validate email
 function isValidEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
-// פונקציה לבדיקה אם מספר טלפון תקין (לישראל)
+// Function to validate phone number (for Israel)
 function isValidPhone(phone) {
   return /^(\+972|0)([23489]|5[0-9])[0-9]{7}$/.test(phone);
 }
 
 export async function submitContactForm(formData) {
-  // בדיקה האם הנתונים הגיעו כ-FormData (מ-action) או כאובייקט רגיל (מ-handleSubmit)
+  // Check if data came as FormData (from action) or regular object (from handleSubmit)
   const isFormDataInstance = formData instanceof FormData;
 
   const data = {
@@ -26,28 +27,28 @@ export async function submitContactForm(formData) {
     message: isFormDataInstance ? formData.get("message") : formData.message,
   };
 
-  // בדיקות תקינות ידניות
+  // Manual validation checks
   if (!data.fullName || data.fullName.length < 2) {
-    throw new Error("שם מלא חייב להכיל לפחות 2 תווים");
+    throw new Error("Full name must contain at least 2 characters");
   }
   if (!isValidEmail(data.email)) {
-    throw new Error("אימייל לא תקין");
+    throw new Error("Invalid email");
   }
   if (!isValidPhone(data.phone)) {
-    throw new Error("מספר טלפון לא תקין");
+    throw new Error("Invalid phone number");
   }
   if (!data.subject || data.subject.length < 2) {
-    throw new Error("נושא חייב להכיל לפחות 2 תווים");
+    throw new Error("Subject must contain at least 2 characters");
   }
   if (!data.message || data.message.length < 5) {
-    throw new Error("תוכן הפניה חייב להכיל לפחות 5 תווים");
+    throw new Error("Message must contain at least 5 characters");
   }
 
   try {
     await connectToDB();
-    // מתאימים את שם השדה למודל
+    // Adjust field name to match model
     const contactData = {
-      name: data.fullName, // השדה 'name' נדרש במודל
+      name: data.fullName, // 'name' field required in model
       email: data.email,
       phone: data.phone,
       subject: data.subject,
@@ -57,25 +58,28 @@ export async function submitContactForm(formData) {
     const newContact = await ContactForm.create(contactData);
     
     try {
-      // שליחת מייל אישור - תופס את השגיאה בנפרד כדי לא לפגוע בתהליך
+      // Send confirmation email - catch error separately to not affect process
       await sendConfirmationEmail(data.fullName, data.email, data.message);
+      
+      // Send admin notification
+      await sendContactFormNotification(contactData);
     } catch (emailError) {
-      console.error("שגיאה בשליחת אימייל אישור:", emailError);
-      // ממשיכים למרות שגיאת האימייל
+      console.error("Email sending error:", emailError);
+      // Continue process even if email sending failed
     }
 
-    return { success: true, message: "ההודעה נשלחה בהצלחה!" };
+    return { success: true, message: "Message sent successfully!" };
   } catch (error) {
-    console.error("שגיאה בשליחת הטופס:", error);
-    throw new Error(error.message || "שגיאה בשליחה, נסה שוב");
+    console.error("Error sending form:", error);
+    throw new Error(error.message || "Error sending, please try again");
   }
 }
 
 async function sendConfirmationEmail(name, email, message) {
-  // בדיקה אם משתני הסביבה קיימים
+  // Check if environment variables exist
   if (!process.env.GMAIL_ADDRESS || !process.env.GMAIL_APP_PASSWORD) {
-    console.warn("משתני סביבה של אימייל חסרים. לא ניתן לשלוח אימייל אישור.");
-    return; // יוצאים מהפונקציה ללא שליחת מייל
+    console.warn("Email environment variables are missing. Email confirmation cannot be sent.");
+    return; // Exit function without sending email
   }
 
   try {
@@ -90,13 +94,13 @@ async function sendConfirmationEmail(name, email, message) {
     const mailOptions = {
       from: process.env.GMAIL_ADDRESS,
       to: email,
-      subject: "אישור קבלת פנייה",
-      text: `שלום ${name},\n\nתודה שפנית אלינו. קיבלנו את ההודעה שלך ונחזור אליך בהקדם האפשרי.\n\nההודעה שלך: ${message}\n\nבברכה,\nצוות המיזם`,
+      subject: "Confirmation of receiving your message",
+      text: `Hello ${name},\n\nThank you for contacting us. We have received your message and we will get back to you as soon as possible.\n\nYour message: ${message}\n\nBest regards,\nThe Team`,
     };
 
     await transporter.sendMail(mailOptions);
   } catch (emailError) {
-    console.error("שגיאה בשליחת אימייל:", emailError);
-    // ממשיכים בתהליך גם אם שליחת האימייל נכשלה
+    console.error("Email sending error:", emailError);
+    // Continue process even if email sending failed
   }
 }

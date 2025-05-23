@@ -13,29 +13,29 @@ export default function HobbyBubble({
   children = "טניס",
   plusMode = true,
   onClick,
-  isClickable = true, // האם הבועה יכולה להיות לחיצה
+  isClickable = true, // Whether the bubble can be clicked
   ...props
 }) {
   const rand = useRand();
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  // פונקציית הלחיצה
+  // Click function
   const handleClick = () => {
-    if (!isClickable) return; // אם לא לחיץ, לא עושים כלום
+    if (!isClickable) return; // If not clickable, do nothing
     
     if (onClick) {
-      // אם יש פונקציית onClick מבחוץ, משתמשים בה
+      // If there's an external onClick function, use it
       onClick();
     } else {
-      // יצירת אובייקט פרמטרים חדש
+      // Create new parameters object
       const params = new URLSearchParams();
       
-      // הנקודה החשובה: אנחנו מגדירים את התחביב כפרמטר q
-      // זה יחליף את השם שהיה בתיבת החיפוש בתחביב
+      // Important point: we define the hobby as parameter q
+      // This will replace the name that was in the search box with the hobby
       params.set("q", children);
       
-      // שמירה על פרמטרים אחרים שאינם קשורים לחיפוש
+      // Preserve other parameters not related to search
       const currentParams = new URLSearchParams(searchParams);
       if (currentParams.has("sort")) {
         params.set("sort", currentParams.get("sort"));
@@ -45,7 +45,7 @@ export default function HobbyBubble({
     }
   };
 
-  // הוספת קלאס לציון האם לחיץ או לא
+  // Add class to indicate if clickable or not
   const bubbleClass = `${styles.hobbyBubble} ${className} ${isClickable ? styles.clickable : ''}`;
 
   return (
