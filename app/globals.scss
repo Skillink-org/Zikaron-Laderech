@@ -1,5 +1,16 @@
 @use '@/styles/_vars.scss' as *;
 
+@import "https://fonts.googleapis.com/css2?family=Noto+Sans+Hebrew:wght@100;200;300;400;500;600;700;800;900&display=swap";
+
+:root {
+  --blue: #272C55;
+  --gray: #fcfcfc;
+  --lightblue: #E8F1F8;
+  --darkGray: #72838A;
+  --mutedBlue: #2D3748;
+  --lightGray: #DDDDDD;
+}
+
 * {
   box-sizing: border-box;
   padding: 0;
