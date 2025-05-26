@@ -19,7 +19,9 @@ const HomePage = () => {
       />
 
       {/* Search section */}
-      <SearchForm query="" searchTrigger="click" />
+      <Suspense fallback={<div>Loading search...</div>}>
+        <SearchForm query="" searchTrigger="click" />
+      </Suspense>
       <TitleDivider variant="line"/>
       {/* Popular hobbies section */}
       <Suspense fallback={<PopularHobbiesSkeleton containerType="bubble" />}>

@@ -1,6 +1,7 @@
 import { connectToDB } from "@/server/connect";
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
+import { Suspense } from "react";
 
 import FallenTable from "../components/FallenTable";
 
@@ -14,7 +15,9 @@ export default async function AdminPage() {
 
   return (
     <>
-      <FallenTable/>
+      <Suspense fallback={<div>Loading admin table...</div>}>
+        <FallenTable/>
+      </Suspense>
     </>
   );
 }

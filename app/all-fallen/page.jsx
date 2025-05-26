@@ -33,12 +33,16 @@ export default async function AllFallenPage({ searchParams }) {
   return (
     <>
       {/* Search section */}
-      <SearchForm query={query} searchTrigger="change" />
+      <Suspense fallback={<div>Loading search...</div>}>
+        <SearchForm query={query} searchTrigger="change" />
+      </Suspense>
 
       <TitleDivider title={"סינון לפי תחביבים נפוצים"} />
 
       {/* Hobbies filter section */}
-      <PopularHobbies displayMode="fallen" isClickable={true} />
+      <Suspense fallback={<div>Loading hobbies filter...</div>}>
+        <PopularHobbies displayMode="fallen" isClickable={true} />
+      </Suspense>
       {/* Fallen list and pagination section */}
       <div className={styles.itemsContainer}>
         <Suspense fallback={<FallenListSkeleton limit={limit} />}>
